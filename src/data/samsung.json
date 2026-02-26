@@ -1,0 +1,739 @@
+{
+  "group": {
+    "id": "samsung",
+    "name": "삼성",
+    "slug": "samsung",
+    "controllerName": "이재용",
+    "description": "삼성그룹은 대한민국 최대 재벌그룹으로 전자, 금융, 바이오 등 다양한 분야에 걸쳐 사업을 영위",
+    "dataDate": "2025-05-01",
+    "totalCompanies": 59,
+    "listedCompanies": 16
+  },
+  "companies": [
+    {
+      "id": "samsung-electronics",
+      "groupId": "samsung",
+      "name": "삼성전자",
+      "isListed": true,
+      "category": "전자/IT",
+      "stockPrice": 67800,
+      "priceChange": -1200,
+      "priceChangePercent": -1.74,
+      "marketCap": 4048000,
+      "sector": "반도체·전자"
+    },
+    {
+      "id": "samsung-ct",
+      "groupId": "samsung",
+      "name": "삼성물산",
+      "isListed": true,
+      "category": "건설",
+      "stockPrice": 128500,
+      "priceChange": 500,
+      "priceChangePercent": 0.39,
+      "marketCap": 242000,
+      "sector": "건설·상사"
+    },
+    {
+      "id": "samsung-life",
+      "groupId": "samsung",
+      "name": "삼성생명보험",
+      "isListed": true,
+      "category": "금융/보험",
+      "stockPrice": 92300,
+      "priceChange": 1300,
+      "priceChangePercent": 1.43,
+      "marketCap": 184600,
+      "sector": "생명보험"
+    },
+    {
+      "id": "samsung-fire",
+      "groupId": "samsung",
+      "name": "삼성화재해상보험",
+      "isListed": true,
+      "category": "금융/보험",
+      "stockPrice": 345000,
+      "priceChange": 5000,
+      "priceChangePercent": 1.47,
+      "marketCap": 163000,
+      "sector": "손해보험"
+    },
+    {
+      "id": "samsung-sdi",
+      "groupId": "samsung",
+      "name": "삼성SDI",
+      "isListed": true,
+      "category": "화학",
+      "stockPrice": 372000,
+      "priceChange": -8000,
+      "priceChangePercent": -2.11,
+      "marketCap": 255600,
+      "sector": "2차전지·소재"
+    },
+    {
+      "id": "samsung-electro-mechanics",
+      "groupId": "samsung",
+      "name": "삼성전기",
+      "isListed": true,
+      "category": "전자/IT",
+      "stockPrice": 158200,
+      "priceChange": 2200,
+      "priceChangePercent": 1.41,
+      "marketCap": 117800,
+      "sector": "전자부품"
+    },
+    {
+      "id": "samsung-sds",
+      "groupId": "samsung",
+      "name": "삼성에스디에스",
+      "isListed": true,
+      "category": "전자/IT",
+      "stockPrice": 152000,
+      "priceChange": -3000,
+      "priceChangePercent": -1.94,
+      "marketCap": 117600,
+      "sector": "IT서비스"
+    },
+    {
+      "id": "samsung-biologics",
+      "groupId": "samsung",
+      "name": "삼성바이오로직스",
+      "isListed": true,
+      "category": "바이오",
+      "stockPrice": 812000,
+      "priceChange": 12000,
+      "priceChangePercent": 1.50,
+      "marketCap": 578000,
+      "sector": "바이오의약품"
+    },
+    {
+      "id": "samsung-securities",
+      "groupId": "samsung",
+      "name": "삼성증권",
+      "isListed": true,
+      "category": "금융/보험",
+      "stockPrice": 42800,
+      "priceChange": 300,
+      "priceChangePercent": 0.71,
+      "marketCap": 33100,
+      "sector": "증권"
+    },
+    {
+      "id": "hotel-shilla",
+      "groupId": "samsung",
+      "name": "호텔신라",
+      "isListed": true,
+      "category": "서비스",
+      "stockPrice": 68200,
+      "priceChange": -800,
+      "priceChangePercent": -1.16,
+      "marketCap": 26700,
+      "sector": "호텔·면세"
+    },
+    {
+      "id": "cheil-worldwide",
+      "groupId": "samsung",
+      "name": "제일기획",
+      "isListed": true,
+      "category": "서비스",
+      "stockPrice": 21450,
+      "priceChange": 150,
+      "priceChangePercent": 0.70,
+      "marketCap": 24700,
+      "sector": "광고"
+    },
+    {
+      "id": "samsung-card",
+      "groupId": "samsung",
+      "name": "삼성카드",
+      "isListed": true,
+      "category": "금융/보험",
+      "stockPrice": 38600,
+      "priceChange": 400,
+      "priceChangePercent": 1.05,
+      "marketCap": 45200,
+      "sector": "카드·할부금융"
+    },
+    {
+      "id": "samsung-heavy",
+      "groupId": "samsung",
+      "name": "삼성중공업",
+      "isListed": true,
+      "category": "건설",
+      "stockPrice": 9850,
+      "priceChange": 250,
+      "priceChangePercent": 2.60,
+      "marketCap": 69300,
+      "sector": "조선"
+    },
+    {
+      "id": "s1-corp",
+      "groupId": "samsung",
+      "name": "에스원",
+      "isListed": true,
+      "category": "서비스",
+      "stockPrice": 62500,
+      "priceChange": -500,
+      "priceChangePercent": -0.79,
+      "marketCap": 23700,
+      "sector": "보안서비스"
+    },
+    {
+      "id": "samsung-ena",
+      "groupId": "samsung",
+      "name": "삼성이엔에이",
+      "isListed": true,
+      "category": "건설",
+      "stockPrice": 58300,
+      "priceChange": 800,
+      "priceChangePercent": 1.39,
+      "marketCap": 14200,
+      "sector": "엔지니어링"
+    },
+    {
+      "id": "samsung-display",
+      "groupId": "samsung",
+      "name": "삼성디스플레이",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "samsung-venture",
+      "groupId": "samsung",
+      "name": "삼성벤처투자",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-futures",
+      "groupId": "samsung",
+      "name": "삼성선물",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-fn-guide",
+      "groupId": "samsung",
+      "name": "삼성에프엔가이드투자회사",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-asset",
+      "groupId": "samsung",
+      "name": "삼성자산운용",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-life-financial",
+      "groupId": "samsung",
+      "name": "삼성생명금융서비스",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-active-asset",
+      "groupId": "samsung",
+      "name": "삼성액티브자산운용",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-hedge-asset",
+      "groupId": "samsung",
+      "name": "삼성해지자산운용",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-fire-financial",
+      "groupId": "samsung",
+      "name": "삼성화재금융서비스보험대리점",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-electronics-service",
+      "groupId": "samsung",
+      "name": "삼성전자서비스",
+      "isListed": false,
+      "category": "서비스"
+    },
+    {
+      "id": "samsung-medison",
+      "groupId": "samsung",
+      "name": "삼성메디슨",
+      "isListed": false,
+      "category": "바이오"
+    },
+    {
+      "id": "samsung-bioepis",
+      "groupId": "samsung",
+      "name": "삼성바이오에피스",
+      "isListed": false,
+      "category": "바이오"
+    },
+    {
+      "id": "semes",
+      "groupId": "samsung",
+      "name": "세메스",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "suwon-samsung-fc",
+      "groupId": "samsung",
+      "name": "수원삼성축구단",
+      "isListed": false,
+      "category": "서비스"
+    },
+    {
+      "id": "samsung-electronics-logitech",
+      "groupId": "samsung",
+      "name": "삼성전자로지텍",
+      "isListed": false,
+      "category": "서비스"
+    },
+    {
+      "id": "steco",
+      "groupId": "samsung",
+      "name": "스테코",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "samsung-card-cs",
+      "groupId": "samsung",
+      "name": "삼성카드고객서비스",
+      "isListed": false,
+      "category": "서비스"
+    },
+    {
+      "id": "samsung-s1a-asset",
+      "groupId": "samsung",
+      "name": "삼성에스원에이자산운용",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "samsung-fn",
+      "groupId": "samsung",
+      "name": "삼성에프엔",
+      "isListed": false,
+      "category": "금융/보험"
+    },
+    {
+      "id": "mirakom-inc",
+      "groupId": "samsung",
+      "name": "미라콤아이앤씨",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "openhands",
+      "groupId": "samsung",
+      "name": "오픈핸즈",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "s-core",
+      "groupId": "samsung",
+      "name": "에스코어",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "secui",
+      "groupId": "samsung",
+      "name": "시큐아이",
+      "isListed": false,
+      "category": "전자/IT"
+    },
+    {
+      "id": "s1-crm",
+      "groupId": "samsung",
+      "name": "에스원씨알엠",
+      "isListed": false,
+      "category": "서비스"
+    },
+    {
+      "id": "samsung-global-research",
+      "groupId": "samsung",
+      "name": "삼성글로벌리서치",
+      "isListed": false,
+      "category": "서비스"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-001",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "samsung-electronics",
+      "ownershipPct": 4.4
+    },
+    {
+      "id": "rel-002",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "samsung-life",
+      "ownershipPct": 19.3
+    },
+    {
+      "id": "rel-003",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-display",
+      "ownershipPct": 84.8
+    },
+    {
+      "id": "rel-004",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-sdi",
+      "ownershipPct": 19.1
+    },
+    {
+      "id": "rel-005",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-electro-mechanics",
+      "ownershipPct": 22.8
+    },
+    {
+      "id": "rel-006",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-sds",
+      "ownershipPct": 22.6
+    },
+    {
+      "id": "rel-007",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-medison",
+      "ownershipPct": 68.5
+    },
+    {
+      "id": "rel-008",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-electronics",
+      "ownershipPct": 10.4
+    },
+    {
+      "id": "rel-009",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "samsung-biologics",
+      "ownershipPct": 43.1
+    },
+    {
+      "id": "rel-010",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-biologics",
+      "ownershipPct": 31.2
+    },
+    {
+      "id": "rel-011",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-fire",
+      "ownershipPct": 7.2
+    },
+    {
+      "id": "rel-012",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-s1a-asset",
+      "ownershipPct": 1.3
+    },
+    {
+      "id": "rel-013",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "hotel-shilla",
+      "ownershipPct": 3.0
+    },
+    {
+      "id": "rel-014",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-securities",
+      "ownershipPct": 29.4
+    },
+    {
+      "id": "rel-015",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-fire",
+      "toCompanyId": "samsung-fire-financial",
+      "ownershipPct": 1.5
+    },
+    {
+      "id": "rel-016",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-fn-guide",
+      "toCompanyId": "samsung-securities",
+      "ownershipPct": 19.5
+    },
+    {
+      "id": "rel-017",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-fn-guide",
+      "toCompanyId": "samsung-fn",
+      "ownershipPct": 18.7
+    },
+    {
+      "id": "rel-018",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-securities",
+      "toCompanyId": "samsung-futures",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-019",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-s1a-asset",
+      "toCompanyId": "samsung-life-financial",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-020",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-s1a-asset",
+      "toCompanyId": "samsung-asset",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-021",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electro-mechanics",
+      "toCompanyId": "samsung-heavy",
+      "ownershipPct": 0.1
+    },
+    {
+      "id": "rel-022",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-sdi",
+      "toCompanyId": "samsung-sds",
+      "ownershipPct": 17.1
+    },
+    {
+      "id": "rel-023",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-venture",
+      "ownershipPct": 17.0
+    },
+    {
+      "id": "rel-024",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-biologics",
+      "toCompanyId": "samsung-bioepis",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-025",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ena",
+      "toCompanyId": "samsung-biologics",
+      "ownershipPct": 0.2
+    },
+    {
+      "id": "rel-026",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-electronics-service",
+      "ownershipPct": 99.3
+    },
+    {
+      "id": "rel-027",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-electronics-logitech",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-028",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "semes",
+      "ownershipPct": 91.5
+    },
+    {
+      "id": "rel-029",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "steco",
+      "ownershipPct": 70.0
+    },
+    {
+      "id": "rel-030",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "suwon-samsung-fc",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-031",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-card",
+      "toCompanyId": "samsung-card-cs",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-032",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-card",
+      "ownershipPct": 71.9
+    },
+    {
+      "id": "rel-033",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "cheil-worldwide",
+      "ownershipPct": 25.2
+    },
+    {
+      "id": "rel-034",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "s1-corp",
+      "ownershipPct": 5.3
+    },
+    {
+      "id": "rel-035",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "s1-corp",
+      "ownershipPct": 1.0
+    },
+    {
+      "id": "rel-036",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-sds",
+      "toCompanyId": "mirakom-inc",
+      "ownershipPct": 83.6
+    },
+    {
+      "id": "rel-037",
+      "groupId": "samsung",
+      "fromCompanyId": "mirakom-inc",
+      "toCompanyId": "openhands",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-038",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-sds",
+      "toCompanyId": "s-core",
+      "ownershipPct": 81.8
+    },
+    {
+      "id": "rel-039",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-sds",
+      "toCompanyId": "secui",
+      "ownershipPct": 8.7
+    },
+    {
+      "id": "rel-040",
+      "groupId": "samsung",
+      "fromCompanyId": "s1-corp",
+      "toCompanyId": "s1-crm",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-041",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-active-asset",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-042",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-life",
+      "toCompanyId": "samsung-hedge-asset",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-043",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-ct",
+      "toCompanyId": "samsung-global-research",
+      "ownershipPct": 29.8
+    },
+    {
+      "id": "rel-044",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "samsung-global-research",
+      "ownershipPct": 14.8
+    },
+    {
+      "id": "rel-045",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-fire",
+      "toCompanyId": "samsung-fire",
+      "ownershipPct": 14.5
+    },
+    {
+      "id": "rel-046",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-venture",
+      "toCompanyId": "samsung-electronics",
+      "ownershipPct": 16.7
+    },
+    {
+      "id": "rel-047",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-heavy",
+      "toCompanyId": "samsung-heavy",
+      "ownershipPct": 15.2
+    },
+    {
+      "id": "rel-048",
+      "groupId": "samsung",
+      "fromCompanyId": "samsung-electronics",
+      "toCompanyId": "s-core",
+      "ownershipPct": 56.5
+    }
+  ],
+  "controllerHoldings": [
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-ct",
+      "ownershipPct": 19.8
+    },
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-life",
+      "ownershipPct": 10.4
+    },
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-sds",
+      "ownershipPct": 9.2
+    },
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-ena",
+      "ownershipPct": 1.5
+    },
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-electronics",
+      "ownershipPct": 1.5
+    },
+    {
+      "groupId": "samsung",
+      "companyId": "samsung-fire",
+      "ownershipPct": 0.1
+    }
+  ]
+}
