@@ -11,8 +11,11 @@ import { formatNumber } from "@/lib/utils";
 
 const groupIcons: Record<string, string> = {
   samsung: "🏢", sk: "⚡", hyundai: "🚗", lg: "📱", lotte: "🏬",
-  posco: "🔩", hanwha: "🚀", "hd-hyundai": "🚢", gs: "⛽", shinsegae: "🛒",
+  posco: "🔩", hanwha: "🚀", "hd-hyundai": "🚢", gs: "⛽", shinsegae: "🛍️",
   hanjin: "✈️", kt: "📡", cj: "🎬", ls: "🔌", kakao: "💬",
+  doosan: "⚙️", dl: "🏗️", jungheung: "🏠", celltrion: "💊", naver: "🌐",
+  "mirae-asset": "📊", coupang: "📦", hankook: "🛞", booyoung: "🏘️",
+  youngpoong: "⛏️", harim: "🐔", hyosung: "🧵", sm: "🚢", hdc: "🏙️",
 };
 
 interface GroupDetailClientProps {

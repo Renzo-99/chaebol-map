@@ -7,13 +7,6 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-function getNodeType(company: Company): string {
-  if (company.isController) return "controller";
-  if (company.isListed) return "listed";
-  if (company.isHolding) return "holding";
-  return "unlisted";
-}
-
 function getNodeStyle(company: Company) {
   if (company.isController) {
     return {
@@ -22,17 +15,17 @@ function getNodeStyle(company: Company) {
       color: "#000",
     };
   }
-  if (company.isListed) {
-    return {
-      background: "rgba(49, 130, 246, 0.15)",
-      border: "2px solid #3182F6",
-      color: "#F2F4F6",
-    };
-  }
   if (company.isHolding) {
     return {
       background: "rgba(34, 197, 94, 0.15)",
       border: "2px solid #22C55E",
+      color: "#F2F4F6",
+    };
+  }
+  if (company.isListed) {
+    return {
+      background: "rgba(49, 130, 246, 0.15)",
+      border: "2px solid #3182F6",
       color: "#F2F4F6",
     };
   }
@@ -63,20 +56,30 @@ export function buildGraphData(
 ): { nodes: Node<CompanyNodeData>[]; edges: Edge[] } {
   const companyMap = new Map(companies.map((c) => [c.id, c]));
 
-  // Simple hierarchical layout
+  // Categorize companies
   const controller = companies.find((c) => c.isController);
-  const listed = companies.filter((c) => c.isListed && !c.isController);
-  const unlisted = companies.filter((c) => !c.isListed && !c.isController);
+  const holding = companies.filter((c) => c.isHolding && !c.isController);
+  const listed = companies.filter((c) => c.isListed && !c.isController && !c.isHolding);
+  const unlisted = companies.filter((c) => !c.isListed && !c.isController && !c.isHolding);
+
+  // Adaptive layout based on total node count
+  const totalNodes = companies.length;
+  const scale = totalNodes > 40 ? 0.85 : totalNodes > 25 ? 0.9 : 1;
+  const hGap = Math.round(250 * scale);
+  const vGap = Math.round(170 * scale);
 
   const nodes: Node<CompanyNodeData>[] = [];
   let yOffset = 0;
 
-  // Controller at top
+  // Controller at top center
   if (controller) {
+    const maxCols = Math.max(listed.length, holding.length, 5);
+    const perRow = Math.min(maxCols, totalNodes > 30 ? 6 : 5);
+    const cx = Math.round((perRow * hGap) / 2);
     nodes.push({
       id: controller.id,
       type: "company",
-      position: { x: 600, y: 0 },
+      position: { x: cx, y: 0 },
       data: { company: controller, label: controller.name },
       style: {
         ...getNodeStyle(controller),
@@ -88,11 +91,39 @@ export function buildGraphData(
         textAlign: "center" as const,
       },
     });
-    yOffset = 150;
+    yOffset = Math.round(150 * scale);
+  }
+
+  // Holding companies (tier 1)
+  if (holding.length > 0) {
+    const holdPerRow = Math.min(holding.length, 4);
+    holding.forEach((company, i) => {
+      const row = Math.floor(i / holdPerRow);
+      const col = i % holdPerRow;
+      nodes.push({
+        id: company.id,
+        type: "company",
+        position: {
+          x: col * hGap + 50,
+          y: yOffset + row * vGap,
+        },
+        data: { company, label: company.name },
+        style: {
+          ...getNodeStyle(company),
+          borderRadius: "14px",
+          padding: "10px 18px",
+          fontSize: "13px",
+          fontWeight: "600",
+          minWidth: "110px",
+          textAlign: "center" as const,
+        },
+      });
+    });
+    yOffset += Math.ceil(holding.length / holdPerRow) * vGap + Math.round(60 * scale);
   }
 
   // Listed companies in a grid
-  const listedPerRow = 5;
+  const listedPerRow = totalNodes > 30 ? 6 : 5;
   listed.forEach((company, i) => {
     const row = Math.floor(i / listedPerRow);
     const col = i % listedPerRow;
@@ -100,8 +131,8 @@ export function buildGraphData(
       id: company.id,
       type: "company",
       position: {
-        x: col * 260 + 50,
-        y: yOffset + row * 180,
+        x: col * hGap + 50,
+        y: yOffset + row * vGap,
       },
       data: { company, label: company.name },
       style: {
@@ -116,10 +147,14 @@ export function buildGraphData(
     });
   });
 
-  yOffset += Math.ceil(listed.length / listedPerRow) * 180 + 80;
+  if (listed.length > 0) {
+    yOffset += Math.ceil(listed.length / listedPerRow) * vGap + Math.round(60 * scale);
+  }
 
   // Unlisted companies
-  const unlistedPerRow = 6;
+  const unlistedPerRow = totalNodes > 30 ? 7 : 6;
+  const uGap = Math.round(210 * scale);
+  const uVGap = Math.round(140 * scale);
   unlisted.forEach((company, i) => {
     const row = Math.floor(i / unlistedPerRow);
     const col = i % unlistedPerRow;
@@ -127,8 +162,8 @@ export function buildGraphData(
       id: company.id,
       type: "company",
       position: {
-        x: col * 220 + 30,
-        y: yOffset + row * 150,
+        x: col * uGap + 30,
+        y: yOffset + row * uVGap,
       },
       data: { company, label: company.name },
       style: {
