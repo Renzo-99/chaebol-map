@@ -21,6 +21,30 @@ export default async function LandingPage() {
     hyundai: "🚗",
     lg: "📱",
     lotte: "🏬",
+    posco: "🔩",
+    hanwha: "🚀",
+    "hd-hyundai": "🚢",
+    gs: "⛽",
+    shinsegae: "🛍️",
+    hanjin: "✈️",
+    kt: "📡",
+    cj: "🎬",
+    ls: "🔌",
+    kakao: "💬",
+    doosan: "⚙️",
+    dl: "🏗️",
+    jungheung: "🏠",
+    celltrion: "💊",
+    naver: "🌐",
+    "mirae-asset": "📊",
+    coupang: "📦",
+    hankook: "🛞",
+    booyoung: "🏘️",
+    youngpoong: "⛏️",
+    harim: "🐔",
+    hyosung: "🧵",
+    sm: "🚢",
+    hdc: "🏙️",
   };
 
   return (
@@ -55,7 +79,7 @@ export default async function LandingPage() {
           </h1>
 
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            삼성, SK, 현대자동차, LG, 롯데.
+            삼성, SK, 현대자동차, LG 등 29대 그룹.
             <br />
             복잡한 재벌 소유지분도를 인터랙티브 그래프로 탐색하고,
             <br />
@@ -213,7 +237,7 @@ export default async function LandingPage() {
               </div>
               <h3 className="font-bold mb-2">그룹 비교 분석</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                5대 그룹의 구조를 비교하고, 계열사 수, 상장사 비율 등을
+                29대 그룹의 구조를 비교하고, 계열사 수, 상장사 비율 등을
                 한눈에 확인할 수 있습니다.
               </p>
             </div>

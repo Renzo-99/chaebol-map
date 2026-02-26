@@ -1,0 +1,176 @@
+{
+  "group": {
+    "id": "naver",
+    "name": "네이버",
+    "slug": "naver",
+    "controllerName": "최수연",
+    "description": "네이버그룹은 대한민국 최대 IT플랫폼 기업으로 검색, 커머스, 웹툰, 클라우드 등 다양한 디지털 서비스 운영",
+    "dataDate": "2025-05-01",
+    "totalCompanies": 60,
+    "listedCompanies": 2
+  },
+  "companies": [
+    {
+      "id": "naver-controller",
+      "groupId": "naver",
+      "name": "최수연(동일인)",
+      "isListed": false,
+      "isController": true,
+      "category": "동일인"
+    },
+    {
+      "id": "naver-corp",
+      "groupId": "naver",
+      "name": "네이버",
+      "isListed": true,
+      "category": "IT플랫폼",
+      "stockCode": "035420",
+      "stockPrice": 218000,
+      "priceChange": 4500,
+      "priceChangePercent": 2.11,
+      "marketCap": 357800,
+      "sector": "인터넷서비스"
+    },
+    {
+      "id": "naver-webtoon",
+      "groupId": "naver",
+      "name": "네이버웹툰",
+      "isListed": true,
+      "category": "엔터테인먼트",
+      "stockCode": "WBTN",
+      "stockPrice": 15200,
+      "priceChange": -300,
+      "priceChangePercent": -1.94,
+      "marketCap": 32000,
+      "sector": "디지털콘텐츠"
+    },
+    {
+      "id": "naver-cloud",
+      "groupId": "naver",
+      "name": "네이버클라우드",
+      "isListed": false,
+      "category": "클라우드/AI"
+    },
+    {
+      "id": "naver-financial",
+      "groupId": "naver",
+      "name": "네이버파이낸셜",
+      "isListed": false,
+      "category": "금융"
+    },
+    {
+      "id": "naver-labs",
+      "groupId": "naver",
+      "name": "네이버랩스",
+      "isListed": false,
+      "category": "로보틱스/AI"
+    },
+    {
+      "id": "line-plus",
+      "groupId": "naver",
+      "name": "라인플러스",
+      "isListed": false,
+      "category": "메신저"
+    },
+    {
+      "id": "snow-corp",
+      "groupId": "naver",
+      "name": "스노우",
+      "isListed": false,
+      "category": "AI/카메라앱"
+    },
+    {
+      "id": "naver-i-and-s",
+      "groupId": "naver",
+      "name": "네이버아이앤에스",
+      "isListed": false,
+      "category": "IT서비스"
+    },
+    {
+      "id": "works-mobile",
+      "groupId": "naver",
+      "name": "웍스모바일",
+      "isListed": false,
+      "category": "협업도구"
+    },
+    {
+      "id": "naver-z",
+      "groupId": "naver",
+      "name": "네이버제트(제페토)",
+      "isListed": false,
+      "category": "메타버스"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-nv-1",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "naver-cloud",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-nv-2",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "naver-financial",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-nv-3",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "naver-webtoon",
+      "ownershipPct": 67.6
+    },
+    {
+      "id": "rel-nv-4",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "line-plus",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-nv-5",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "snow-corp",
+      "ownershipPct": 42.8
+    },
+    {
+      "id": "rel-nv-6",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "naver-labs",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-nv-7",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "naver-i-and-s",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-nv-8",
+      "groupId": "naver",
+      "fromCompanyId": "naver-corp",
+      "toCompanyId": "works-mobile",
+      "ownershipPct": 73.5
+    },
+    {
+      "id": "rel-nv-9",
+      "groupId": "naver",
+      "fromCompanyId": "snow-corp",
+      "toCompanyId": "naver-z",
+      "ownershipPct": 46.5
+    }
+  ],
+  "controllerHoldings": [
+    {
+      "groupId": "naver",
+      "companyId": "naver-corp",
+      "ownershipPct": 0.5
+    }
+  ]
+}

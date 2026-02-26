@@ -1,0 +1,126 @@
+{
+  "group": {
+    "id": "mirae-asset",
+    "name": "미래에셋",
+    "slug": "mirae-asset",
+    "controllerName": "박현주",
+    "description": "미래에셋그룹은 증권, 자산운용, 생명보험 등 금융투자 중심의 그룹",
+    "dataDate": "2025-05-01",
+    "totalCompanies": 40,
+    "listedCompanies": 3
+  },
+  "companies": [
+    {
+      "id": "mirae-controller",
+      "groupId": "mirae-asset",
+      "name": "박현주(동일인)",
+      "isListed": false,
+      "isController": true,
+      "category": "동일인"
+    },
+    {
+      "id": "mirae-securities",
+      "groupId": "mirae-asset",
+      "name": "미래에셋증권",
+      "isListed": true,
+      "category": "금융",
+      "stockCode": "006800",
+      "stockPrice": 8950,
+      "priceChange": 120,
+      "priceChangePercent": 1.36,
+      "marketCap": 55800,
+      "sector": "증권"
+    },
+    {
+      "id": "mirae-life",
+      "groupId": "mirae-asset",
+      "name": "미래에셋생명",
+      "isListed": true,
+      "category": "금융/보험",
+      "stockCode": "085620",
+      "stockPrice": 4500,
+      "priceChange": -50,
+      "priceChangePercent": -1.10,
+      "marketCap": 14700,
+      "sector": "생명보험"
+    },
+    {
+      "id": "mirae-venture",
+      "groupId": "mirae-asset",
+      "name": "미래에셋벤처투자",
+      "isListed": true,
+      "category": "금융",
+      "stockCode": "100790",
+      "stockPrice": 5200,
+      "priceChange": 80,
+      "priceChangePercent": 1.56,
+      "marketCap": 3600,
+      "sector": "벤처투자"
+    },
+    {
+      "id": "mirae-asset-mgmt",
+      "groupId": "mirae-asset",
+      "name": "미래에셋자산운용",
+      "isListed": false,
+      "category": "자산운용"
+    },
+    {
+      "id": "mirae-capital",
+      "groupId": "mirae-asset",
+      "name": "미래에셋캐피탈",
+      "isListed": false,
+      "category": "금융"
+    },
+    {
+      "id": "mirae-consulting",
+      "groupId": "mirae-asset",
+      "name": "미래에셋컨설팅",
+      "isListed": false,
+      "category": "컨설팅"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-ma-1",
+      "groupId": "mirae-asset",
+      "fromCompanyId": "mirae-securities",
+      "toCompanyId": "mirae-asset-mgmt",
+      "ownershipPct": 90.0
+    },
+    {
+      "id": "rel-ma-2",
+      "groupId": "mirae-asset",
+      "fromCompanyId": "mirae-securities",
+      "toCompanyId": "mirae-capital",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-ma-3",
+      "groupId": "mirae-asset",
+      "fromCompanyId": "mirae-securities",
+      "toCompanyId": "mirae-life",
+      "ownershipPct": 47.4
+    },
+    {
+      "id": "rel-ma-4",
+      "groupId": "mirae-asset",
+      "fromCompanyId": "mirae-securities",
+      "toCompanyId": "mirae-venture",
+      "ownershipPct": 29.5
+    },
+    {
+      "id": "rel-ma-5",
+      "groupId": "mirae-asset",
+      "fromCompanyId": "mirae-securities",
+      "toCompanyId": "mirae-consulting",
+      "ownershipPct": 100.0
+    }
+  ],
+  "controllerHoldings": [
+    {
+      "groupId": "mirae-asset",
+      "companyId": "mirae-securities",
+      "ownershipPct": 15.2
+    }
+  ]
+}

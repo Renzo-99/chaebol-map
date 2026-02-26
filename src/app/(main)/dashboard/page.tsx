@@ -39,7 +39,7 @@ export default async function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold">대시보드</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          한국 5대 그룹 소유지분도 한눈에 보기
+          한국 29대 그룹 소유지분도 한눈에 보기
         </p>
       </div>
 

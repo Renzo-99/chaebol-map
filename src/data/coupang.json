@@ -1,0 +1,128 @@
+{
+  "group": {
+    "id": "coupang",
+    "name": "쿠팡",
+    "slug": "coupang",
+    "controllerName": "김범석",
+    "description": "쿠팡그룹은 대한민국 최대 이커머스 기업으로 물류, 이츠, 플레이 등 다각화 진행",
+    "dataDate": "2025-05-01",
+    "totalCompanies": 25,
+    "listedCompanies": 1
+  },
+  "companies": [
+    {
+      "id": "coupang-controller",
+      "groupId": "coupang",
+      "name": "김범석(동일인)",
+      "isListed": false,
+      "isController": true,
+      "category": "동일인"
+    },
+    {
+      "id": "coupang-inc",
+      "groupId": "coupang",
+      "name": "쿠팡",
+      "isListed": true,
+      "category": "이커머스",
+      "stockCode": "CPNG",
+      "stockPrice": 26400,
+      "priceChange": -200,
+      "priceChangePercent": -0.75,
+      "marketCap": 480000,
+      "sector": "이커머스"
+    },
+    {
+      "id": "coupang-logistics",
+      "groupId": "coupang",
+      "name": "쿠팡로지스틱스서비스",
+      "isListed": false,
+      "category": "물류"
+    },
+    {
+      "id": "coupang-fulfillment",
+      "groupId": "coupang",
+      "name": "쿠팡풀필먼트서비스",
+      "isListed": false,
+      "category": "물류"
+    },
+    {
+      "id": "coupang-eats",
+      "groupId": "coupang",
+      "name": "쿠팡이츠",
+      "isListed": false,
+      "category": "배달서비스"
+    },
+    {
+      "id": "coupang-pay",
+      "groupId": "coupang",
+      "name": "쿠팡페이",
+      "isListed": false,
+      "category": "핀테크"
+    },
+    {
+      "id": "coupang-play",
+      "groupId": "coupang",
+      "name": "쿠팡플레이",
+      "isListed": false,
+      "category": "OTT"
+    },
+    {
+      "id": "coupang-finance",
+      "groupId": "coupang",
+      "name": "쿠팡파이낸스",
+      "isListed": false,
+      "category": "금융"
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-cp-1",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-logistics",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-cp-2",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-fulfillment",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-cp-3",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-eats",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-cp-4",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-pay",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-cp-5",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-play",
+      "ownershipPct": 100.0
+    },
+    {
+      "id": "rel-cp-6",
+      "groupId": "coupang",
+      "fromCompanyId": "coupang-inc",
+      "toCompanyId": "coupang-finance",
+      "ownershipPct": 100.0
+    }
+  ],
+  "controllerHoldings": [
+    {
+      "groupId": "coupang",
+      "companyId": "coupang-inc",
+      "ownershipPct": 10.2
+    }
+  ]
+}
