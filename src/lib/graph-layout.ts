@@ -7,47 +7,11 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-function getNodeStyle(company: Company) {
-  if (company.isController) {
-    return {
-      background: "#F59E0B",
-      border: "2px solid #FCD34D",
-      color: "#000",
-    };
-  }
-  if (company.isHolding) {
-    return {
-      background: "rgba(34, 197, 94, 0.15)",
-      border: "2px solid #22C55E",
-      color: "#F2F4F6",
-    };
-  }
-  if (company.isListed) {
-    return {
-      background: "rgba(49, 130, 246, 0.15)",
-      border: "2px solid #3182F6",
-      color: "#F2F4F6",
-    };
-  }
-  return {
-    background: "rgba(100, 116, 139, 0.15)",
-    border: "1px solid #475569",
-    color: "#94A3B8",
-  };
-}
-
-function getEdgeStyle(pct: number) {
-  if (pct >= 50) {
-    return { strokeWidth: 3, stroke: "#F59E0B" };
-  }
-  if (pct >= 20) {
-    return { strokeWidth: 2, stroke: "#3182F6" };
-  }
-  if (pct >= 5) {
-    return { strokeWidth: 1.5, stroke: "#64748B" };
-  }
-  return { strokeWidth: 1, stroke: "#475569", strokeDasharray: "5,5" };
-}
+// 노드 크기 상수 (CSS와 동기화)
+const NODE_W = 180;
+const NODE_H_LISTED = 82;
+const NODE_H_UNLISTED = 52;
+const NODE_H_CONTROLLER = 90;
 
 export function buildGraphData(
   companies: Company[],
@@ -56,129 +20,84 @@ export function buildGraphData(
 ): { nodes: Node<CompanyNodeData>[]; edges: Edge[] } {
   const companyMap = new Map(companies.map((c) => [c.id, c]));
 
-  // Categorize companies
+  // 카테고리별 분류
   const controller = companies.find((c) => c.isController);
   const holding = companies.filter((c) => c.isHolding && !c.isController);
-  const listed = companies.filter((c) => c.isListed && !c.isController && !c.isHolding);
-  const unlisted = companies.filter((c) => !c.isListed && !c.isController && !c.isHolding);
+  const listed = companies.filter(
+    (c) => c.isListed && !c.isController && !c.isHolding
+  );
+  const unlisted = companies.filter(
+    (c) => !c.isListed && !c.isController && !c.isHolding
+  );
 
-  // Adaptive layout based on total node count
+  // 적응형 스케일링
   const totalNodes = companies.length;
-  const scale = totalNodes > 40 ? 0.85 : totalNodes > 25 ? 0.9 : 1;
-  const hGap = Math.round(250 * scale);
-  const vGap = Math.round(170 * scale);
+  const scale = totalNodes > 50 ? 0.75 : totalNodes > 35 ? 0.85 : totalNodes > 20 ? 0.92 : 1;
+
+  const hGap = Math.round(220 * scale);
+  const vGap = Math.round(160 * scale);
 
   const nodes: Node<CompanyNodeData>[] = [];
   let yOffset = 0;
 
-  // Controller at top center
+  // 그리드 중앙 정렬 헬퍼
+  function layoutRow(
+    items: Company[],
+    perRow: number,
+    startY: number,
+    nodeType: string
+  ) {
+    const rows = Math.ceil(items.length / perRow);
+    for (let i = 0; i < items.length; i++) {
+      const row = Math.floor(i / perRow);
+      const colsInRow = Math.min(perRow, items.length - row * perRow);
+      const col = i % perRow;
+      // 중앙 정렬: 전체 폭 기준으로 해당 row의 아이템을 가운데 배치
+      const totalWidth = (colsInRow - 1) * hGap;
+      const offsetX = -totalWidth / 2 + col * hGap;
+
+      nodes.push({
+        id: items[i].id,
+        type: nodeType,
+        position: { x: offsetX, y: startY + row * vGap },
+        data: { company: items[i], label: items[i].name },
+      });
+    }
+    return startY + rows * vGap;
+  }
+
+  // ── 동일인(총수) ──
   if (controller) {
-    const maxCols = Math.max(listed.length, holding.length, 5);
-    const perRow = Math.min(maxCols, totalNodes > 30 ? 6 : 5);
-    const cx = Math.round((perRow * hGap) / 2);
     nodes.push({
       id: controller.id,
       type: "company",
-      position: { x: cx, y: 0 },
+      position: { x: -NODE_W / 2, y: 0 },
       data: { company: controller, label: controller.name },
-      style: {
-        ...getNodeStyle(controller),
-        borderRadius: "16px",
-        padding: "12px 20px",
-        fontSize: "14px",
-        fontWeight: "700",
-        minWidth: "120px",
-        textAlign: "center" as const,
-      },
     });
-    yOffset = Math.round(150 * scale);
+    yOffset = NODE_H_CONTROLLER + Math.round(60 * scale);
   }
 
-  // Holding companies (tier 1)
+  // ── 지주회사 ──
   if (holding.length > 0) {
     const holdPerRow = Math.min(holding.length, 4);
-    holding.forEach((company, i) => {
-      const row = Math.floor(i / holdPerRow);
-      const col = i % holdPerRow;
-      nodes.push({
-        id: company.id,
-        type: "company",
-        position: {
-          x: col * hGap + 50,
-          y: yOffset + row * vGap,
-        },
-        data: { company, label: company.name },
-        style: {
-          ...getNodeStyle(company),
-          borderRadius: "14px",
-          padding: "10px 18px",
-          fontSize: "13px",
-          fontWeight: "600",
-          minWidth: "110px",
-          textAlign: "center" as const,
-        },
-      });
-    });
-    yOffset += Math.ceil(holding.length / holdPerRow) * vGap + Math.round(60 * scale);
+    yOffset = layoutRow(holding, holdPerRow, yOffset, "company");
+    yOffset += Math.round(40 * scale);
   }
 
-  // Listed companies in a grid
-  const listedPerRow = totalNodes > 30 ? 6 : 5;
-  listed.forEach((company, i) => {
-    const row = Math.floor(i / listedPerRow);
-    const col = i % listedPerRow;
-    nodes.push({
-      id: company.id,
-      type: "company",
-      position: {
-        x: col * hGap + 50,
-        y: yOffset + row * vGap,
-      },
-      data: { company, label: company.name },
-      style: {
-        ...getNodeStyle(company),
-        borderRadius: "12px",
-        padding: "10px 16px",
-        fontSize: "12px",
-        fontWeight: "600",
-        minWidth: "100px",
-        textAlign: "center" as const,
-      },
-    });
-  });
-
+  // ── 상장회사 ──
   if (listed.length > 0) {
-    yOffset += Math.ceil(listed.length / listedPerRow) * vGap + Math.round(60 * scale);
+    const listedPerRow = totalNodes > 35 ? 7 : totalNodes > 20 ? 6 : 5;
+    yOffset = layoutRow(listed, listedPerRow, yOffset, "company");
+    yOffset += Math.round(40 * scale);
   }
 
-  // Unlisted companies
-  const unlistedPerRow = totalNodes > 30 ? 7 : 6;
-  const uGap = Math.round(210 * scale);
-  const uVGap = Math.round(140 * scale);
-  unlisted.forEach((company, i) => {
-    const row = Math.floor(i / unlistedPerRow);
-    const col = i % unlistedPerRow;
-    nodes.push({
-      id: company.id,
-      type: "company",
-      position: {
-        x: col * uGap + 30,
-        y: yOffset + row * uVGap,
-      },
-      data: { company, label: company.name },
-      style: {
-        ...getNodeStyle(company),
-        borderRadius: "10px",
-        padding: "8px 12px",
-        fontSize: "11px",
-        fontWeight: "500",
-        minWidth: "80px",
-        textAlign: "center" as const,
-      },
-    });
-  });
+  // ── 비상장회사 ──
+  if (unlisted.length > 0) {
+    const unlistedPerRow = totalNodes > 35 ? 8 : totalNodes > 20 ? 7 : 6;
+    layoutRow(unlisted, unlistedPerRow, yOffset, "company");
+  }
 
-  // Build edges from relations
+  // ── 엣지 (회사 간 지분관계) ──
   const edges: Edge[] = [];
 
   relations.forEach((rel) => {
@@ -186,51 +105,31 @@ export function buildGraphData(
     const to = companyMap.get(rel.toCompanyId);
     if (!from || !to) return;
 
-    const style = getEdgeStyle(rel.ownershipPct);
     edges.push({
       id: rel.id,
       source: rel.fromCompanyId,
       target: rel.toCompanyId,
-      label: `${rel.ownershipPct}%`,
-      type: "smoothstep",
+      type: "ownership",
       animated: rel.ownershipPct >= 50,
-      style,
-      labelStyle: {
-        fontSize: "10px",
-        fontWeight: "600",
-        fill: "#94A3B8",
+      data: {
+        ownershipPct: rel.ownershipPct,
+        isControllerEdge: false,
       },
-      labelBgStyle: {
-        fill: "#212830",
-        fillOpacity: 0.9,
-      },
-      labelBgPadding: [4, 8] as [number, number],
-      labelBgBorderRadius: 6,
     });
   });
 
-  // Controller holdings edges
+  // ── 동일인 지분 엣지 ──
   if (controller) {
-    controllerHoldings.forEach((holding, i) => {
-      const style = getEdgeStyle(holding.ownershipPct);
+    controllerHoldings.forEach((h, i) => {
       edges.push({
         id: `ctrl-${i}`,
         source: controller.id,
-        target: holding.companyId,
-        label: `${holding.ownershipPct}%`,
-        type: "smoothstep",
-        style,
-        labelStyle: {
-          fontSize: "10px",
-          fontWeight: "600",
-          fill: "#FCD34D",
+        target: h.companyId,
+        type: "ownership",
+        data: {
+          ownershipPct: h.ownershipPct,
+          isControllerEdge: true,
         },
-        labelBgStyle: {
-          fill: "#212830",
-          fillOpacity: 0.9,
-        },
-        labelBgPadding: [4, 8] as [number, number],
-        labelBgBorderRadius: 6,
       });
     });
   }

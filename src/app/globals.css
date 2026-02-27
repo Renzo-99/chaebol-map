@@ -77,7 +77,9 @@ body {
   border-radius: 3px;
 }
 
-/* React Flow overrides */
+/* ==============================
+   React Flow 기본 오버라이드
+   ============================== */
 .react-flow__background {
   background: var(--background) !important;
 }
@@ -103,4 +105,331 @@ body {
 
 .react-flow__controls-button:hover {
   background: var(--muted) !important;
+}
+
+/* ==============================
+   커스텀 노드 스타일
+   ============================== */
+.ownership-node {
+  min-width: 160px;
+  border-radius: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+}
+
+.ownership-node:hover {
+  transform: translateY(-2px);
+  z-index: 10;
+}
+
+/* ─── 동일인(총수) 노드 ─── */
+.node-controller {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border: 2px solid #FCD34D;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25), 0 0 0 1px rgba(252, 211, 77, 0.15);
+  min-width: 140px;
+}
+
+.node-controller:hover {
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35), 0 0 0 1px rgba(252, 211, 77, 0.25);
+}
+
+.node-controller-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 2px;
+}
+
+.node-controller-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.node-controller-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.node-controller-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* ─── 지주회사 노드 ─── */
+.node-holding {
+  background: rgba(34, 197, 94, 0.08);
+  border: 2px solid #22C55E;
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.12);
+}
+
+.node-holding:hover {
+  background: rgba(34, 197, 94, 0.14);
+  box-shadow: 0 6px 24px rgba(34, 197, 94, 0.2);
+}
+
+/* ─── 상장회사 노드 ─── */
+.node-listed {
+  background: rgba(49, 130, 246, 0.06);
+  border: 2px solid rgba(49, 130, 246, 0.5);
+  box-shadow: 0 2px 12px rgba(49, 130, 246, 0.08);
+}
+
+.node-listed:hover {
+  background: rgba(49, 130, 246, 0.12);
+  border-color: #3182F6;
+  box-shadow: 0 6px 24px rgba(49, 130, 246, 0.18);
+}
+
+/* ─── 비상장 노드 ─── */
+.node-unlisted {
+  background: rgba(100, 116, 139, 0.06);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.node-unlisted:hover {
+  background: rgba(100, 116, 139, 0.12);
+  border-color: rgba(100, 116, 139, 0.5);
+}
+
+/* ─── 선택 상태 ─── */
+.node-selected {
+  box-shadow: 0 0 0 2px #3182F6, 0 8px 30px rgba(49, 130, 246, 0.25) !important;
+}
+
+/* ─── 노드 내부 요소 ─── */
+.node-header {
+  padding: 10px 16px 6px;
+}
+
+.node-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.node-star {
+  color: #FBBF24;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.node-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #F2F4F6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-category {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: #8B95A1;
+  font-weight: 500;
+}
+
+.node-stock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px 10px;
+  gap: 8px;
+}
+
+.node-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #F2F4F6;
+  font-variant-numeric: tabular-nums;
+}
+
+.node-change {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.change-up {
+  color: #F04452;
+}
+
+.change-down {
+  color: #3182F6;
+}
+
+.change-flat {
+  color: #8B95A1;
+}
+
+.node-holding-badge {
+  padding: 2px 16px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #22C55E;
+  opacity: 0.8;
+}
+
+/* ─── 핸들 (연결점) ─── */
+.node-handle {
+  width: 6px !important;
+  height: 6px !important;
+  background: #475569 !important;
+  border: 1px solid #64748B !important;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.ownership-node:hover .node-handle {
+  opacity: 1;
+}
+
+/* ==============================
+   커스텀 엣지 레이블
+   ============================== */
+.edge-label {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  line-height: 1.4;
+}
+
+/* ==============================
+   필터 바 & 범례
+   ============================== */
+.graph-filter-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(33, 40, 48, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(44, 53, 66, 0.6);
+  border-radius: 14px;
+}
+
+.graph-filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8B95A1;
+}
+
+.graph-filter-slider {
+  width: 100px;
+  accent-color: #3182F6;
+  cursor: pointer;
+}
+
+.graph-filter-value {
+  font-size: 12px;
+  font-weight: 800;
+  color: #3182F6;
+  min-width: 36px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.graph-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  background: rgba(33, 40, 48, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(44, 53, 66, 0.6);
+  border-radius: 14px;
+}
+
+.graph-legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6B7684;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.graph-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #8B95A1;
+}
+
+.graph-legend-divider {
+  height: 1px;
+  background: rgba(44, 53, 66, 0.8);
+  margin: 2px 0;
+}
+
+/* 범례 점 */
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-controller {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  border: 1px solid #FCD34D;
+}
+
+.legend-listed {
+  background: rgba(49, 130, 246, 0.15);
+  border: 2px solid rgba(49, 130, 246, 0.6);
+}
+
+.legend-holding {
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid #22C55E;
+}
+
+.legend-unlisted {
+  background: rgba(100, 116, 139, 0.1);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+}
+
+/* 범례 선 */
+.legend-line {
+  width: 18px;
+  height: 0;
+  flex-shrink: 0;
+}
+
+.legend-line-major {
+  border-top: 3px solid #F59E0B;
+}
+
+.legend-line-mid {
+  border-top: 2px solid #3B82F6;
+}
+
+.legend-line-minor {
+  border-top: 1px dashed #475569;
 }
