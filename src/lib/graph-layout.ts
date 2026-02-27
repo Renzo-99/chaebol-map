@@ -7,10 +7,10 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// 레이아웃 상수 (실제 렌더링 크기 기준)
-const BASE_NODE_W = 220;
-const BASE_H_GAP = 50;
-const BASE_V_GAP = 140;
+// 레이아웃 상수 — CSS .ftc-node width: 200px + 여유분
+const NODE_W = 210;
+const BASE_H_GAP = 60;
+const BASE_V_GAP = 150;
 
 export function buildGraphData(
   companies: Company[],
@@ -130,20 +130,20 @@ export function buildGraphData(
     }
   });
 
-  // 적응형 스케일링
+  // 적응형 스케일링 — 노드 크기는 고정, 간격만 축소
   const totalNodes = allCompanies.length;
-  const scale =
+  const gapScale =
     totalNodes > 50
-      ? 0.78
+      ? 0.6
       : totalNodes > 35
-      ? 0.85
+      ? 0.75
       : totalNodes > 20
-      ? 0.92
+      ? 0.85
       : 1;
 
-  const nodeW = Math.round(BASE_NODE_W * scale);
-  const hGap = Math.round(BASE_H_GAP * scale);
-  const vGap = Math.round(BASE_V_GAP * scale);
+  const nodeW = NODE_W;
+  const hGap = Math.round(BASE_H_GAP * gapScale);
+  const vGap = Math.round(BASE_V_GAP * gapScale);
 
   // 서브트리 너비 계산 (메모이제이션)
   const subtreeWidths = new Map<string, number>();

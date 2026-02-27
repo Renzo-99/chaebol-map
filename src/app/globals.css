@@ -112,13 +112,15 @@ body {
    노드 공통 (FTC 배치 + Toss 디자인)
    ============================== */
 .ftc-node {
+  width: 200px;
+  box-sizing: border-box;
   background: #212830;
   border: 1px solid #333D4B;
   border-radius: 10px;
   font-family: inherit;
   color: #F2F4F6;
   cursor: pointer;
-  white-space: nowrap;
+  overflow: hidden;
   transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 
@@ -198,6 +200,7 @@ body {
   display: flex;
   align-items: center;
   gap: 3px;
+  overflow: hidden;
 }
 
 .ftc-name {
@@ -206,6 +209,8 @@ body {
   color: #F2F4F6;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .ftc-star {
