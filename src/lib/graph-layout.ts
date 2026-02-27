@@ -8,10 +8,10 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// 레이아웃 상수
+// 레이아웃 상수 — 세로 리스트 형태
 const NODE_W = 200;
-const H_GAP = 40;
-const V_GAP = 120;
+const X_INDENT = 60;  // 깊이별 들여쓰기
+const ROW_GAP = 80;   // 노드 간 세로 간격
 
 export function buildGraphData(
   companies: Company[],
@@ -145,67 +145,34 @@ export function buildGraphData(
 
   // ─── 5. 적응형 스케일링 ───
   const totalNodes = allCompanies.length;
-  const scale =
-    totalNodes > 60 ? 0.6 : totalNodes > 40 ? 0.7 : totalNodes > 25 ? 0.85 : 1;
+  const rowGap = totalNodes > 40 ? 65 : totalNodes > 25 ? 72 : ROW_GAP;
 
-  const hGap = Math.max(20, Math.round(H_GAP * scale));
-  const vGap = Math.round(V_GAP * scale);
-  const cellW = NODE_W + hGap;
-
-  // ─── 6. 서브트리 너비 계산 ───
-  const leafCount = new Map<string, number>();
-
-  function countLeaves(nodeId: string): number {
-    if (leafCount.has(nodeId)) return leafCount.get(nodeId)!;
-    const children = treeChildren.get(nodeId) ?? [];
-    if (children.length === 0) {
-      leafCount.set(nodeId, 1);
-      return 1;
-    }
-    const total = children.reduce((sum, cid) => sum + countLeaves(cid), 0);
-    leafCount.set(nodeId, total);
-    return total;
-  }
-
-  // ─── 7. 위치 결정 ───
+  // ─── 6. 세로 리스트 레이아웃 (DFS 순서) ───
+  // 각 노드를 DFS pre-order로 순회하며 세로로 나열
+  // X 위치 = 트리 깊이 × 들여쓰기, Y 위치 = 순서 × 행 간격
   const positions = new Map<string, { x: number; y: number }>();
+  let rowIndex = 0;
 
-  function positionTree(nodeId: string, leftX: number, level: number) {
-    const children = treeChildren.get(nodeId) ?? [];
-
-    let childLeft = leftX;
-    children.forEach((childId) => {
-      const childLeaves = countLeaves(childId);
-      const childWidth = childLeaves * cellW;
-      positionTree(childId, childLeft, level + 1);
-      childLeft += childWidth;
+  function layoutDFS(nodeId: string, depth: number) {
+    positions.set(nodeId, {
+      x: depth * X_INDENT,
+      y: rowIndex * rowGap,
     });
+    rowIndex++;
 
-    if (children.length > 0) {
-      const firstChild = positions.get(children[0])!;
-      const lastChild = positions.get(children[children.length - 1])!;
-      positions.set(nodeId, {
-        x: (firstChild.x + lastChild.x) / 2,
-        y: level * vGap,
-      });
-    } else {
-      positions.set(nodeId, {
-        x: leftX + cellW / 2 - NODE_W / 2,
-        y: level * vGap,
-      });
-    }
+    const children = treeChildren.get(nodeId) ?? [];
+    children.forEach((childId) => {
+      layoutDFS(childId, depth + 1);
+    });
   }
 
   if (controller) {
-    const rootLeaves = countLeaves(controller.id);
-    const totalWidth = rootLeaves * cellW;
-    positionTree(controller.id, -totalWidth / 2, 0);
+    layoutDFS(controller.id, 0);
   } else {
-    const cols = Math.max(1, Math.ceil(Math.sqrt(totalNodes)));
-    allCompanies.forEach((c, i) => {
-      const row = Math.floor(i / cols);
-      const col = i % cols;
-      positions.set(c.id, { x: col * cellW, y: row * vGap });
+    allCompanies.forEach((c) => {
+      if (!positions.has(c.id)) {
+        layoutDFS(c.id, 0);
+      }
     });
   }
 
