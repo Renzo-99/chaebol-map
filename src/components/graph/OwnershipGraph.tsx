@@ -44,6 +44,18 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
+  // 동일인 주식보유현황 데이터
+  const controllerHoldingsList = useMemo(() => {
+    const companyMap = new Map(data.companies.map((c) => [c.id, c]));
+    return data.controllerHoldings
+      .filter((h) => h.ownershipPct > 0)
+      .map((h) => ({
+        name: companyMap.get(h.companyId)?.name ?? h.companyId,
+        pct: h.ownershipPct,
+      }))
+      .sort((a, b) => b.pct - a.pct);
+  }, [data]);
+
   // 호버 연결 노드/엣지
   const hoverConnected = useMemo(() => {
     if (!hoveredNodeId) return null;
@@ -182,8 +194,9 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         <span className="ftc-toolbar-value">{minPct}%+</span>
       </div>
 
-      {/* 범례 */}
+      {/* FTC 범례 (우측 상단) */}
       <div className="ftc-legend">
+        <div className="ftc-legend-title">범례</div>
         <span className="ftc-legend-item">
           <span className="ftc-legend-oval" />동일인
         </span>
@@ -193,7 +206,38 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         <span className="ftc-legend-item">
           <span className="ftc-legend-shade" />지주사(음영)
         </span>
+        <div className="ftc-legend-sep" />
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-line ftc-legend-line-ctrl" />동일인 지분
+        </span>
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-line ftc-legend-line-tree" />회사간 지분
+        </span>
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-line ftc-legend-line-cross" />교차출자
+        </span>
       </div>
+
+      {/* 동일인 주식보유현황 (FTC 원본 우측 상단 정보) */}
+      {controllerHoldingsList.length > 0 && (
+        <div className="ftc-ctrl-holdings">
+          <div className="ftc-ctrl-holdings-title">
+            동일인 {data.group.controllerName} 주식보유현황
+          </div>
+          <table className="ftc-ctrl-holdings-table">
+            <tbody>
+              {controllerHoldingsList.map((h, i) => (
+                <tr key={i}>
+                  <td className="ftc-ctrl-holdings-name">{h.name}</td>
+                  <td className="ftc-ctrl-holdings-pct">
+                    {h.pct === 100 ? "100" : h.pct.toFixed(1)}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <ReactFlow
         nodes={filteredNodes}

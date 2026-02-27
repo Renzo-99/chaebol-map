@@ -16,6 +16,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
   targetX,
   targetY,
   targetPosition,
+  markerEnd,
   data,
 }: EdgeProps) {
   const pct = (data?.ownershipPct as number) ?? 0;
@@ -23,7 +24,6 @@ export const OwnershipEdge = memo(function OwnershipEdge({
   const isTreeEdge = (data?.isTreeEdge as boolean) ?? true;
   const dimmed = (data?.dimmed as boolean) ?? false;
 
-  // 직각 엣지 (FTC 스타일), 비트리 엣지는 약간 둥글게
   const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -34,34 +34,34 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     borderRadius: isTreeEdge ? 0 : 8,
   });
 
-  // 소유율 기반 스타일
+  // FTC 공정위 스타일 색상
   let strokeColor: string;
   let strokeWidth: number;
   let strokeDasharray: string | undefined;
 
   if (isController) {
-    strokeColor = "#D97706";
-    strokeWidth = 1.8;
-  } else if (pct >= 50) {
-    strokeColor = "#333";
-    strokeWidth = 1.8;
-  } else if (pct >= 20) {
-    strokeColor = "#555";
-    strokeWidth = 1.2;
-  } else if (pct >= 5) {
-    strokeColor = "#777";
-    strokeWidth = 1;
-  } else {
-    strokeColor = "#aaa";
+    // 동일인 → 회사: 녹색 점선 (FTC 원본과 동일)
+    strokeColor = "#16A34A";
+    strokeWidth = 1.5;
+    strokeDasharray = "6 3";
+  } else if (!isTreeEdge) {
+    // 교차출자/비트리: 회색 점선
+    strokeColor = "#9CA3AF";
     strokeWidth = 0.8;
     strokeDasharray = "4 3";
-  }
-
-  // 비트리 엣지는 점선 + 더 연하게 (교차출자/순환출자 등)
-  if (!isTreeEdge && !isController) {
+  } else if (pct >= 50) {
+    strokeColor = "#111";
+    strokeWidth = 1.8;
+  } else if (pct >= 20) {
+    strokeColor = "#333";
+    strokeWidth = 1.3;
+  } else if (pct >= 5) {
+    strokeColor = "#666";
+    strokeWidth = 1;
+  } else {
     strokeColor = "#999";
-    strokeDasharray = strokeDasharray ?? "6 3";
-    strokeWidth = Math.min(strokeWidth, 1);
+    strokeWidth = 0.8;
+    strokeDasharray = "4 3";
   }
 
   return (
@@ -69,6 +69,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
       <BaseEdge
         id={id}
         path={edgePath}
+        markerEnd={markerEnd}
         style={{
           stroke: strokeColor,
           strokeWidth,
@@ -85,6 +86,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
             pointerEvents: "none",
             opacity: dimmed ? 0.08 : 1,
+            color: isController ? "#16A34A" : "#333",
           }}
         >
           {pct === 100 ? "100" : pct.toFixed(1)}

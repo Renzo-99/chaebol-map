@@ -285,21 +285,34 @@ body {
   right: 10px;
   z-index: 10;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 5px 12px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   font-size: 11px;
-  color: #555;
+  color: #333;
+}
+
+.ftc-legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.ftc-legend-sep {
+  height: 1px;
+  background: #ddd;
+  margin: 2px 0;
 }
 
 .ftc-legend-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .ftc-legend-oval {
@@ -323,4 +336,71 @@ body {
   height: 10px;
   border: 1px solid #333;
   background: #d9d9d9;
+}
+
+/* 범례 엣지 스타일 표시 */
+.ftc-legend-line {
+  display: inline-block;
+  width: 20px;
+  height: 0;
+  border-top-width: 2px;
+}
+
+.ftc-legend-line-ctrl {
+  border-top: 2px dashed #16A34A;
+}
+
+.ftc-legend-line-tree {
+  border-top: 2px solid #333;
+}
+
+.ftc-legend-line-cross {
+  border-top: 2px dashed #9CA3AF;
+}
+
+/* ─── 동일인 주식보유현황 (FTC 원본 스타일) ─── */
+.ftc-ctrl-holdings {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  z-index: 10;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  max-width: 220px;
+}
+
+.ftc-ctrl-holdings-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #16A34A;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.ftc-ctrl-holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ftc-ctrl-holdings-name {
+  font-size: 11px;
+  color: #333;
+  padding: 1px 6px 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.ftc-ctrl-holdings-pct {
+  font-size: 11px;
+  font-weight: 700;
+  color: #16A34A;
+  text-align: right;
+  padding: 1px 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }

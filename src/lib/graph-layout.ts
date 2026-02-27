@@ -279,7 +279,7 @@ export function buildGraphData(
       type: "ownership",
       sourceHandle,
       targetHandle,
-      markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8 },
+      markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: isTree ? "#333" : "#9CA3AF" },
       data: {
         ownershipPct: r.ownershipPct,
         isControllerEdge: false,
@@ -300,7 +300,7 @@ export function buildGraphData(
         type: "ownership",
         sourceHandle: "bottom",
         targetHandle: "top",
-        markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8 },
+        markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: "#16A34A" },
         data: {
           ownershipPct: h.ownershipPct,
           isControllerEdge: true,
