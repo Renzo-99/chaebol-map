@@ -37,7 +37,8 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     const { nodes, edges } = buildGraphData(
       data.companies,
       data.relations,
-      data.controllerHoldings
+      data.controllerHoldings,
+      data.group.controllerName
     );
     return { initialNodes: nodes, initialEdges: edges };
   }, [data]);

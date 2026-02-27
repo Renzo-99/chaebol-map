@@ -7,162 +7,215 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// 노드 크기 (FTC 배치 + 토스 디자인)
-const NODE_H_LISTED = 50;
-const NODE_H_UNLISTED = 30;
-const NODE_H_CONTROLLER = 50;
+// 레이아웃 상수
+const BASE_NODE_W = 160;
+const BASE_H_GAP = 40;
+const BASE_V_GAP = 130;
 
 export function buildGraphData(
   companies: Company[],
   relations: OwnershipRelation[],
-  controllerHoldings: ControllerHolding[]
+  controllerHoldings: ControllerHolding[],
+  controllerName?: string
 ): { nodes: Node<CompanyNodeData>[]; edges: Edge[] } {
   if (companies.length === 0) return { nodes: [], edges: [] };
 
   const companyMap = new Map(companies.map((c) => [c.id, c]));
 
-  // 소유 관계 그래프
-  const childrenOf = new Map<string, { id: string; pct: number }[]>();
-  const parentsOf = new Map<string, { id: string; pct: number }[]>();
+  // 동일인 노드 확인 또는 가상 생성
+  let controller = companies.find((c) => c.isController);
+  const allCompanies = [...companies];
+
+  if (!controller && controllerHoldings.length > 0) {
+    controller = {
+      id: "__controller__",
+      groupId: companies[0].groupId,
+      name: controllerName ?? "동일인",
+      isListed: false,
+      isHolding: false,
+      isController: true,
+      category: "동일인",
+    };
+    allCompanies.unshift(controller);
+    companyMap.set(controller.id, controller);
+  }
+
+  // 각 회사에 대한 소유 관계 수집 (누가 이 회사를 얼마나 소유하는지)
+  const incomingOwnership = new Map<string, { fromId: string; pct: number }[]>();
 
   relations.forEach((r) => {
     if (!companyMap.has(r.fromCompanyId) || !companyMap.has(r.toCompanyId)) return;
     if (r.fromCompanyId === r.toCompanyId) return;
-
-    const children = childrenOf.get(r.fromCompanyId) ?? [];
-    children.push({ id: r.toCompanyId, pct: r.ownershipPct });
-    childrenOf.set(r.fromCompanyId, children);
-
-    const parents = parentsOf.get(r.toCompanyId) ?? [];
-    parents.push({ id: r.fromCompanyId, pct: r.ownershipPct });
-    parentsOf.set(r.toCompanyId, parents);
+    const incoming = incomingOwnership.get(r.toCompanyId) ?? [];
+    incoming.push({ fromId: r.fromCompanyId, pct: r.ownershipPct });
+    incomingOwnership.set(r.toCompanyId, incoming);
   });
 
-  const controller = companies.find((c) => c.isController);
+  if (controller) {
+    controllerHoldings.forEach((h) => {
+      if (!companyMap.has(h.companyId)) return;
+      const incoming = incomingOwnership.get(h.companyId) ?? [];
+      incoming.push({ fromId: controller!.id, pct: h.ownershipPct });
+      incomingOwnership.set(h.companyId, incoming);
+    });
+  }
 
-  // BFS 레벨 할당
-  const level = new Map<string, number>();
+  // 각 회사의 주요 모회사 결정 (지분율 가장 높은 소유자)
+  const primaryChildrenMap = new Map<string, string[]>();
+
+  allCompanies.forEach((c) => {
+    if (c.id === controller?.id) return;
+    const incoming = incomingOwnership.get(c.id);
+    if (!incoming || incoming.length === 0) return;
+    const sorted = [...incoming].sort((a, b) => b.pct - a.pct);
+    const bestParent = sorted[0];
+    const children = primaryChildrenMap.get(bestParent.fromId) ?? [];
+    children.push(c.id);
+    primaryChildrenMap.set(bestParent.fromId, children);
+  });
+
+  // 자식을 지분율 내림차순 정렬
+  primaryChildrenMap.forEach((children, parentId) => {
+    children.sort((a, b) => {
+      const aIncoming = incomingOwnership.get(a) ?? [];
+      const bIncoming = incomingOwnership.get(b) ?? [];
+      const aPct = aIncoming.find((e) => e.fromId === parentId)?.pct ?? 0;
+      const bPct = bIncoming.find((e) => e.fromId === parentId)?.pct ?? 0;
+      return bPct - aPct;
+    });
+  });
+
+  // BFS로 트리 구축 (순환 방지)
+  const treeChildren = new Map<string, string[]>();
   const visited = new Set<string>();
   const queue: string[] = [];
 
   if (controller) {
-    level.set(controller.id, 0);
     visited.add(controller.id);
-
-    const ctrlHoldSorted = [...controllerHoldings].sort(
-      (a, b) => b.ownershipPct - a.ownershipPct
-    );
-    ctrlHoldSorted.forEach((h) => {
-      if (companyMap.has(h.companyId) && !visited.has(h.companyId)) {
-        level.set(h.companyId, 1);
-        visited.add(h.companyId);
-        queue.push(h.companyId);
-      }
-    });
+    queue.push(controller.id);
+    treeChildren.set(controller.id, []);
   }
 
   while (queue.length > 0) {
-    const current = queue.shift()!;
-    const currentLevel = level.get(current)!;
-    const children = childrenOf.get(current) ?? [];
-    children.sort((a, b) => b.pct - a.pct);
-    children.forEach((child) => {
-      if (!visited.has(child.id)) {
-        level.set(child.id, currentLevel + 1);
-        visited.add(child.id);
-        queue.push(child.id);
+    const parentId = queue.shift()!;
+    const candidates = primaryChildrenMap.get(parentId) ?? [];
+    const validChildren: string[] = [];
+    candidates.forEach((childId) => {
+      if (!visited.has(childId)) {
+        visited.add(childId);
+        validChildren.push(childId);
+        treeChildren.set(childId, []);
+        queue.push(childId);
       }
     });
+    treeChildren.set(parentId, validChildren);
   }
 
-  companies.forEach((c) => {
-    if (!visited.has(c.id)) {
-      const parents = parentsOf.get(c.id);
-      if (parents && parents.length > 0) {
-        const bestParent = parents.sort((a, b) => b.pct - a.pct)[0];
-        const parentLevel = level.get(bestParent.id);
-        if (parentLevel !== undefined) {
-          level.set(c.id, parentLevel + 1);
-        } else {
-          level.set(c.id, c.isHolding ? 1 : c.isListed ? 2 : 3);
-        }
-      } else {
-        level.set(c.id, c.isHolding ? 1 : c.isListed ? 2 : 3);
-      }
-      visited.add(c.id);
+  // 고아 노드 처리 (트리에 아직 없는 회사)
+  allCompanies.forEach((c) => {
+    if (visited.has(c.id)) return;
+    visited.add(c.id);
+    treeChildren.set(c.id, []);
+
+    // 트리에 이미 있는 최적 부모 찾기
+    const incoming = incomingOwnership.get(c.id) ?? [];
+    const validParent = [...incoming]
+      .filter((e) => treeChildren.has(e.fromId))
+      .sort((a, b) => b.pct - a.pct)[0];
+
+    if (validParent) {
+      treeChildren.get(validParent.fromId)!.push(c.id);
+    } else if (controller) {
+      treeChildren.get(controller.id)!.push(c.id);
     }
-  });
-
-  // 레벨별 분류
-  const levelGroups = new Map<number, Company[]>();
-  companies.forEach((c) => {
-    const lv = level.get(c.id) ?? 3;
-    const group = levelGroups.get(lv) ?? [];
-    group.push(c);
-    levelGroups.set(lv, group);
-  });
-
-  levelGroups.forEach((group) => {
-    group.sort((a, b) => {
-      if (a.isHolding && !b.isHolding) return -1;
-      if (!a.isHolding && b.isHolding) return 1;
-      if (a.isListed && !b.isListed) return -1;
-      if (!a.isListed && b.isListed) return 1;
-      if (a.isListed && b.isListed) return (b.marketCap ?? 0) - (a.marketCap ?? 0);
-      return 0;
-    });
   });
 
   // 적응형 스케일링
-  const totalNodes = companies.length;
+  const totalNodes = allCompanies.length;
   const scale =
-    totalNodes > 50 ? 0.65 : totalNodes > 35 ? 0.75 : totalNodes > 20 ? 0.85 : 1;
+    totalNodes > 50
+      ? 0.65
+      : totalNodes > 35
+      ? 0.75
+      : totalNodes > 20
+      ? 0.85
+      : 1;
 
-  const hGap = Math.round(175 * scale);
-  const vGap = Math.round(110 * scale);
+  const nodeW = Math.round(BASE_NODE_W * scale);
+  const hGap = Math.round(BASE_H_GAP * scale);
+  const vGap = Math.round(BASE_V_GAP * scale);
 
-  // 노드 배치
-  const nodes: Node<CompanyNodeData>[] = [];
-  const sortedLevels = [...levelGroups.keys()].sort((a, b) => a - b);
+  // 서브트리 너비 계산 (메모이제이션)
+  const subtreeWidths = new Map<string, number>();
 
-  sortedLevels.forEach((lv) => {
-    const group = levelGroups.get(lv)!;
-    const perRow =
-      lv === 0
-        ? 1
-        : Math.min(
-            group.length,
-            totalNodes > 50 ? 12 : totalNodes > 35 ? 10 : totalNodes > 20 ? 8 : 6
-          );
-
-    for (let i = 0; i < group.length; i++) {
-      const row = Math.floor(i / perRow);
-      const col = i % perRow;
-      const colsInRow = Math.min(perRow, group.length - row * perRow);
-      const totalWidth = (colsInRow - 1) * hGap;
-      const x = -totalWidth / 2 + col * hGap;
-
-      const nodeH = group[i].isController
-        ? NODE_H_CONTROLLER
-        : group[i].isListed
-        ? NODE_H_LISTED
-        : NODE_H_UNLISTED;
-
-      const baseY = lv * vGap * 1.2;
-      const y = baseY + row * (nodeH + 30 * scale);
-
-      nodes.push({
-        id: group[i].id,
-        type: "company",
-        position: { x, y },
-        data: { company: group[i], label: group[i].name },
-      });
+  function calcWidth(nodeId: string): number {
+    if (subtreeWidths.has(nodeId)) return subtreeWidths.get(nodeId)!;
+    const children = treeChildren.get(nodeId) ?? [];
+    let width: number;
+    if (children.length === 0) {
+      width = nodeW;
+    } else {
+      const childrenTotal = children.reduce(
+        (sum, cid) => sum + calcWidth(cid),
+        0
+      );
+      width = childrenTotal + (children.length - 1) * hGap;
     }
+    subtreeWidths.set(nodeId, width);
+    return width;
+  }
+
+  // 노드 위치 결정 (트리 레이아웃)
+  const positions = new Map<string, { x: number; y: number }>();
+
+  function positionTree(nodeId: string, leftX: number, level: number) {
+    const width = calcWidth(nodeId);
+    positions.set(nodeId, {
+      x: leftX + width / 2 - nodeW / 2,
+      y: level * vGap,
+    });
+
+    const children = treeChildren.get(nodeId) ?? [];
+    let childLeft = leftX;
+    children.forEach((childId) => {
+      const childWidth = calcWidth(childId);
+      positionTree(childId, childLeft, level + 1);
+      childLeft += childWidth + hGap;
+    });
+  }
+
+  if (controller) {
+    const rootWidth = calcWidth(controller.id);
+    positionTree(controller.id, -rootWidth / 2, 0);
+  } else {
+    // 동일인 노드가 없는 경우 그리드 배치
+    const cols = Math.max(1, Math.ceil(Math.sqrt(totalNodes)));
+    allCompanies.forEach((c, i) => {
+      const row = Math.floor(i / cols);
+      const col = i % cols;
+      positions.set(c.id, {
+        x: col * (nodeW + hGap),
+        y: row * vGap,
+      });
+    });
+  }
+
+  // React Flow 노드 생성
+  const nodes: Node<CompanyNodeData>[] = [];
+  positions.forEach((pos, id) => {
+    const company = companyMap.get(id);
+    if (!company) return;
+    nodes.push({
+      id,
+      type: "company",
+      position: { x: pos.x, y: pos.y },
+      data: { company, label: company.name },
+    });
   });
 
-  // 엣지
+  // 엣지 생성
   const edges: Edge[] = [];
-  const nodeIdSet = new Set(companies.map((c) => c.id));
+  const nodeIdSet = new Set(allCompanies.map((c) => c.id));
 
   const marker = {
     type: MarkerType.ArrowClosed,
@@ -172,7 +225,8 @@ export function buildGraphData(
   };
 
   relations.forEach((rel) => {
-    if (!nodeIdSet.has(rel.fromCompanyId) || !nodeIdSet.has(rel.toCompanyId)) return;
+    if (!nodeIdSet.has(rel.fromCompanyId) || !nodeIdSet.has(rel.toCompanyId))
+      return;
     if (rel.fromCompanyId === rel.toCompanyId) return;
 
     edges.push({
@@ -193,7 +247,7 @@ export function buildGraphData(
       if (!nodeIdSet.has(h.companyId)) return;
       edges.push({
         id: `ctrl-${i}`,
-        source: controller.id,
+        source: controller!.id,
         target: h.companyId,
         type: "ownership",
         data: {
