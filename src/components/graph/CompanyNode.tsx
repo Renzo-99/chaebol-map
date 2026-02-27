@@ -15,15 +15,20 @@ export const CompanyNode = memo(function CompanyNode({
   const isListed = company.isListed;
   const isHolding = company.isHolding;
 
-  const dimStyle = dimmed ? { opacity: 0.15, transition: "opacity 0.2s" } : { transition: "opacity 0.2s" };
+  const dimStyle = dimmed
+    ? { opacity: 0.15, transition: "opacity 0.2s" }
+    : { transition: "opacity 0.2s" };
 
   // 동일인(총수) 노드
   if (isController) {
     return (
-      <div className={`ftc-node ftc-ctrl ${selected ? "ftc-sel" : ""}`} style={dimStyle}>
+      <div
+        className={`ftc-node ftc-ctrl ${selected ? "ftc-sel" : ""}`}
+        style={dimStyle}
+      >
         <Handle type="target" position={Position.Top} className="ftc-handle" />
         <span className="ftc-ctrl-sub">동일인</span>
-        <span className="ftc-ctrl-name">({company.name})</span>
+        <span className="ftc-ctrl-name">{company.name}</span>
         <Handle type="source" position={Position.Bottom} className="ftc-handle" />
       </div>
     );
@@ -36,11 +41,21 @@ export const CompanyNode = memo(function CompanyNode({
     ? "ftc-listed"
     : "ftc-unlisted";
 
+  // 상장/비상장 뱃지
+  const badge = isListed ? "상장" : "비상장";
+  const badgeClass = isListed ? "ftc-badge-listed" : "ftc-badge-unlisted";
+
   return (
-    <div className={`ftc-node ${typeClass} ${selected ? "ftc-sel" : ""}`} style={dimStyle}>
+    <div
+      className={`ftc-node ${typeClass} ${selected ? "ftc-sel" : ""}`}
+      style={dimStyle}
+    >
       <Handle type="target" position={Position.Top} className="ftc-handle" />
+      <div className="ftc-node-header">
+        <span className={`ftc-badge ${badgeClass}`}>{badge}</span>
+        {isHolding && <span className="ftc-badge ftc-badge-holding">지주</span>}
+      </div>
       <div className="ftc-name-row">
-        {isListed && <span className="ftc-star">★</span>}
         <span className="ftc-name">{company.name}</span>
       </div>
       {isListed && company.stockPrice != null && (
@@ -61,9 +76,6 @@ export const CompanyNode = memo(function CompanyNode({
             {(company.priceChangePercent ?? 0).toFixed(1)}%
           </span>
         </div>
-      )}
-      {isHolding && !isListed && (
-        <div className="ftc-holding-badge">지주</div>
       )}
       <Handle type="source" position={Position.Bottom} className="ftc-handle" />
     </div>

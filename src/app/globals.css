@@ -194,9 +194,43 @@ body {
   box-shadow: 0 0 0 2px #3182F6, 0 4px 16px rgba(49, 130, 246, 0.25) !important;
 }
 
+/* ─── 노드 헤더 (뱃지 영역) ─── */
+.ftc-node-header {
+  padding: 4px 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ftc-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.ftc-badge-listed {
+  background: rgba(49, 130, 246, 0.15);
+  color: #60A5FA;
+  border: 1px solid rgba(49, 130, 246, 0.3);
+}
+
+.ftc-badge-unlisted {
+  background: rgba(100, 116, 139, 0.1);
+  color: #8B95A1;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.ftc-badge-holding {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ADE80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
 /* ─── 노드 내부 요소 ─── */
 .ftc-name-row {
-  padding: 6px 10px 2px;
+  padding: 2px 8px 2px;
   display: flex;
   align-items: center;
   gap: 3px;
@@ -213,21 +247,15 @@ body {
   min-width: 0;
 }
 
-.ftc-star {
-  color: #FBBF24;
-  font-size: 11px;
-  flex-shrink: 0;
-}
-
 .ftc-price-row {
-  padding: 0 10px 6px;
+  padding: 0 8px 5px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .ftc-price {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: #8B95A1;
   font-variant-numeric: tabular-nums;
@@ -245,20 +273,6 @@ body {
 
 .ftc-down {
   color: #3182F6;
-}
-
-.ftc-label {
-  padding: 6px 10px;
-  font-weight: 700;
-  color: #F2F4F6;
-  font-size: 12px;
-}
-
-.ftc-holding-badge {
-  padding: 0 10px 6px;
-  font-size: 10px;
-  font-weight: 700;
-  color: #4ADE80;
 }
 
 /* ─── 핸들 ─── */

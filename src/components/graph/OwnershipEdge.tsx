@@ -5,6 +5,7 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
   getStraightPath,
+  getSmoothStepPath,
   type EdgeProps,
 } from "@xyflow/react";
 
@@ -19,8 +20,8 @@ export const OwnershipEdge = memo(function OwnershipEdge({
 }: EdgeProps) {
   const pct = (data?.ownershipPct as number) ?? 0;
   const isController = (data?.isControllerEdge as boolean) ?? false;
+  const isTreeEdge = (data?.isTreeEdge as boolean) ?? true;
   const dimmed = (data?.dimmed as boolean) ?? false;
-  const highlighted = (data?.highlighted as boolean) ?? false;
 
   // 지분율에 따른 스타일
   let strokeColor: string;
@@ -45,19 +46,20 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     dashArray = "4,4";
   }
 
-  const [edgePath, labelX, labelY] = getStraightPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-  });
+  // 트리 엣지: 직선, 교차 엣지: smoothstep
+  const [edgePath] = isTreeEdge
+    ? getStraightPath({ sourceX, sourceY, targetX, targetY })
+    : getSmoothStepPath({
+        sourceX,
+        sourceY,
+        targetX,
+        targetY,
+        borderRadius: 16,
+      });
 
-  // 라벨을 타겟 노드 가까이 배치 (75% 지점)
-  const lx = sourceX + (targetX - sourceX) * 0.75;
-  const ly = sourceY + (targetY - sourceY) * 0.75;
-
-  // 기본: 20%+ 또는 동일인만 표시, 호버 시: 전부 표시
-  const showLabel = highlighted || pct >= 20 || isController;
+  // 라벨 위치: 엣지 중간 지점
+  const lx = sourceX + (targetX - sourceX) * 0.5;
+  const ly = sourceY + (targetY - sourceY) * 0.5;
 
   // 레이블 색상
   const labelColor = isController
@@ -98,25 +100,23 @@ export const OwnershipEdge = memo(function OwnershipEdge({
           transition: "opacity 0.2s",
         }}
       />
-      {showLabel && (
-        <EdgeLabelRenderer>
-          <div
-            className="ftc-edge-label"
-            style={{
-              position: "absolute",
-              transform: `translate(-50%, -50%) translate(${lx}px,${ly}px)`,
-              pointerEvents: "none",
-              color: labelColor,
-              background: labelBg,
-              borderColor: labelBorder,
-              opacity: dimmed ? 0.06 : 1,
-              transition: "opacity 0.2s",
-            }}
-          >
-            {pct === 100 ? "100" : pct.toFixed(1)}%
-          </div>
-        </EdgeLabelRenderer>
-      )}
+      <EdgeLabelRenderer>
+        <div
+          className="ftc-edge-label"
+          style={{
+            position: "absolute",
+            transform: `translate(-50%, -50%) translate(${lx}px,${ly}px)`,
+            pointerEvents: "none",
+            color: labelColor,
+            background: labelBg,
+            borderColor: labelBorder,
+            opacity: dimmed ? 0.06 : 1,
+            transition: "opacity 0.2s",
+          }}
+        >
+          {pct === 100 ? "100" : pct.toFixed(1)}%
+        </div>
+      </EdgeLabelRenderer>
     </>
   );
 });

@@ -335,13 +335,6 @@
       "ownershipPct": 31.79
     },
     {
-      "id": "r-sk-17",
-      "groupId": "sk",
-      "fromCompanyId": "sk-innovation",
-      "toCompanyId": "sk-biopharmaceuticals",
-      "ownershipPct": 0
-    },
-    {
       "id": "r-sk-18",
       "groupId": "sk",
       "fromCompanyId": "skc",
@@ -354,13 +347,6 @@
       "fromCompanyId": "sk-gas",
       "toCompanyId": "sk-discovery",
       "ownershipPct": 9.19
-    },
-    {
-      "id": "r-sk-20",
-      "groupId": "sk",
-      "fromCompanyId": "sk-telecom",
-      "toCompanyId": "sk-planet",
-      "ownershipPct": 0
     },
     {
       "id": "r-sk-21",

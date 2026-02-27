@@ -74,7 +74,6 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   const filteredNodes = useMemo(() => {
     let result = nodes;
 
-    // 지분율 필터 기반 노드
     if (minPct > 0) {
       const pctNodeIds = new Set<string>();
       pctFilteredEdges.forEach((e) => {
@@ -84,21 +83,23 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
       result = result.filter((n) => pctNodeIds.has(n.id));
     }
 
-    // 노드 타입 필터
     if (nodeFilter !== "all") {
       result = result.filter((n) => {
         const company = (n.data as CompanyNodeData).company;
-        if (company.isController) return true; // 동일인은 항상 표시
+        if (company.isController) return true;
         switch (nodeFilter) {
-          case "listed": return company.isListed;
-          case "holding": return company.isHolding;
-          case "unlisted": return !company.isListed && !company.isHolding;
-          default: return true;
+          case "listed":
+            return company.isListed;
+          case "holding":
+            return company.isHolding;
+          case "unlisted":
+            return !company.isListed && !company.isHolding;
+          default:
+            return true;
         }
       });
     }
 
-    // 호버 하이라이트 (dimmed 플래그)
     if (hoverConnected) {
       result = result.map((n) => ({
         ...n,
@@ -109,14 +110,13 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     return result;
   }, [nodes, minPct, pctFilteredEdges, nodeFilter, hoverConnected]);
 
-  // 엣지 필터링 (노드 기반 + 호버 하이라이트)
+  // 엣지 필터링
   const finalEdges = useMemo(() => {
     const nodeIdSet = new Set(filteredNodes.map((n) => n.id));
     let result = pctFilteredEdges.filter(
       (e) => nodeIdSet.has(e.source) && nodeIdSet.has(e.target)
     );
 
-    // 호버 하이라이트 + 연결된 엣지 라벨 표시
     if (hoverConnected) {
       result = result.map((e) => {
         const isConnected = hoverConnected.edgeIds.has(e.id);
@@ -137,12 +137,9 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     []
   );
 
-  const onNodeMouseEnter = useCallback(
-    (_: React.MouseEvent, node: Node) => {
-      setHoveredNodeId(node.id);
-    },
-    []
-  );
+  const onNodeMouseEnter = useCallback((_: React.MouseEvent, node: Node) => {
+    setHoveredNodeId(node.id);
+  }, []);
 
   const onNodeMouseLeave = useCallback(() => {
     setHoveredNodeId(null);
@@ -154,7 +151,7 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
 
   const filterButtons: { key: NodeFilter; label: string }[] = [
     { key: "all", label: "전체" },
-    { key: "listed", label: "★ 상장사" },
+    { key: "listed", label: "상장사" },
     { key: "holding", label: "지주사" },
     { key: "unlisted", label: "비상장" },
   ];
@@ -195,64 +192,36 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
       <div className="ftc-legend">
         <div className="ftc-legend-title">범례</div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-dot"
-            style={{
-              background: "linear-gradient(135deg, #F59E0B, #D97706)",
-              border: "1px solid #FCD34D",
-            }}
-          />
+          <div className="ftc-legend-dot" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)", border: "1px solid #FCD34D" }} />
           <span>동일인(총수)</span>
         </div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-dot"
-            style={{
-              background: "#212830",
-              borderLeft: "3px solid #3182F6",
-              borderRadius: "2px",
-            }}
-          />
-          <span>★ 상장회사</span>
+          <div className="ftc-legend-dot" style={{ background: "#212830", borderLeft: "3px solid #3182F6", borderRadius: "2px" }} />
+          <span>상장회사</span>
         </div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-dot"
-            style={{
-              background: "#1C2E24",
-              borderLeft: "3px solid #22C55E",
-              borderRadius: "2px",
-            }}
-          />
+          <div className="ftc-legend-dot" style={{ background: "#1C2E24", borderLeft: "3px solid #22C55E", borderRadius: "2px" }} />
           <span>지주회사</span>
         </div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-dot"
-            style={{ background: "#212830", border: "1px solid #2C3542" }}
-          />
+          <div className="ftc-legend-dot" style={{ background: "#212830", border: "1px solid #2C3542" }} />
           <span>비상장</span>
         </div>
         <div className="ftc-legend-divider" />
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-line"
-            style={{ borderTop: "2.5px solid #F59E0B" }}
-          />
+          <div className="ftc-legend-line" style={{ borderTop: "2.5px solid #F59E0B" }} />
           <span>50%+ 지분</span>
         </div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-line"
-            style={{ borderTop: "1.5px solid #3182F6" }}
-          />
+          <div className="ftc-legend-line" style={{ borderTop: "1.5px solid #3182F6" }} />
           <span>20%+ 지분</span>
         </div>
         <div className="ftc-legend-item">
-          <div
-            className="ftc-legend-line"
-            style={{ borderTop: "1px dashed #4B5563" }}
-          />
+          <div className="ftc-legend-line" style={{ borderTop: "1px solid #64748B" }} />
+          <span>5%+ 지분</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div className="ftc-legend-line" style={{ borderTop: "1px dashed #4B5563" }} />
           <span>&lt;5% 지분</span>
         </div>
       </div>
@@ -269,7 +238,7 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         onNodeMouseLeave={onNodeMouseLeave}
         onPaneClick={onPaneClick}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{ padding: 0.15 }}
         minZoom={0.02}
         maxZoom={3}
         proOptions={{ hideAttribution: true }}
@@ -289,15 +258,9 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
           maskColor="rgba(25, 31, 40, 0.7)"
           style={{ background: "#212830" }}
         />
-        <Background
-          variant={BackgroundVariant.Dots}
-          gap={24}
-          size={1}
-          color="#2C3542"
-        />
+        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#2C3542" />
       </ReactFlow>
 
-      {/* 회사 상세 패널 */}
       {selectedCompany && (
         <CompanyDetailPanel
           company={selectedCompany}
