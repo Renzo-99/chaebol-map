@@ -5,11 +5,9 @@ import {
   ReactFlow,
   Controls,
   MiniMap,
-  Background,
   useNodesState,
   useEdgesState,
   type Node,
-  BackgroundVariant,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import type { GroupData, Company } from "@/types";
@@ -46,7 +44,7 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
-  // 호버된 노드와 연결된 노드/엣지 ID
+  // 호버 연결 노드/엣지
   const hoverConnected = useMemo(() => {
     if (!hoveredNodeId) return null;
     const connectedNodeIds = new Set<string>([hoveredNodeId]);
@@ -118,13 +116,13 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     );
 
     if (hoverConnected) {
-      result = result.map((e) => {
-        const isConnected = hoverConnected.edgeIds.has(e.id);
-        return {
-          ...e,
-          data: { ...e.data, dimmed: !isConnected, highlighted: isConnected },
-        };
-      });
+      result = result.map((e) => ({
+        ...e,
+        data: {
+          ...e.data,
+          dimmed: !hoverConnected.edgeIds.has(e.id),
+        },
+      }));
     }
 
     return result;
@@ -157,73 +155,44 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   ];
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full" style={{ background: "#fff" }}>
       {/* 필터 바 */}
-      <div className="ftc-filter-bar">
-        <div className="flex items-center gap-1 mr-2">
+      <div className="ftc-toolbar">
+        <div className="ftc-toolbar-group">
           {filterButtons.map((btn) => (
             <button
               key={btn.key}
               onClick={() => setNodeFilter(btn.key)}
-              className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all ${
-                nodeFilter === btn.key
-                  ? "bg-primary/20 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              }`}
+              className={`ftc-toolbar-btn ${nodeFilter === btn.key ? "ftc-toolbar-btn-active" : ""}`}
             >
               {btn.label}
             </button>
           ))}
         </div>
-        <div className="w-px h-5 bg-border/50 mx-1" />
-        <span className="ftc-filter-label">지분율</span>
+        <span className="ftc-toolbar-sep" />
+        <span className="ftc-toolbar-label">지분율</span>
         <input
           type="range"
           min={0}
           max={50}
           value={minPct}
           onChange={(e) => setMinPct(Number(e.target.value))}
-          className="ftc-filter-slider"
+          className="ftc-toolbar-slider"
         />
-        <span className="ftc-filter-value">{minPct}%+</span>
+        <span className="ftc-toolbar-value">{minPct}%+</span>
       </div>
 
       {/* 범례 */}
       <div className="ftc-legend">
-        <div className="ftc-legend-title">범례</div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-dot" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)", border: "1px solid #FCD34D" }} />
-          <span>동일인(총수)</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-dot" style={{ background: "#212830", borderLeft: "3px solid #3182F6", borderRadius: "2px" }} />
-          <span>상장회사</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-dot" style={{ background: "#1C2E24", borderLeft: "3px solid #22C55E", borderRadius: "2px" }} />
-          <span>지주회사</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-dot" style={{ background: "#212830", border: "1px solid #2C3542" }} />
-          <span>비상장</span>
-        </div>
-        <div className="ftc-legend-divider" />
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-line" style={{ borderTop: "2.5px solid #F59E0B" }} />
-          <span>50%+ 지분</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-line" style={{ borderTop: "1.5px solid #3182F6" }} />
-          <span>20%+ 지분</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-line" style={{ borderTop: "1px solid #64748B" }} />
-          <span>5%+ 지분</span>
-        </div>
-        <div className="ftc-legend-item">
-          <div className="ftc-legend-line" style={{ borderTop: "1px dashed #4B5563" }} />
-          <span>&lt;5% 지분</span>
-        </div>
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-oval" />동일인
+        </span>
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-star">★</span>상장사
+        </span>
+        <span className="ftc-legend-item">
+          <span className="ftc-legend-shade" />지주사(음영)
+        </span>
       </div>
 
       <ReactFlow
@@ -238,7 +207,7 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         onNodeMouseLeave={onNodeMouseLeave}
         onPaneClick={onPaneClick}
         fitView
-        fitViewOptions={{ padding: 0.15 }}
+        fitViewOptions={{ padding: 0.12 }}
         minZoom={0.02}
         maxZoom={3}
         proOptions={{ hideAttribution: true }}
@@ -249,16 +218,14 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
           position="bottom-right"
           nodeColor={(node) => {
             const company = (node.data as CompanyNodeData)?.company;
-            if (!company) return "#475569";
-            if (company.isController) return "#F59E0B";
-            if (company.isHolding) return "#22C55E";
-            if (company.isListed) return "#3182F6";
-            return "#475569";
+            if (!company) return "#bbb";
+            if (company.isController) return "#D97706";
+            if (company.isHolding) return "#999";
+            return "#333";
           }}
-          maskColor="rgba(25, 31, 40, 0.7)"
-          style={{ background: "#212830" }}
+          maskColor="rgba(0, 0, 0, 0.08)"
+          style={{ background: "#f9f9f9", border: "1px solid #ddd" }}
         />
-        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#2C3542" />
       </ReactFlow>
 
       {selectedCompany && (

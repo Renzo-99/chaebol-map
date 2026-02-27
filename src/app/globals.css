@@ -78,320 +78,249 @@ body {
 }
 
 /* ==============================
-   React Flow — Toss Dark Theme
+   React Flow — FTC 소유지분도 라이트 테마
    ============================== */
 .react-flow__background {
-  background: var(--background) !important;
+  background: #fff !important;
 }
 
 .react-flow__minimap {
-  border-radius: 10px !important;
+  border-radius: 4px !important;
   overflow: hidden;
-  border: 1px solid var(--border) !important;
+  border: 1px solid #ddd !important;
 }
 
 .react-flow__controls {
-  border-radius: 10px !important;
+  border-radius: 4px !important;
   overflow: hidden;
-  border: 1px solid var(--border) !important;
-  background: var(--card) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border: 1px solid #ccc !important;
+  background: #fff !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 .react-flow__controls-button {
-  background: var(--card) !important;
-  border-bottom: 1px solid var(--border) !important;
-  fill: var(--foreground) !important;
+  background: #fff !important;
+  border-bottom: 1px solid #eee !important;
+  fill: #333 !important;
 }
 
 .react-flow__controls-button:hover {
-  background: var(--muted) !important;
+  background: #f5f5f5 !important;
 }
 
 /* ==============================
-   노드 공통 (FTC 배치 + Toss 디자인)
+   FTC 소유지분도 — 동일인(총수) 노드
    ============================== */
-.ftc-node {
-  width: 200px;
-  box-sizing: border-box;
-  background: #212830;
-  border: 1px solid #333D4B;
-  border-radius: 10px;
-  font-family: inherit;
-  color: #F2F4F6;
-  cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-}
-
-.ftc-node:hover {
-  transform: translateY(-1px);
-}
-
-/* ─── 상장회사 ─── */
-.ftc-listed {
-  border-left: 3px solid #3182F6;
-}
-
-.ftc-listed:hover {
-  border-color: #60A5FA;
-  box-shadow: 0 4px 16px rgba(49, 130, 246, 0.2);
-}
-
-/* ─── 지주회사 ─── */
-.ftc-holding {
-  background: #1C2E24;
-  border-left: 3px solid #22C55E;
-}
-
-.ftc-holding:hover {
-  border-color: #4ADE80;
-  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2);
-}
-
-/* ─── 비상장 ─── */
-.ftc-unlisted {
-  border-color: #2C3542;
-}
-
-.ftc-unlisted:hover {
-  border-color: #4B5563;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-}
-
-/* ─── 동일인(총수) ─── */
 .ftc-ctrl {
-  background: linear-gradient(145deg, #F59E0B, #D97706);
-  border: 1.5px solid #FCD34D;
-  border-radius: 12px;
+  width: 130px;
+  box-sizing: border-box;
   text-align: center;
-  padding: 8px 18px;
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+  padding: 6px 10px;
+  border: 2px solid #333;
+  border-radius: 50px;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .ftc-ctrl:hover {
-  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
-  transform: translateY(-2px);
+  background: #f9f9f9;
 }
 
 .ftc-ctrl-sub {
   display: block;
   font-size: 10px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.04em;
+  color: #666;
+  line-height: 1.2;
 }
 
 .ftc-ctrl-name {
   display: block;
-  font-size: 14px;
-  font-weight: 800;
-  color: #000;
-}
-
-/* ─── 선택 상태 ─── */
-.ftc-sel {
-  box-shadow: 0 0 0 2px #3182F6, 0 4px 16px rgba(49, 130, 246, 0.25) !important;
-}
-
-/* ─── 노드 헤더 (뱃지 영역) ─── */
-.ftc-node-header {
-  padding: 4px 8px 0;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.ftc-badge {
-  font-size: 9px;
-  font-weight: 700;
-  padding: 1px 5px;
-  border-radius: 4px;
-  letter-spacing: 0.02em;
-}
-
-.ftc-badge-listed {
-  background: rgba(49, 130, 246, 0.15);
-  color: #60A5FA;
-  border: 1px solid rgba(49, 130, 246, 0.3);
-}
-
-.ftc-badge-unlisted {
-  background: rgba(100, 116, 139, 0.1);
-  color: #8B95A1;
-  border: 1px solid rgba(100, 116, 139, 0.2);
-}
-
-.ftc-badge-holding {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ADE80;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-}
-
-/* ─── 노드 내부 요소 ─── */
-.ftc-name-row {
-  padding: 2px 8px 2px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  overflow: hidden;
-}
-
-.ftc-name {
-  font-weight: 700;
   font-size: 12px;
-  color: #F2F4F6;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.ftc-price-row {
-  padding: 0 8px 5px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ftc-price {
-  font-size: 10px;
-  font-weight: 600;
-  color: #8B95A1;
-  font-variant-numeric: tabular-nums;
-}
-
-.ftc-change {
-  font-size: 10px;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.ftc-up {
-  color: #F04452;
-}
-
-.ftc-down {
-  color: #3182F6;
-}
-
-/* ─── 핸들 ─── */
-.ftc-handle {
-  width: 5px !important;
-  height: 5px !important;
-  background: #4B5563 !important;
-  border: none !important;
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-.ftc-node:hover .ftc-handle {
-  opacity: 0.6;
-}
-
-/* ==============================
-   엣지 레이블
-   ============================== */
-.ftc-edge-label {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 5px;
-  border: 1px solid;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-  pointer-events: none;
+  color: #000;
   line-height: 1.3;
 }
 
 /* ==============================
-   필터 & 범례
+   FTC 소유지분도 — 회사 노드
    ============================== */
-.ftc-filter-bar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  background: rgba(33, 40, 48, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(44, 53, 66, 0.6);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.ftc-filter-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #8B95A1;
-}
-
-.ftc-filter-slider {
-  width: 90px;
-  accent-color: #3182F6;
+.ftc-box {
+  width: 130px;
+  box-sizing: border-box;
+  padding: 5px 6px;
+  border: 1px solid #333;
+  background: #fff;
+  font-family: inherit;
+  text-align: center;
   cursor: pointer;
 }
 
-.ftc-filter-value {
-  font-size: 12px;
-  font-weight: 800;
-  color: #3182F6;
-  min-width: 36px;
+.ftc-box:hover {
+  background: #f0f0f0;
+}
+
+/* 지주회사 음영 */
+.ftc-shaded {
+  background: #d9d9d9;
+}
+
+.ftc-shaded:hover {
+  background: #ccc;
+}
+
+.ftc-txt {
+  font-size: 11px;
+  font-weight: 600;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.4;
+}
+
+/* ─── 핸들 (투명) ─── */
+.ftc-h {
+  width: 4px !important;
+  height: 4px !important;
+  background: transparent !important;
+  border: none !important;
+  opacity: 0;
+}
+
+/* ==============================
+   FTC 소유지분도 — 엣지 라벨
+   ============================== */
+.ftc-pct {
+  font-size: 9px;
+  font-weight: 600;
+  color: #333;
+  background: #fff;
+  padding: 0 2px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==============================
+   FTC 소유지분도 — 도구 모음 & 범례
+   ============================== */
+.ftc-toolbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.ftc-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ftc-toolbar-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ftc-toolbar-btn:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+.ftc-toolbar-btn-active {
+  color: #000;
+  background: #eee;
+  border-color: #ccc;
+}
+
+.ftc-toolbar-sep {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: #ddd;
+}
+
+.ftc-toolbar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+}
+
+.ftc-toolbar-slider {
+  width: 80px;
+  accent-color: #333;
+  cursor: pointer;
+}
+
+.ftc-toolbar-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: #333;
+  min-width: 30px;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+/* ─── 범례 ─── */
 .ftc-legend {
   position: absolute;
-  bottom: 60px;
-  left: 12px;
+  top: 10px;
+  right: 10px;
   z-index: 10;
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px 14px;
-  background: rgba(33, 40, 48, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(44, 53, 66, 0.6);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.ftc-legend-title {
-  font-size: 10px;
-  font-weight: 700;
-  color: #6B7684;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 2px;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  font-size: 11px;
+  color: #555;
 }
 
 .ftc-legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: #8B95A1;
+  gap: 4px;
 }
 
-.ftc-legend-dot {
-  width: 10px;
+.ftc-legend-oval {
+  display: inline-block;
+  width: 14px;
   height: 10px;
-  border-radius: 3px;
-  flex-shrink: 0;
+  border: 1.5px solid #333;
+  border-radius: 50%;
+  background: #fff;
 }
 
-.ftc-legend-line {
-  width: 16px;
-  height: 0;
-  flex-shrink: 0;
+.ftc-legend-star {
+  font-size: 11px;
+  color: #000;
+  margin-right: 1px;
 }
 
-.ftc-legend-divider {
-  height: 1px;
-  background: rgba(44, 53, 66, 0.8);
-  margin: 2px 0;
+.ftc-legend-shade {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  border: 1px solid #333;
+  background: #d9d9d9;
 }

@@ -1,4 +1,4 @@
-import { MarkerType, type Node, type Edge } from "@xyflow/react";
+import { type Node, type Edge } from "@xyflow/react";
 import type { Company, OwnershipRelation, ControllerHolding } from "@/types";
 
 export interface CompanyNodeData {
@@ -8,10 +8,11 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// ─── 세로 리스트 레이아웃 상수 ───
-const NODE_W = 200;
-const INDENT = 230; // 부모-자식 가로 들여쓰기 (노드 너비 + 여백)
-const ROW_H = 90; // 행 간격
+// ── FTC 소유지분도 레이아웃 상수 ──
+const NODE_W = 130;
+const NODE_H = 38;
+const H_GAP = 14;
+const V_GAP = 52;
 
 export function buildGraphData(
   companies: Company[],
@@ -73,7 +74,6 @@ export function buildGraphData(
   const visited = new Set<string>();
   const queue: string[] = [];
 
-  // 주요 부모 결정
   const bestParent = new Map<string, string>();
   for (const c of all) {
     if (c.id === ctrl?.id) continue;
@@ -96,7 +96,6 @@ export function buildGraphData(
       if (visited.has(c.id)) continue;
       if (bestParent.get(c.id) === pid) kids.push(c.id);
     }
-    // 지분율 내림차순 정렬
     kids.sort((a, b) => {
       const ap = (incoming.get(a) ?? []).find((e) => e.from === pid)?.pct ?? 0;
       const bp = (incoming.get(b) ?? []).find((e) => e.from === pid)?.pct ?? 0;
@@ -115,12 +114,7 @@ export function buildGraphData(
     if (visited.has(c.id)) continue;
     visited.add(c.id);
     children.set(c.id, []);
-    const inc = incoming.get(c.id) ?? [];
-    const vp = [...inc]
-      .filter((e) => children.has(e.from))
-      .sort((a, b) => b.pct - a.pct)[0];
-    if (vp) children.get(vp.from)!.push(c.id);
-    else if (ctrl) children.get(ctrl.id)!.push(c.id);
+    if (ctrl) children.get(ctrl.id)!.push(c.id);
   }
 
   // ── 트리 엣지 셋 ──
@@ -129,26 +123,56 @@ export function buildGraphData(
     for (const kid of kids) treeEdges.add(`${pid}->${kid}`);
   });
 
-  // ── 세로 리스트 배치 (DFS pre-order) ──
-  // 모든 노드를 위→아래로 나열, depth로 X 오프셋
+  // ── 서브트리 너비 계산 ──
+  const subtreeW = new Map<string, number>();
+
+  function calcWidth(id: string): number {
+    const kids = children.get(id) ?? [];
+    if (kids.length === 0) {
+      subtreeW.set(id, NODE_W);
+      return NODE_W;
+    }
+    let total = 0;
+    for (const kid of kids) total += calcWidth(kid);
+    total += (kids.length - 1) * H_GAP;
+    const w = Math.max(NODE_W, total);
+    subtreeW.set(id, w);
+    return w;
+  }
+
+  // ── 위치 배치 (부모 중앙, 자식 수평 분산) ──
   const positions = new Map<string, { x: number; y: number }>();
   const depthMap = new Map<string, number>();
-  let row = 0;
 
-  function dfs(id: string, depth: number) {
-    positions.set(id, { x: depth * INDENT, y: row * ROW_H });
+  function layout(id: string, cx: number, y: number, depth: number) {
+    positions.set(id, { x: cx - NODE_W / 2, y });
     depthMap.set(id, depth);
-    row++;
-    for (const kid of children.get(id) ?? []) {
-      dfs(kid, depth + 1);
+
+    const kids = children.get(id) ?? [];
+    if (kids.length === 0) return;
+
+    const myW = subtreeW.get(id) ?? NODE_W;
+    let sx = cx - myW / 2;
+
+    for (const kid of kids) {
+      const kw = subtreeW.get(kid) ?? NODE_W;
+      layout(kid, sx + kw / 2, y + NODE_H + V_GAP, depth + 1);
+      sx += kw + H_GAP;
     }
   }
 
   if (ctrl) {
-    dfs(ctrl.id, 0);
+    calcWidth(ctrl.id);
+    layout(ctrl.id, 0, 0, 0);
   } else {
+    let ox = 0;
     for (const c of all) {
-      if (!positions.has(c.id)) dfs(c.id, 0);
+      if (!positions.has(c.id)) {
+        calcWidth(c.id);
+        const w = subtreeW.get(c.id) ?? NODE_W;
+        layout(c.id, ox + w / 2, 0, 0);
+        ox += w + H_GAP * 2;
+      }
     }
   }
 
@@ -161,11 +185,7 @@ export function buildGraphData(
       id,
       type: "company",
       position: pos,
-      data: {
-        company,
-        label: company.name,
-        depth: depthMap.get(id) ?? 0,
-      },
+      data: { company, label: company.name, depth: depthMap.get(id) ?? 0 },
     });
   }
 
@@ -173,17 +193,9 @@ export function buildGraphData(
   const edges: Edge[] = [];
   const idSet = new Set(all.map((c) => c.id));
 
-  const mkMarker = (color: string) => ({
-    type: MarkerType.ArrowClosed,
-    color,
-    width: 8,
-    height: 8,
-  });
-
   for (const r of rels) {
     if (!idSet.has(r.fromCompanyId) || !idSet.has(r.toCompanyId)) continue;
     const isTree = treeEdges.has(`${r.fromCompanyId}->${r.toCompanyId}`);
-    const color = edgeColor(r.ownershipPct);
     edges.push({
       id: r.id,
       source: r.fromCompanyId,
@@ -191,12 +203,7 @@ export function buildGraphData(
       type: "ownership",
       sourceHandle: isTree ? "bottom" : "right",
       targetHandle: isTree ? "top" : "left",
-      data: {
-        ownershipPct: r.ownershipPct,
-        isControllerEdge: false,
-        isTreeEdge: isTree,
-      },
-      markerEnd: mkMarker(color),
+      data: { ownershipPct: r.ownershipPct, isControllerEdge: false, isTreeEdge: isTree },
     });
   }
 
@@ -212,22 +219,10 @@ export function buildGraphData(
         type: "ownership",
         sourceHandle: "bottom",
         targetHandle: "top",
-        data: {
-          ownershipPct: h.ownershipPct,
-          isControllerEdge: true,
-          isTreeEdge: isTree,
-        },
-        markerEnd: mkMarker("#F59E0B"),
+        data: { ownershipPct: h.ownershipPct, isControllerEdge: true, isTreeEdge: isTree },
       });
     }
   }
 
   return { nodes, edges };
-}
-
-function edgeColor(pct: number): string {
-  if (pct >= 50) return "#F59E0B";
-  if (pct >= 20) return "#3182F6";
-  if (pct >= 5) return "#64748B";
-  return "#4B5563";
 }
