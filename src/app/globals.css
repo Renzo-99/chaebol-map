@@ -78,191 +78,301 @@ body {
 }
 
 /* ==============================
-   React Flow — Light Theme
+   React Flow — Toss Dark Theme
    ============================== */
 .react-flow__background {
-  background: #FFFFFF !important;
+  background: var(--background) !important;
 }
 
 .react-flow__minimap {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   overflow: hidden;
-  border: 1px solid #E2E8F0 !important;
+  border: 1px solid var(--border) !important;
 }
 
 .react-flow__controls {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   overflow: hidden;
-  border: 1px solid #E2E8F0 !important;
-  background: #FFFFFF !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border: 1px solid var(--border) !important;
+  background: var(--card) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .react-flow__controls-button {
-  background: #FFFFFF !important;
-  border-bottom: 1px solid #F1F5F9 !important;
-  fill: #475569 !important;
+  background: var(--card) !important;
+  border-bottom: 1px solid var(--border) !important;
+  fill: var(--foreground) !important;
 }
 
 .react-flow__controls-button:hover {
-  background: #F8FAFC !important;
+  background: var(--muted) !important;
 }
 
 /* ==============================
-   FTC-style 노드 (Light)
+   노드 공통 (FTC 배치 + Toss 디자인)
    ============================== */
 .ftc-node {
-  background: #FFFFFF;
-  border: 1px solid #555;
-  padding: 5px 10px;
-  font-size: 11px;
+  background: #212830;
+  border: 1px solid #333D4B;
+  border-radius: 10px;
   font-family: inherit;
-  color: #1E293B;
+  color: #F2F4F6;
   cursor: pointer;
   white-space: nowrap;
-  line-height: 1.4;
-  transition: background 0.12s, box-shadow 0.12s;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 
 .ftc-node:hover {
-  background: #F0F7FF;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
 }
 
-/* 지주회사 — 음영 처리 (공정위 스타일) */
+/* ─── 상장회사 ─── */
+.ftc-listed {
+  border-left: 3px solid #3182F6;
+}
+
+.ftc-listed:hover {
+  border-color: #60A5FA;
+  box-shadow: 0 4px 16px rgba(49, 130, 246, 0.2);
+}
+
+/* ─── 지주회사 ─── */
 .ftc-holding {
-  background: #E5E5E5;
+  background: #1C2E24;
+  border-left: 3px solid #22C55E;
 }
 
 .ftc-holding:hover {
-  background: #DBEAFE;
+  border-color: #4ADE80;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.2);
 }
 
-/* 동일인(총수) 노드 */
+/* ─── 비상장 ─── */
+.ftc-unlisted {
+  border-color: #2C3542;
+}
+
+.ftc-unlisted:hover {
+  border-color: #4B5563;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+/* ─── 동일인(총수) ─── */
 .ftc-ctrl {
-  border: 1.5px solid #333;
+  background: linear-gradient(145deg, #F59E0B, #D97706);
+  border: 1.5px solid #FCD34D;
+  border-radius: 12px;
   text-align: center;
-  padding: 6px 16px;
-  background: #FFFBEB;
+  padding: 8px 18px;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
 }
 
 .ftc-ctrl:hover {
-  background: #FEF3C7;
+  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
 }
 
 .ftc-ctrl-sub {
   display: block;
   font-size: 10px;
   font-weight: 600;
-  color: #666;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.04em;
 }
 
 .ftc-ctrl-name {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
-  color: #111;
+  color: #000;
 }
 
-/* 선택 상태 */
+/* ─── 선택 상태 ─── */
 .ftc-sel {
-  outline: 2px solid #3182F6;
-  outline-offset: 1px;
-  box-shadow: 0 2px 10px rgba(49, 130, 246, 0.2) !important;
+  box-shadow: 0 0 0 2px #3182F6, 0 4px 16px rgba(49, 130, 246, 0.25) !important;
 }
 
-/* 회사명 */
-.ftc-label {
+/* ─── 노드 내부 요소 ─── */
+.ftc-name-row {
+  padding: 6px 10px 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ftc-name {
   font-weight: 700;
-  color: #1E293B;
-  font-size: 11px;
+  font-size: 12px;
+  color: #F2F4F6;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ftc-star {
-  color: #000;
-  margin-right: 1px;
+  color: #FBBF24;
+  font-size: 11px;
+  flex-shrink: 0;
 }
 
-/* 핸들 */
+.ftc-price-row {
+  padding: 0 10px 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ftc-price {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8B95A1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftc-change {
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ftc-up {
+  color: #F04452;
+}
+
+.ftc-down {
+  color: #3182F6;
+}
+
+.ftc-label {
+  padding: 6px 10px;
+  font-weight: 700;
+  color: #F2F4F6;
+  font-size: 12px;
+}
+
+.ftc-holding-badge {
+  padding: 0 10px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #4ADE80;
+}
+
+/* ─── 핸들 ─── */
 .ftc-handle {
-  width: 4px !important;
-  height: 4px !important;
-  background: #94A3B8 !important;
+  width: 5px !important;
+  height: 5px !important;
+  background: #4B5563 !important;
   border: none !important;
   opacity: 0;
-  transition: opacity 0.12s;
+  transition: opacity 0.15s;
 }
 
 .ftc-node:hover .ftc-handle {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* ==============================
-   엣지 레이블 (Light)
+   엣지 레이블
    ============================== */
 .ftc-edge-label {
-  font-size: 9px;
-  font-weight: 600;
-  color: #333;
-  background: rgba(255, 255, 255, 0.88);
-  padding: 0 2px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 /* ==============================
-   필터 & 범례 (Light)
+   필터 & 범례
    ============================== */
 .ftc-filter-bar {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(8px);
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(33, 40, 48, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(44, 53, 66, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .ftc-filter-label {
   font-size: 11px;
   font-weight: 600;
-  color: #64748B;
+  color: #8B95A1;
 }
 
 .ftc-filter-slider {
-  width: 80px;
-  accent-color: #333;
+  width: 90px;
+  accent-color: #3182F6;
   cursor: pointer;
 }
 
 .ftc-filter-value {
-  font-size: 11px;
-  font-weight: 700;
-  color: #1E293B;
-  min-width: 32px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #3182F6;
+  min-width: 36px;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 .ftc-legend {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   z-index: 10;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(8px);
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 14px;
+  background: rgba(33, 40, 48, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(44, 53, 66, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.ftc-legend-title {
   font-size: 10px;
-  color: #64748B;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  font-weight: 700;
+  color: #6B7684;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.ftc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #8B95A1;
+}
+
+.ftc-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ftc-legend-line {
+  width: 16px;
+  height: 0;
+  flex-shrink: 0;
+}
+
+.ftc-legend-divider {
+  height: 1px;
+  background: rgba(44, 53, 66, 0.8);
+  margin: 2px 0;
 }

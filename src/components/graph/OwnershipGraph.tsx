@@ -87,9 +87,70 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         <span className="ftc-filter-value">{minPct}%+</span>
       </div>
 
-      {/* 범례 (FTC 스타일) */}
+      {/* 범례 */}
       <div className="ftc-legend">
-        <span>음영은 지주회사, ★은 상장회사, 단위: %</span>
+        <div className="ftc-legend-title">범례</div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-dot"
+            style={{
+              background: "linear-gradient(135deg, #F59E0B, #D97706)",
+              border: "1px solid #FCD34D",
+            }}
+          />
+          <span>동일인(총수)</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-dot"
+            style={{
+              background: "#212830",
+              borderLeft: "3px solid #3182F6",
+              borderRadius: "2px",
+            }}
+          />
+          <span>★ 상장회사</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-dot"
+            style={{
+              background: "#1C2E24",
+              borderLeft: "3px solid #22C55E",
+              borderRadius: "2px",
+            }}
+          />
+          <span>지주회사</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-dot"
+            style={{ background: "#212830", border: "1px solid #2C3542" }}
+          />
+          <span>비상장</span>
+        </div>
+        <div className="ftc-legend-divider" />
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-line"
+            style={{ borderTop: "2.5px solid #F59E0B" }}
+          />
+          <span>50%+ 지분</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-line"
+            style={{ borderTop: "1.5px solid #3182F6" }}
+          />
+          <span>20%+ 지분</span>
+        </div>
+        <div className="ftc-legend-item">
+          <div
+            className="ftc-legend-line"
+            style={{ borderTop: "1px dashed #4B5563" }}
+          />
+          <span>&lt;5% 지분</span>
+        </div>
       </div>
 
       <ReactFlow
@@ -112,20 +173,20 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
           position="bottom-right"
           nodeColor={(node) => {
             const company = (node.data as CompanyNodeData)?.company;
-            if (!company) return "#CBD5E1";
+            if (!company) return "#475569";
             if (company.isController) return "#F59E0B";
-            if (company.isHolding) return "#94A3B8";
-            if (company.isListed) return "#475569";
-            return "#CBD5E1";
+            if (company.isHolding) return "#22C55E";
+            if (company.isListed) return "#3182F6";
+            return "#475569";
           }}
-          maskColor="rgba(0, 0, 0, 0.06)"
-          style={{ background: "#F8FAFC" }}
+          maskColor="rgba(25, 31, 40, 0.7)"
+          style={{ background: "#212830" }}
         />
         <Background
           variant={BackgroundVariant.Dots}
-          gap={20}
-          size={0.5}
-          color="#E2E8F0"
+          gap={24}
+          size={1}
+          color="#2C3542"
         />
       </ReactFlow>
 
