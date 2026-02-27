@@ -7,10 +7,10 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// 레이아웃 상수
-const BASE_NODE_W = 160;
-const BASE_H_GAP = 40;
-const BASE_V_GAP = 130;
+// 레이아웃 상수 (실제 렌더링 크기 기준)
+const BASE_NODE_W = 220;
+const BASE_H_GAP = 50;
+const BASE_V_GAP = 140;
 
 export function buildGraphData(
   companies: Company[],
@@ -134,11 +134,11 @@ export function buildGraphData(
   const totalNodes = allCompanies.length;
   const scale =
     totalNodes > 50
-      ? 0.65
+      ? 0.78
       : totalNodes > 35
-      ? 0.75
-      : totalNodes > 20
       ? 0.85
+      : totalNodes > 20
+      ? 0.92
       : 1;
 
   const nodeW = Math.round(BASE_NODE_W * scale);
