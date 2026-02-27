@@ -21,6 +21,8 @@ import { CompanyDetailPanel } from "./CompanyDetailPanel";
 const nodeTypes = { company: CompanyNode };
 const edgeTypes = { ownership: OwnershipEdge };
 
+type NodeFilter = "all" | "listed" | "holding" | "unlisted";
+
 interface OwnershipGraphProps {
   data: GroupData;
 }
@@ -28,6 +30,8 @@ interface OwnershipGraphProps {
 export function OwnershipGraph({ data }: OwnershipGraphProps) {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [minPct, setMinPct] = useState(0);
+  const [nodeFilter, setNodeFilter] = useState<NodeFilter>("all");
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
 
   const { initialNodes, initialEdges } = useMemo(() => {
     const { nodes, edges } = buildGraphData(
@@ -41,7 +45,23 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
-  const filteredEdges = useMemo(() => {
+  // 호버된 노드와 연결된 노드/엣지 ID
+  const hoverConnected = useMemo(() => {
+    if (!hoveredNodeId) return null;
+    const connectedNodeIds = new Set<string>([hoveredNodeId]);
+    const connectedEdgeIds = new Set<string>();
+    edges.forEach((e) => {
+      if (e.source === hoveredNodeId || e.target === hoveredNodeId) {
+        connectedEdgeIds.add(e.id);
+        connectedNodeIds.add(e.source);
+        connectedNodeIds.add(e.target);
+      }
+    });
+    return { nodeIds: connectedNodeIds, edgeIds: connectedEdgeIds };
+  }, [hoveredNodeId, edges]);
+
+  // 지분율 필터
+  const pctFilteredEdges = useMemo(() => {
     if (minPct === 0) return edges;
     return edges.filter((e) => {
       const pct = (e.data?.ownershipPct as number) ?? 0;
@@ -49,20 +69,62 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     });
   }, [edges, minPct]);
 
-  const visibleNodeIds = useMemo(() => {
-    if (minPct === 0) return null;
-    const ids = new Set<string>();
-    filteredEdges.forEach((e) => {
-      ids.add(e.source);
-      ids.add(e.target);
-    });
-    return ids;
-  }, [filteredEdges, minPct]);
-
+  // 노드 필터링
   const filteredNodes = useMemo(() => {
-    if (!visibleNodeIds) return nodes;
-    return nodes.filter((n) => visibleNodeIds.has(n.id));
-  }, [nodes, visibleNodeIds]);
+    let result = nodes;
+
+    // 지분율 필터 기반 노드
+    if (minPct > 0) {
+      const pctNodeIds = new Set<string>();
+      pctFilteredEdges.forEach((e) => {
+        pctNodeIds.add(e.source);
+        pctNodeIds.add(e.target);
+      });
+      result = result.filter((n) => pctNodeIds.has(n.id));
+    }
+
+    // 노드 타입 필터
+    if (nodeFilter !== "all") {
+      result = result.filter((n) => {
+        const company = (n.data as CompanyNodeData).company;
+        if (company.isController) return true; // 동일인은 항상 표시
+        switch (nodeFilter) {
+          case "listed": return company.isListed;
+          case "holding": return company.isHolding;
+          case "unlisted": return !company.isListed && !company.isHolding;
+          default: return true;
+        }
+      });
+    }
+
+    // 호버 하이라이트 (dimmed 플래그)
+    if (hoverConnected) {
+      result = result.map((n) => ({
+        ...n,
+        data: { ...n.data, dimmed: !hoverConnected.nodeIds.has(n.id) },
+      }));
+    }
+
+    return result;
+  }, [nodes, minPct, pctFilteredEdges, nodeFilter, hoverConnected]);
+
+  // 엣지 필터링 (노드 기반 + 호버 하이라이트)
+  const finalEdges = useMemo(() => {
+    const nodeIdSet = new Set(filteredNodes.map((n) => n.id));
+    let result = pctFilteredEdges.filter(
+      (e) => nodeIdSet.has(e.source) && nodeIdSet.has(e.target)
+    );
+
+    // 호버 하이라이트
+    if (hoverConnected) {
+      result = result.map((e) => ({
+        ...e,
+        data: { ...e.data, dimmed: !hoverConnected.edgeIds.has(e.id) },
+      }));
+    }
+
+    return result;
+  }, [pctFilteredEdges, filteredNodes, hoverConnected]);
 
   const onNodeClick = useCallback(
     (_: React.MouseEvent, node: Node<CompanyNodeData>) => {
@@ -71,10 +133,48 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
     []
   );
 
+  const onNodeMouseEnter = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      setHoveredNodeId(node.id);
+    },
+    []
+  );
+
+  const onNodeMouseLeave = useCallback(() => {
+    setHoveredNodeId(null);
+  }, []);
+
+  const onPaneClick = useCallback(() => {
+    setSelectedCompany(null);
+  }, []);
+
+  const filterButtons: { key: NodeFilter; label: string }[] = [
+    { key: "all", label: "전체" },
+    { key: "listed", label: "★ 상장사" },
+    { key: "holding", label: "지주사" },
+    { key: "unlisted", label: "비상장" },
+  ];
+
   return (
     <div className="relative h-full w-full">
       {/* 필터 바 */}
       <div className="ftc-filter-bar">
+        <div className="flex items-center gap-1 mr-2">
+          {filterButtons.map((btn) => (
+            <button
+              key={btn.key}
+              onClick={() => setNodeFilter(btn.key)}
+              className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all ${
+                nodeFilter === btn.key
+                  ? "bg-primary/20 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`}
+            >
+              {btn.label}
+            </button>
+          ))}
+        </div>
+        <div className="w-px h-5 bg-border/50 mx-1" />
         <span className="ftc-filter-label">지분율</span>
         <input
           type="range"
@@ -155,12 +255,15 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
 
       <ReactFlow
         nodes={filteredNodes}
-        edges={filteredEdges}
+        edges={finalEdges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
+        onNodeMouseEnter={onNodeMouseEnter}
+        onNodeMouseLeave={onNodeMouseLeave}
+        onPaneClick={onPaneClick}
         fitView
         fitViewOptions={{ padding: 0.12 }}
         minZoom={0.03}

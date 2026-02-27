@@ -8,15 +8,19 @@ export const CompanyNode = memo(function CompanyNode({
   data,
   selected,
 }: NodeProps) {
-  const { company } = data as CompanyNodeData;
+  const nodeData = data as CompanyNodeData & { dimmed?: boolean };
+  const { company } = nodeData;
+  const dimmed = nodeData.dimmed ?? false;
   const isController = company.isController;
   const isListed = company.isListed;
   const isHolding = company.isHolding;
 
+  const dimStyle = dimmed ? { opacity: 0.15, transition: "opacity 0.2s" } : { transition: "opacity 0.2s" };
+
   // 동일인(총수) 노드
   if (isController) {
     return (
-      <div className={`ftc-node ftc-ctrl ${selected ? "ftc-sel" : ""}`}>
+      <div className={`ftc-node ftc-ctrl ${selected ? "ftc-sel" : ""}`} style={dimStyle}>
         <Handle type="target" position={Position.Top} className="ftc-handle" />
         <span className="ftc-ctrl-sub">동일인</span>
         <span className="ftc-ctrl-name">({company.name})</span>
@@ -33,7 +37,7 @@ export const CompanyNode = memo(function CompanyNode({
     : "ftc-unlisted";
 
   return (
-    <div className={`ftc-node ${typeClass} ${selected ? "ftc-sel" : ""}`}>
+    <div className={`ftc-node ${typeClass} ${selected ? "ftc-sel" : ""}`} style={dimStyle}>
       <Handle type="target" position={Position.Top} className="ftc-handle" />
       <div className="ftc-name-row">
         {isListed && <span className="ftc-star">★</span>}

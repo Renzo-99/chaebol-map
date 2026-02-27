@@ -21,6 +21,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
 }: EdgeProps) {
   const pct = (data?.ownershipPct as number) ?? 0;
   const isController = (data?.isControllerEdge as boolean) ?? false;
+  const dimmed = (data?.dimmed as boolean) ?? false;
 
   // 지분율에 따른 스타일
   let strokeColor: string;
@@ -90,6 +91,8 @@ export const OwnershipEdge = memo(function OwnershipEdge({
           stroke: strokeColor,
           strokeWidth,
           strokeDasharray: dashArray,
+          opacity: dimmed ? 0.08 : 1,
+          transition: "opacity 0.2s",
         }}
       />
       <EdgeLabelRenderer>
@@ -102,6 +105,8 @@ export const OwnershipEdge = memo(function OwnershipEdge({
             color: labelColor,
             background: labelBg,
             borderColor: labelBorder,
+            opacity: dimmed ? 0.08 : 1,
+            transition: "opacity 0.2s",
           }}
         >
           {pct === 100 ? "100" : pct.toFixed(1)}%

@@ -142,25 +142,32 @@ export function useLiveStockPrices(companies: Company[]) {
 
     if (stockCodes.length === 0) return;
 
-    // 캐시 확인
-    const cached = getCachedPrices();
-    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-      setPrices(cached.data);
-      setLastUpdate(new Date(cached.timestamp));
-      fetchedRef.current = true;
-      return;
+    fetchedRef.current = true;
+
+    async function loadPrices() {
+      // 캐시 확인
+      const cached = getCachedPrices();
+      const now = Date.now();
+      if (cached && now - cached.timestamp < CACHE_TTL) {
+        return { data: cached.data, timestamp: cached.timestamp };
+      }
+
+      setLoading(true);
+      const result = await fetchBatchQuotes(stockCodes);
+      setLoading(false);
+
+      if (Object.keys(result).length > 0) {
+        setCachedPrices(result);
+        return { data: result, timestamp: Date.now() };
+      }
+      return null;
     }
 
-    fetchedRef.current = true;
-    setLoading(true);
-
-    fetchBatchQuotes(stockCodes).then((result) => {
-      if (Object.keys(result).length > 0) {
-        setPrices(result);
-        setCachedPrices(result);
-        setLastUpdate(new Date());
+    loadPrices().then((result) => {
+      if (result) {
+        setPrices(result.data);
+        setLastUpdate(new Date(result.timestamp));
       }
-      setLoading(false);
     });
   }, [companies]);
 

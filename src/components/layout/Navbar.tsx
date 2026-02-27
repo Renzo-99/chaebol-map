@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GitBranch, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSearch } from "@/components/shared/SearchProvider";
 
 const navItems = [
   { href: "/dashboard", label: "대시보드" },
@@ -13,6 +14,7 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const { setOpen } = useSearch();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-xl border-b border-border/50">
@@ -44,7 +46,10 @@ export function Navbar() {
           </nav>
         </div>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 h-9 px-3.5 rounded-xl bg-muted/50 border border-border/50 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-2 h-9 px-3.5 rounded-xl bg-muted/50 border border-border/50 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             <Search className="w-3.5 h-3.5" />
             <span>검색</span>
             <kbd className="ml-2 text-[10px] bg-background rounded px-1.5 py-0.5 border border-border">
