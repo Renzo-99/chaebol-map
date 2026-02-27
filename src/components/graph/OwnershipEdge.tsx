@@ -4,7 +4,7 @@ import { memo } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
-  getBezierPath,
+  getStraightPath,
   type EdgeProps,
 } from "@xyflow/react";
 
@@ -14,14 +14,13 @@ export const OwnershipEdge = memo(function OwnershipEdge({
   sourceY,
   targetX,
   targetY,
-  sourcePosition,
-  targetPosition,
   data,
   markerEnd,
 }: EdgeProps) {
   const pct = (data?.ownershipPct as number) ?? 0;
   const isController = (data?.isControllerEdge as boolean) ?? false;
   const dimmed = (data?.dimmed as boolean) ?? false;
+  const highlighted = (data?.highlighted as boolean) ?? false;
 
   // 지분율에 따른 스타일
   let strokeColor: string;
@@ -46,17 +45,19 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     dashArray = "4,4";
   }
 
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const [edgePath, labelX, labelY] = getStraightPath({
     sourceX,
     sourceY,
     targetX,
     targetY,
-    sourcePosition,
-    targetPosition,
   });
 
-  // 3% 미만 지분율은 라벨 숨김
-  const showLabel = pct >= 3 || isController;
+  // 라벨을 타겟 노드 가까이 배치 (75% 지점)
+  const lx = sourceX + (targetX - sourceX) * 0.75;
+  const ly = sourceY + (targetY - sourceY) * 0.75;
+
+  // 기본: 20%+ 또는 동일인만 표시, 호버 시: 전부 표시
+  const showLabel = highlighted || pct >= 20 || isController;
 
   // 레이블 색상
   const labelColor = isController
@@ -68,12 +69,12 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     : "#94A3B8";
 
   const labelBg = isController
-    ? "rgba(245, 158, 11, 0.12)"
+    ? "rgba(245, 158, 11, 0.15)"
     : pct >= 50
-    ? "rgba(245, 158, 11, 0.1)"
+    ? "rgba(245, 158, 11, 0.12)"
     : pct >= 20
-    ? "rgba(59, 130, 246, 0.1)"
-    : "rgba(100, 116, 139, 0.08)";
+    ? "rgba(59, 130, 246, 0.12)"
+    : "rgba(100, 116, 139, 0.1)";
 
   const labelBorder = isController
     ? "rgba(245, 158, 11, 0.3)"
@@ -93,7 +94,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
           stroke: strokeColor,
           strokeWidth,
           strokeDasharray: dashArray,
-          opacity: dimmed ? 0.08 : 1,
+          opacity: dimmed ? 0.06 : 1,
           transition: "opacity 0.2s",
         }}
       />
@@ -103,12 +104,12 @@ export const OwnershipEdge = memo(function OwnershipEdge({
             className="ftc-edge-label"
             style={{
               position: "absolute",
-              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-              pointerEvents: "all",
+              transform: `translate(-50%, -50%) translate(${lx}px,${ly}px)`,
+              pointerEvents: "none",
               color: labelColor,
               background: labelBg,
               borderColor: labelBorder,
-              opacity: dimmed ? 0.08 : 1,
+              opacity: dimmed ? 0.06 : 1,
               transition: "opacity 0.2s",
             }}
           >

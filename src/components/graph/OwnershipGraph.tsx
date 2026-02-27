@@ -116,12 +116,15 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
       (e) => nodeIdSet.has(e.source) && nodeIdSet.has(e.target)
     );
 
-    // 호버 하이라이트
+    // 호버 하이라이트 + 연결된 엣지 라벨 표시
     if (hoverConnected) {
-      result = result.map((e) => ({
-        ...e,
-        data: { ...e.data, dimmed: !hoverConnected.edgeIds.has(e.id) },
-      }));
+      result = result.map((e) => {
+        const isConnected = hoverConnected.edgeIds.has(e.id);
+        return {
+          ...e,
+          data: { ...e.data, dimmed: !isConnected, highlighted: isConnected },
+        };
+      });
     }
 
     return result;
