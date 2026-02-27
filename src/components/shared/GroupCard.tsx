@@ -5,42 +5,11 @@ import { ArrowRight, Building2, Star, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { GroupData } from "@/types";
+import { getGroupIcon } from "@/lib/constants";
 
 interface GroupCardProps {
   data: GroupData;
 }
-
-const groupIcons: Record<string, string> = {
-  samsung: "🏢",
-  sk: "⚡",
-  hyundai: "🚗",
-  lg: "📱",
-  lotte: "🏬",
-  posco: "🔩",
-  hanwha: "🚀",
-  "hd-hyundai": "🚢",
-  gs: "⛽",
-  shinsegae: "🛍️",
-  hanjin: "✈️",
-  kt: "📡",
-  cj: "🎬",
-  ls: "🔌",
-  kakao: "💬",
-  doosan: "⚙️",
-  dl: "🏗️",
-  jungheung: "🏠",
-  celltrion: "💊",
-  naver: "🌐",
-  "mirae-asset": "📊",
-  coupang: "📦",
-  hankook: "🛞",
-  booyoung: "🏘️",
-  youngpoong: "⛏️",
-  harim: "🐔",
-  hyosung: "🧵",
-  sm: "🚢",
-  hdc: "🏙️",
-};
 
 export function GroupCard({ data }: GroupCardProps) {
   const { group, companies } = data;
@@ -60,7 +29,7 @@ export function GroupCard({ data }: GroupCardProps) {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">
-                {groupIcons[group.slug] ?? "🏢"}
+                {getGroupIcon(group.slug)}
               </span>
               <div>
                 <h3 className="text-base font-bold">{group.name}그룹</h3>

@@ -2,21 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ArrowLeft, Building2, Star, TrendingUp, TrendingDown, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { OwnershipGraph } from "@/components/graph/OwnershipGraph";
 import type { GroupData } from "@/types";
-import { formatNumber } from "@/lib/utils";
 
-const groupIcons: Record<string, string> = {
-  samsung: "🏢", sk: "⚡", hyundai: "🚗", lg: "📱", lotte: "🏬",
-  posco: "🔩", hanwha: "🚀", "hd-hyundai": "🚢", gs: "⛽", shinsegae: "🛍️",
-  hanjin: "✈️", kt: "📡", cj: "🎬", ls: "🔌", kakao: "💬",
-  doosan: "⚙️", dl: "🏗️", jungheung: "🏠", celltrion: "💊", naver: "🌐",
-  "mirae-asset": "📊", coupang: "📦", hankook: "🛞", booyoung: "🏘️",
-  youngpoong: "⛏️", harim: "🐔", hyosung: "🧵", sm: "🚢", hdc: "🏙️",
-};
+const OwnershipGraph = dynamic(
+  () => import("@/components/graph/OwnershipGraph").then((m) => m.OwnershipGraph),
+  { ssr: false, loading: () => <div className="flex-1 flex items-center justify-center text-muted-foreground">지분도 로딩 중...</div> }
+);
+import { formatNumber, formatPrice } from "@/lib/utils";
+import { getGroupIcon } from "@/lib/constants";
 
 interface GroupDetailClientProps {
   data: GroupData;
@@ -47,7 +44,7 @@ export function GroupDetailClient({ data }: GroupDetailClientProps) {
               </Button>
             </Link>
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{groupIcons[group.slug] ?? "🏢"}</span>
+              <span className="text-2xl">{getGroupIcon(group.slug)}</span>
               <div>
                 <h1 className="text-xl font-bold">{group.name}그룹 소유지분도</h1>
                 <p className="text-sm text-muted-foreground">
@@ -145,7 +142,7 @@ export function GroupDetailClient({ data }: GroupDetailClientProps) {
                     {company.stockPrice && (
                       <>
                         <p className="font-bold">
-                          {company.stockPrice.toLocaleString()}원
+                          {formatPrice(company.stockPrice)}
                         </p>
                         <div
                           className={`flex items-center justify-end gap-1 text-sm ${

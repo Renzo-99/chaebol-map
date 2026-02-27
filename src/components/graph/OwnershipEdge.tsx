@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -7,7 +8,7 @@ import {
   type EdgeProps,
 } from "@xyflow/react";
 
-export function OwnershipEdge({
+export const OwnershipEdge = memo(function OwnershipEdge({
   id,
   sourceX,
   sourceY,
@@ -108,4 +109,4 @@ export function OwnershipEdge({
       </EdgeLabelRenderer>
     </>
   );
-}
+});

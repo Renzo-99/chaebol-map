@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, GitBranch, Star, Building2, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAllGroups } from "@/lib/data";
+import { getGroupIcon } from "@/lib/constants";
 
 export default async function LandingPage() {
   const groups = await getAllGroups();
@@ -14,38 +15,6 @@ export default async function LandingPage() {
     (sum, g) => sum + g.group.listedCompanies,
     0
   );
-
-  const groupIcons: Record<string, string> = {
-    samsung: "🏢",
-    sk: "⚡",
-    hyundai: "🚗",
-    lg: "📱",
-    lotte: "🏬",
-    posco: "🔩",
-    hanwha: "🚀",
-    "hd-hyundai": "🚢",
-    gs: "⛽",
-    shinsegae: "🛍️",
-    hanjin: "✈️",
-    kt: "📡",
-    cj: "🎬",
-    ls: "🔌",
-    kakao: "💬",
-    doosan: "⚙️",
-    dl: "🏗️",
-    jungheung: "🏠",
-    celltrion: "💊",
-    naver: "🌐",
-    "mirae-asset": "📊",
-    coupang: "📦",
-    hankook: "🛞",
-    booyoung: "🏘️",
-    youngpoong: "⛏️",
-    harim: "🐔",
-    hyosung: "🧵",
-    sm: "🚢",
-    hdc: "🏙️",
-  };
 
   return (
     <div className="min-h-screen">
@@ -146,7 +115,7 @@ export default async function LandingPage() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <span className="text-3xl">
-                          {groupIcons[g.group.slug] ?? "🏢"}
+                          {getGroupIcon(g.group.slug)}
                         </span>
                         <div>
                           <h3 className="text-lg font-bold">

@@ -1,15 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Building2, Star } from "lucide-react";
 import { getAllGroups } from "@/lib/data";
-
-const groupIcons: Record<string, string> = {
-  samsung: "🏢", sk: "⚡", hyundai: "🚗", lg: "📱", lotte: "🏬",
-  posco: "🔩", hanwha: "🚀", "hd-hyundai": "🚢", gs: "⛽", shinsegae: "🛍️",
-  hanjin: "✈️", kt: "📡", cj: "🎬", ls: "🔌", kakao: "💬",
-  doosan: "⚙️", dl: "🏗️", jungheung: "🏠", celltrion: "💊", naver: "🌐",
-  "mirae-asset": "📊", coupang: "📦", hankook: "🛞", booyoung: "🏘️",
-  youngpoong: "⛏️", harim: "🐔", hyosung: "🧵", sm: "🚢", hdc: "🏙️",
-};
+import { getGroupIcon } from "@/lib/constants";
 
 export default async function GroupsPage() {
   const groups = await getAllGroups();
@@ -35,7 +27,7 @@ export default async function GroupsPage() {
               <div className="rounded-2xl bg-card border border-border/50 p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl">{groupIcons[g.group.slug] ?? "🏢"}</span>
+                    <span className="text-3xl">{getGroupIcon(g.group.slug)}</span>
                     <div>
                       <h3 className="text-lg font-bold">{g.group.name}그룹</h3>
                       <p className="text-sm text-muted-foreground">{g.group.controllerName}</p>
