@@ -8,9 +8,9 @@ export interface CompanyNodeData {
 }
 
 // 레이아웃 상수 — CSS .ftc-node width: 200px + 여유분
-const NODE_W = 210;
-const BASE_H_GAP = 60;
-const BASE_V_GAP = 150;
+const NODE_W = 220;
+const BASE_H_GAP = 100;
+const BASE_V_GAP = 200;
 
 export function buildGraphData(
   companies: Company[],
@@ -130,15 +130,15 @@ export function buildGraphData(
     }
   });
 
-  // 적응형 스케일링 — 노드 크기는 고정, 간격만 축소
+  // 적응형 스케일링 — 노드 크기는 고정, 간격만 축소 (최소 간격 보장)
   const totalNodes = allCompanies.length;
   const gapScale =
-    totalNodes > 50
-      ? 0.6
-      : totalNodes > 35
-      ? 0.75
-      : totalNodes > 20
-      ? 0.85
+    totalNodes > 60
+      ? 0.7
+      : totalNodes > 40
+      ? 0.8
+      : totalNodes > 25
+      ? 0.9
       : 1;
 
   const nodeW = NODE_W;

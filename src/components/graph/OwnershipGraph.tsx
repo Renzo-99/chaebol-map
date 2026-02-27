@@ -266,8 +266,8 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         onNodeMouseLeave={onNodeMouseLeave}
         onPaneClick={onPaneClick}
         fitView
-        fitViewOptions={{ padding: 0.12 }}
-        minZoom={0.03}
+        fitViewOptions={{ padding: 0.2 }}
+        minZoom={0.02}
         maxZoom={3}
         proOptions={{ hideAttribution: true }}
         defaultEdgeOptions={{ type: "ownership" }}

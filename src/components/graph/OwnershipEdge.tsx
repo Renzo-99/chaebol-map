@@ -4,7 +4,7 @@ import { memo } from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
-  getSmoothStepPath,
+  getBezierPath,
   type EdgeProps,
 } from "@xyflow/react";
 
@@ -42,19 +42,21 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     strokeWidth = 1;
   } else {
     strokeColor = "#4B5563";
-    strokeWidth = 1;
+    strokeWidth = 0.8;
     dashArray = "4,4";
   }
 
-  const [edgePath, labelX, labelY] = getSmoothStepPath({
+  const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     targetX,
     targetY,
     sourcePosition,
     targetPosition,
-    borderRadius: 10,
   });
+
+  // 3% 미만 지분율은 라벨 숨김
+  const showLabel = pct >= 3 || isController;
 
   // 레이블 색상
   const labelColor = isController
@@ -95,23 +97,25 @@ export const OwnershipEdge = memo(function OwnershipEdge({
           transition: "opacity 0.2s",
         }}
       />
-      <EdgeLabelRenderer>
-        <div
-          className="ftc-edge-label"
-          style={{
-            position: "absolute",
-            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            pointerEvents: "all",
-            color: labelColor,
-            background: labelBg,
-            borderColor: labelBorder,
-            opacity: dimmed ? 0.08 : 1,
-            transition: "opacity 0.2s",
-          }}
-        >
-          {pct === 100 ? "100" : pct.toFixed(1)}%
-        </div>
-      </EdgeLabelRenderer>
+      {showLabel && (
+        <EdgeLabelRenderer>
+          <div
+            className="ftc-edge-label"
+            style={{
+              position: "absolute",
+              transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              pointerEvents: "all",
+              color: labelColor,
+              background: labelBg,
+              borderColor: labelBorder,
+              opacity: dimmed ? 0.08 : 1,
+              transition: "opacity 0.2s",
+            }}
+          >
+            {pct === 100 ? "100" : pct.toFixed(1)}%
+          </div>
+        </EdgeLabelRenderer>
+      )}
     </>
   );
 });
