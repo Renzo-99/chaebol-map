@@ -19,29 +19,28 @@ export const CompanyNode = memo(function CompanyNode({
     ? { opacity: 0.15, transition: "opacity 0.2s" }
     : { transition: "opacity 0.2s" };
 
-  // 동일인(총수) 노드
   if (isController) {
     return (
       <div
         className={`ftc-node ftc-ctrl ${selected ? "ftc-sel" : ""}`}
         style={dimStyle}
       >
-        <Handle type="target" position={Position.Top} className="ftc-handle" />
+        <Handle id="top" type="target" position={Position.Top} className="ftc-handle" />
+        <Handle id="left" type="target" position={Position.Left} className="ftc-handle" />
         <span className="ftc-ctrl-sub">동일인</span>
         <span className="ftc-ctrl-name">{company.name}</span>
-        <Handle type="source" position={Position.Bottom} className="ftc-handle" />
+        <Handle id="bottom" type="source" position={Position.Bottom} className="ftc-handle" />
+        <Handle id="right" type="source" position={Position.Right} className="ftc-handle" />
       </div>
     );
   }
 
-  // 타입별 클래스
   const typeClass = isHolding
     ? "ftc-holding"
     : isListed
     ? "ftc-listed"
     : "ftc-unlisted";
 
-  // 상장/비상장 뱃지
   const badge = isListed ? "상장" : "비상장";
   const badgeClass = isListed ? "ftc-badge-listed" : "ftc-badge-unlisted";
 
@@ -50,7 +49,8 @@ export const CompanyNode = memo(function CompanyNode({
       className={`ftc-node ${typeClass} ${selected ? "ftc-sel" : ""}`}
       style={dimStyle}
     >
-      <Handle type="target" position={Position.Top} className="ftc-handle" />
+      <Handle id="top" type="target" position={Position.Top} className="ftc-handle" />
+      <Handle id="left" type="target" position={Position.Left} className="ftc-handle" />
       <div className="ftc-node-header">
         <span className={`ftc-badge ${badgeClass}`}>{badge}</span>
         {isHolding && <span className="ftc-badge ftc-badge-holding">지주</span>}
@@ -77,7 +77,8 @@ export const CompanyNode = memo(function CompanyNode({
           </span>
         </div>
       )}
-      <Handle type="source" position={Position.Bottom} className="ftc-handle" />
+      <Handle id="bottom" type="source" position={Position.Bottom} className="ftc-handle" />
+      <Handle id="right" type="source" position={Position.Right} className="ftc-handle" />
     </div>
   );
 });

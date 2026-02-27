@@ -4,14 +4,14 @@ import type { Company, OwnershipRelation, ControllerHolding } from "@/types";
 export interface CompanyNodeData {
   company: Company;
   label: string;
-  treeEdge?: boolean;
+  depth: number;
   [key: string]: unknown;
 }
 
-// 레이아웃 상수 — 세로 리스트 형태
+// ─── 세로 리스트 레이아웃 상수 ───
 const NODE_W = 200;
-const X_INDENT = 60;  // 깊이별 들여쓰기
-const ROW_GAP = 80;   // 노드 간 세로 간격
+const INDENT = 230; // 부모-자식 가로 들여쓰기 (노드 너비 + 여백)
+const ROW_H = 90; // 행 간격
 
 export function buildGraphData(
   companies: Company[],
@@ -23,12 +23,12 @@ export function buildGraphData(
 
   const companyMap = new Map(companies.map((c) => [c.id, c]));
 
-  // ─── 1. 동일인 노드 생성 ───
-  let controller = companies.find((c) => c.isController);
-  const allCompanies = [...companies];
+  // ── 동일인 노드 ──
+  let ctrl = companies.find((c) => c.isController);
+  const all = [...companies];
 
-  if (!controller && controllerHoldings.length > 0) {
-    controller = {
+  if (!ctrl && controllerHoldings.length > 0) {
+    ctrl = {
       id: "__controller__",
       groupId: companies[0].groupId,
       name: controllerName ?? "동일인",
@@ -37,212 +37,195 @@ export function buildGraphData(
       isController: true,
       category: "동일인",
     };
-    allCompanies.unshift(controller);
-    companyMap.set(controller.id, controller);
+    all.unshift(ctrl);
+    companyMap.set(ctrl.id, ctrl);
   }
 
-  // ─── 2. 유효한 관계만 수집 (0% 제외) ───
-  const validRelations = relations.filter(
+  // ── 유효 관계 (0% 제외, 자기참조 제외) ──
+  const rels = relations.filter(
     (r) =>
       companyMap.has(r.fromCompanyId) &&
       companyMap.has(r.toCompanyId) &&
       r.fromCompanyId !== r.toCompanyId &&
       r.ownershipPct > 0
   );
-
-  const validCtrlHoldings = controllerHoldings.filter(
+  const ctrlH = controllerHoldings.filter(
     (h) => companyMap.has(h.companyId) && h.ownershipPct > 0
   );
 
-  // ─── 3. 각 회사의 소유자 수집 ───
-  const incomingMap = new Map<string, { fromId: string; pct: number }[]>();
-
-  validRelations.forEach((r) => {
-    const incoming = incomingMap.get(r.toCompanyId) ?? [];
-    incoming.push({ fromId: r.fromCompanyId, pct: r.ownershipPct });
-    incomingMap.set(r.toCompanyId, incoming);
-  });
-
-  if (controller) {
-    validCtrlHoldings.forEach((h) => {
-      const incoming = incomingMap.get(h.companyId) ?? [];
-      incoming.push({ fromId: controller!.id, pct: h.ownershipPct });
-      incomingMap.set(h.companyId, incoming);
-    });
+  // ── 소유자 맵 ──
+  const incoming = new Map<string, { from: string; pct: number }[]>();
+  for (const r of rels) {
+    const arr = incoming.get(r.toCompanyId) ?? [];
+    arr.push({ from: r.fromCompanyId, pct: r.ownershipPct });
+    incoming.set(r.toCompanyId, arr);
+  }
+  if (ctrl) {
+    for (const h of ctrlH) {
+      const arr = incoming.get(h.companyId) ?? [];
+      arr.push({ from: ctrl.id, pct: h.ownershipPct });
+      incoming.set(h.companyId, arr);
+    }
   }
 
-  // ─── 4. 주요 부모 결정 → 트리 구축 (BFS) ───
-  const primaryParent = new Map<string, string>();
-  allCompanies.forEach((c) => {
-    if (c.id === controller?.id) return;
-    const incoming = incomingMap.get(c.id);
-    if (!incoming || incoming.length === 0) return;
-    const best = [...incoming].sort((a, b) => b.pct - a.pct)[0];
-    primaryParent.set(c.id, best.fromId);
-  });
-
-  const treeChildren = new Map<string, string[]>();
+  // ── 트리 구축 (BFS, 주요 부모 = 최대 지분율) ──
+  const children = new Map<string, string[]>();
   const visited = new Set<string>();
   const queue: string[] = [];
-  const nodeLevel = new Map<string, number>();
 
-  if (controller) {
-    visited.add(controller.id);
-    queue.push(controller.id);
-    treeChildren.set(controller.id, []);
-    nodeLevel.set(controller.id, 0);
+  // 주요 부모 결정
+  const bestParent = new Map<string, string>();
+  for (const c of all) {
+    if (c.id === ctrl?.id) continue;
+    const inc = incoming.get(c.id);
+    if (!inc || inc.length === 0) continue;
+    const best = [...inc].sort((a, b) => b.pct - a.pct)[0];
+    bestParent.set(c.id, best.from);
+  }
+
+  if (ctrl) {
+    visited.add(ctrl.id);
+    queue.push(ctrl.id);
+    children.set(ctrl.id, []);
   }
 
   while (queue.length > 0) {
-    const parentId = queue.shift()!;
-    const level = nodeLevel.get(parentId) ?? 0;
-
-    const children: string[] = [];
-    allCompanies.forEach((c) => {
-      if (visited.has(c.id)) return;
-      if (primaryParent.get(c.id) === parentId) {
-        children.push(c.id);
-      }
-    });
-
-    children.sort((a, b) => {
-      const aIncoming = incomingMap.get(a) ?? [];
-      const bIncoming = incomingMap.get(b) ?? [];
-      const aPct = aIncoming.find((e) => e.fromId === parentId)?.pct ?? 0;
-      const bPct = bIncoming.find((e) => e.fromId === parentId)?.pct ?? 0;
-      return bPct - aPct;
-    });
-
-    children.forEach((childId) => {
-      visited.add(childId);
-      treeChildren.set(childId, []);
-      queue.push(childId);
-      nodeLevel.set(childId, level + 1);
-    });
-
-    treeChildren.set(parentId, children);
-  }
-
-  // 고아 노드 처리
-  allCompanies.forEach((c) => {
-    if (visited.has(c.id)) return;
-    visited.add(c.id);
-    treeChildren.set(c.id, []);
-    nodeLevel.set(c.id, 1);
-
-    const incoming = incomingMap.get(c.id) ?? [];
-    const validParent = [...incoming]
-      .filter((e) => treeChildren.has(e.fromId))
-      .sort((a, b) => b.pct - a.pct)[0];
-
-    if (validParent) {
-      treeChildren.get(validParent.fromId)!.push(c.id);
-      nodeLevel.set(c.id, (nodeLevel.get(validParent.fromId) ?? 0) + 1);
-    } else if (controller) {
-      treeChildren.get(controller.id)!.push(c.id);
+    const pid = queue.shift()!;
+    const kids: string[] = [];
+    for (const c of all) {
+      if (visited.has(c.id)) continue;
+      if (bestParent.get(c.id) === pid) kids.push(c.id);
     }
+    // 지분율 내림차순 정렬
+    kids.sort((a, b) => {
+      const ap = (incoming.get(a) ?? []).find((e) => e.from === pid)?.pct ?? 0;
+      const bp = (incoming.get(b) ?? []).find((e) => e.from === pid)?.pct ?? 0;
+      return bp - ap;
+    });
+    for (const kid of kids) {
+      visited.add(kid);
+      children.set(kid, []);
+      queue.push(kid);
+    }
+    children.set(pid, kids);
+  }
+
+  // 고아 노드
+  for (const c of all) {
+    if (visited.has(c.id)) continue;
+    visited.add(c.id);
+    children.set(c.id, []);
+    const inc = incoming.get(c.id) ?? [];
+    const vp = [...inc]
+      .filter((e) => children.has(e.from))
+      .sort((a, b) => b.pct - a.pct)[0];
+    if (vp) children.get(vp.from)!.push(c.id);
+    else if (ctrl) children.get(ctrl.id)!.push(c.id);
+  }
+
+  // ── 트리 엣지 셋 ──
+  const treeEdges = new Set<string>();
+  children.forEach((kids, pid) => {
+    for (const kid of kids) treeEdges.add(`${pid}->${kid}`);
   });
 
-  // ─── 5. 적응형 스케일링 ───
-  const totalNodes = allCompanies.length;
-  const rowGap = totalNodes > 40 ? 65 : totalNodes > 25 ? 72 : ROW_GAP;
-
-  // ─── 6. 세로 리스트 레이아웃 (DFS 순서) ───
-  // 각 노드를 DFS pre-order로 순회하며 세로로 나열
-  // X 위치 = 트리 깊이 × 들여쓰기, Y 위치 = 순서 × 행 간격
+  // ── 세로 리스트 배치 (DFS pre-order) ──
+  // 모든 노드를 위→아래로 나열, depth로 X 오프셋
   const positions = new Map<string, { x: number; y: number }>();
-  let rowIndex = 0;
+  const depthMap = new Map<string, number>();
+  let row = 0;
 
-  function layoutDFS(nodeId: string, depth: number) {
-    positions.set(nodeId, {
-      x: depth * X_INDENT,
-      y: rowIndex * rowGap,
-    });
-    rowIndex++;
-
-    const children = treeChildren.get(nodeId) ?? [];
-    children.forEach((childId) => {
-      layoutDFS(childId, depth + 1);
-    });
+  function dfs(id: string, depth: number) {
+    positions.set(id, { x: depth * INDENT, y: row * ROW_H });
+    depthMap.set(id, depth);
+    row++;
+    for (const kid of children.get(id) ?? []) {
+      dfs(kid, depth + 1);
+    }
   }
 
-  if (controller) {
-    layoutDFS(controller.id, 0);
+  if (ctrl) {
+    dfs(ctrl.id, 0);
   } else {
-    allCompanies.forEach((c) => {
-      if (!positions.has(c.id)) {
-        layoutDFS(c.id, 0);
-      }
-    });
+    for (const c of all) {
+      if (!positions.has(c.id)) dfs(c.id, 0);
+    }
   }
 
-  // ─── 8. 트리 엣지 식별 ───
-  const treeEdgeSet = new Set<string>();
-  treeChildren.forEach((children, parentId) => {
-    children.forEach((childId) => {
-      treeEdgeSet.add(`${parentId}->${childId}`);
-    });
-  });
-
-  // ─── 9. React Flow 노드 생성 ───
+  // ── 노드 생성 ──
   const nodes: Node<CompanyNodeData>[] = [];
-  positions.forEach((pos, id) => {
+  for (const [id, pos] of positions) {
     const company = companyMap.get(id);
-    if (!company) return;
+    if (!company) continue;
     nodes.push({
       id,
       type: "company",
-      position: { x: pos.x, y: pos.y },
-      data: { company, label: company.name },
+      position: pos,
+      data: {
+        company,
+        label: company.name,
+        depth: depthMap.get(id) ?? 0,
+      },
     });
-  });
+  }
 
-  // ─── 10. 엣지 생성 ───
+  // ── 엣지 생성 ──
   const edges: Edge[] = [];
-  const nodeIdSet = new Set(allCompanies.map((c) => c.id));
+  const idSet = new Set(all.map((c) => c.id));
 
-  const makeMarker = (color: string) => ({
+  const mkMarker = (color: string) => ({
     type: MarkerType.ArrowClosed,
     color,
     width: 8,
     height: 8,
   });
 
-  validRelations.forEach((rel) => {
-    if (!nodeIdSet.has(rel.fromCompanyId) || !nodeIdSet.has(rel.toCompanyId))
-      return;
-    const isTree = treeEdgeSet.has(`${rel.fromCompanyId}->${rel.toCompanyId}`);
-    const color = getEdgeColor(rel.ownershipPct, false);
+  for (const r of rels) {
+    if (!idSet.has(r.fromCompanyId) || !idSet.has(r.toCompanyId)) continue;
+    const isTree = treeEdges.has(`${r.fromCompanyId}->${r.toCompanyId}`);
+    const color = edgeColor(r.ownershipPct);
     edges.push({
-      id: rel.id,
-      source: rel.fromCompanyId,
-      target: rel.toCompanyId,
+      id: r.id,
+      source: r.fromCompanyId,
+      target: r.toCompanyId,
       type: "ownership",
-      data: { ownershipPct: rel.ownershipPct, isControllerEdge: false, isTreeEdge: isTree },
-      markerEnd: makeMarker(color),
+      sourceHandle: isTree ? "bottom" : "right",
+      targetHandle: isTree ? "top" : "left",
+      data: {
+        ownershipPct: r.ownershipPct,
+        isControllerEdge: false,
+        isTreeEdge: isTree,
+      },
+      markerEnd: mkMarker(color),
     });
-  });
+  }
 
-  if (controller) {
-    validCtrlHoldings.forEach((h, i) => {
-      if (!nodeIdSet.has(h.companyId)) return;
-      const isTree = treeEdgeSet.has(`${controller!.id}->${h.companyId}`);
+  if (ctrl) {
+    for (let i = 0; i < ctrlH.length; i++) {
+      const h = ctrlH[i];
+      if (!idSet.has(h.companyId)) continue;
+      const isTree = treeEdges.has(`${ctrl.id}->${h.companyId}`);
       edges.push({
         id: `ctrl-${i}`,
-        source: controller!.id,
+        source: ctrl.id,
         target: h.companyId,
         type: "ownership",
-        data: { ownershipPct: h.ownershipPct, isControllerEdge: true, isTreeEdge: isTree },
-        markerEnd: makeMarker("#F59E0B"),
+        sourceHandle: "bottom",
+        targetHandle: "top",
+        data: {
+          ownershipPct: h.ownershipPct,
+          isControllerEdge: true,
+          isTreeEdge: isTree,
+        },
+        markerEnd: mkMarker("#F59E0B"),
       });
-    });
+    }
   }
 
   return { nodes, edges };
 }
 
-function getEdgeColor(pct: number, isController: boolean): string {
-  if (isController) return "#F59E0B";
+function edgeColor(pct: number): string {
   if (pct >= 50) return "#F59E0B";
   if (pct >= 20) return "#3182F6";
   if (pct >= 5) return "#64748B";
