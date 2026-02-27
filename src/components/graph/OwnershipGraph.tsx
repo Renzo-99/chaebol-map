@@ -218,9 +218,9 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         </span>
       </div>
 
-      {/* 동일인 주식보유현황 (FTC 원본 우측 상단 정보) */}
+      {/* 동일인 주식보유현황 (FTC 원본 스타일) */}
       {controllerHoldingsList.length > 0 && (
-        <div className="ftc-ctrl-holdings">
+        <div className="ftc-ctrl-holdings" style={{ top: "180px" }}>
           <div className="ftc-ctrl-holdings-title">
             동일인 {data.group.controllerName} 주식보유현황
           </div>
@@ -251,7 +251,7 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         onNodeMouseLeave={onNodeMouseLeave}
         onPaneClick={onPaneClick}
         fitView
-        fitViewOptions={{ padding: 0.12 }}
+        fitViewOptions={{ padding: 0.15 }}
         minZoom={0.02}
         maxZoom={3}
         proOptions={{ hideAttribution: true }}

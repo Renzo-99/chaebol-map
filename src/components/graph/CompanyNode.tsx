@@ -15,7 +15,7 @@ export const CompanyNode = memo(function CompanyNode({
     ? { opacity: 0.15, transition: "opacity 0.2s" }
     : { transition: "opacity 0.2s" };
 
-  // 동일인(총수) 노드 — 둥근 타원 스타일
+  // 동일인(총수) 노드 — FTC 원본 둥근 타원
   if (company.isController) {
     return (
       <div className="ftc-ctrl" style={dimStyle}>
@@ -29,7 +29,7 @@ export const CompanyNode = memo(function CompanyNode({
     );
   }
 
-  // 일반 회사 노드
+  // 일반 회사 노드 — FTC 원본 직사각형
   const cls = company.isHolding ? "ftc-box ftc-shaded" : "ftc-box";
 
   return (
@@ -37,7 +37,7 @@ export const CompanyNode = memo(function CompanyNode({
       <Handle id="top" type="target" position={Position.Top} className="ftc-h" />
       <Handle id="left" type="target" position={Position.Left} className="ftc-h" />
       <span className="ftc-txt">
-        {company.isListed && "★ "}
+        {company.isListed && <span className="ftc-star">★</span>}
         {company.name}
       </span>
       <Handle id="bottom" type="source" position={Position.Bottom} className="ftc-h" />

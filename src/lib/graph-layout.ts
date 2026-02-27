@@ -9,15 +9,15 @@ export interface CompanyNodeData {
 }
 
 // ── FTC 소유지분도 레이아웃 상수 ──
-const NODE_W = 130;
-const NODE_H = 38;
+const NODE_W = 140;
+const NODE_H = 40;
 
-// 노드 수에 따른 간격 조정
+// 노드 수에 따른 간격 조정 (FTC 인쇄물 비율 참고)
 function getSpacing(count: number) {
-  if (count > 50) return { hGap: 6, vGap: 38 };
-  if (count > 35) return { hGap: 10, vGap: 44 };
-  if (count > 20) return { hGap: 14, vGap: 52 };
-  return { hGap: 18, vGap: 60 };
+  if (count > 50) return { hGap: 10, vGap: 50 };
+  if (count > 35) return { hGap: 14, vGap: 56 };
+  if (count > 20) return { hGap: 18, vGap: 64 };
+  return { hGap: 24, vGap: 72 };
 }
 
 export function buildGraphData(
@@ -99,6 +99,7 @@ export function buildGraphData(
         if (visited.has(c.id)) continue;
         if (bestParent.get(c.id) === pid) kids.push(c.id);
       }
+      // 지분율 내림차순 정렬
       kids.sort((a, b) => {
         const ap =
           (incoming.get(a) ?? []).find((e) => e.from === pid)?.pct ?? 0;
@@ -125,7 +126,6 @@ export function buildGraphData(
   processBFS();
 
   // Phase 2: 순환 참조로 인한 미방문 노드 해결
-  // 이미 방문된 부모가 있는 미방문 노드를 반복 탐색
   let changed = true;
   while (changed) {
     changed = false;
@@ -137,13 +137,11 @@ export function buildGraphData(
         .sort((a, b) => b.pct - a.pct);
       if (visitedInc.length === 0) continue;
 
-      // 가장 높은 지분율의 방문된 부모에 연결
       const best = visitedInc[0];
       visited.add(c.id);
       children.set(c.id, []);
       children.get(best.from)!.push(c.id);
 
-      // 이 노드로부터 BFS 계속
       queue.push(c.id);
       processBFS();
 
@@ -234,41 +232,62 @@ export function buildGraphData(
     });
   }
 
-  // ── 엣지 생성 ──
+  // ── 엣지 생성 (트리 엣지 먼저, 비트리 엣지 나중에) ──
   const edges: Edge[] = [];
   const idSet = new Set(all.map((c) => c.id));
 
+  // 트리 엣지 먼저 추가
   for (const r of rels) {
     if (!idSet.has(r.fromCompanyId) || !idSet.has(r.toCompanyId)) continue;
     const isTree = treeEdges.has(`${r.fromCompanyId}->${r.toCompanyId}`);
+    if (!isTree) continue;
 
-    // 트리 엣지: bottom → top, 비트리 엣지: 위치 기반 핸들
+    edges.push({
+      id: r.id,
+      source: r.fromCompanyId,
+      target: r.toCompanyId,
+      type: "ownership",
+      sourceHandle: "bottom",
+      targetHandle: "top",
+      markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: "#333" },
+      data: {
+        ownershipPct: r.ownershipPct,
+        isControllerEdge: false,
+        isTreeEdge: true,
+      },
+    });
+  }
+
+  // 비트리 엣지 추가
+  for (const r of rels) {
+    if (!idSet.has(r.fromCompanyId) || !idSet.has(r.toCompanyId)) continue;
+    const isTree = treeEdges.has(`${r.fromCompanyId}->${r.toCompanyId}`);
+    if (isTree) continue;
+
     let sourceHandle = "bottom";
     let targetHandle = "top";
 
-    if (!isTree) {
-      const sp = positions.get(r.fromCompanyId);
-      const tp = positions.get(r.toCompanyId);
-      if (sp && tp) {
-        const scx = sp.x + NODE_W / 2;
-        const scy = sp.y + NODE_H / 2;
-        const tcx = tp.x + NODE_W / 2;
-        const tcy = tp.y + NODE_H / 2;
-        const dx = tcx - scx;
-        const dy = tcy - scy;
+    const sp = positions.get(r.fromCompanyId);
+    const tp = positions.get(r.toCompanyId);
+    if (sp && tp) {
+      const scx = sp.x + NODE_W / 2;
+      const scy = sp.y + NODE_H / 2;
+      const tcx = tp.x + NODE_W / 2;
+      const tcy = tp.y + NODE_H / 2;
+      const dx = tcx - scx;
+      const dy = tcy - scy;
 
-        if (Math.abs(dy) < NODE_H) {
-          // 같은 레벨 (수평 관계)
-          sourceHandle = dx > 0 ? "right" : "left";
-          targetHandle = dx > 0 ? "left" : "right";
-        } else if (dy > 0) {
-          sourceHandle = "bottom";
-          targetHandle = "top";
-        } else {
-          // 역방향 (자식 → 부모)
-          sourceHandle = "top";
-          targetHandle = "bottom";
-        }
+      if (Math.abs(dy) < NODE_H) {
+        // 같은 레벨 (수평 관계)
+        sourceHandle = dx > 0 ? "right" : "left";
+        targetHandle = dx > 0 ? "left" : "right";
+      } else if (dy > 0) {
+        sourceHandle = "bottom";
+        targetHandle = "top";
+      } else {
+        // 역방향 (자식 → 부모)
+        sourceHandle = "top";
+        targetHandle = "bottom";
       }
     }
 
@@ -279,15 +298,16 @@ export function buildGraphData(
       type: "ownership",
       sourceHandle,
       targetHandle,
-      markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: isTree ? "#333" : "#9CA3AF" },
+      markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: "#9CA3AF" },
       data: {
         ownershipPct: r.ownershipPct,
         isControllerEdge: false,
-        isTreeEdge: isTree,
+        isTreeEdge: false,
       },
     });
   }
 
+  // 동일인 지분 엣지 (최상위)
   if (ctrl) {
     for (let i = 0; i < ctrlH.length; i++) {
       const h = ctrlH[i];
@@ -300,7 +320,7 @@ export function buildGraphData(
         type: "ownership",
         sourceHandle: "bottom",
         targetHandle: "top",
-        markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: "#16A34A" },
+        markerEnd: { type: MarkerType.ArrowClosed, width: 10, height: 10, color: "#16A34A" },
         data: {
           ownershipPct: h.ownershipPct,
           isControllerEdge: true,

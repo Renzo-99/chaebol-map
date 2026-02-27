@@ -78,7 +78,7 @@ body {
 }
 
 /* ==============================
-   React Flow — FTC 소유지분도 라이트 테마
+   React Flow — FTC 소유지분도
    ============================== */
 .react-flow__background {
   background: #fff !important;
@@ -112,27 +112,28 @@ body {
    FTC 소유지분도 — 동일인(총수) 노드
    ============================== */
 .ftc-ctrl {
-  width: 130px;
+  width: 140px;
   box-sizing: border-box;
   text-align: center;
-  padding: 6px 10px;
-  border: 2px solid #333;
+  padding: 8px 12px;
+  border: 2px solid #222;
   border-radius: 50px;
   background: #fff;
-  font-family: inherit;
+  font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
   cursor: pointer;
 }
 
 .ftc-ctrl:hover {
-  background: #f9f9f9;
+  background: #f7f7f7;
 }
 
 .ftc-ctrl-sub {
   display: block;
   font-size: 10px;
   font-weight: 600;
-  color: #666;
+  color: #555;
   line-height: 1.2;
+  letter-spacing: 0.5px;
 }
 
 .ftc-ctrl-name {
@@ -140,25 +141,25 @@ body {
   font-size: 12px;
   font-weight: 700;
   color: #000;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 /* ==============================
    FTC 소유지분도 — 회사 노드
    ============================== */
 .ftc-box {
-  width: 130px;
+  width: 140px;
   box-sizing: border-box;
-  padding: 5px 6px;
-  border: 1px solid #333;
+  padding: 6px 8px;
+  border: 1.5px solid #222;
   background: #fff;
-  font-family: inherit;
+  font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
   text-align: center;
   cursor: pointer;
 }
 
 .ftc-box:hover {
-  background: #f0f0f0;
+  background: #f5f5f5;
 }
 
 /* 지주회사 음영 */
@@ -178,7 +179,13 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
-  line-height: 1.4;
+  line-height: 1.5;
+}
+
+.ftc-star {
+  color: #000;
+  font-size: 10px;
+  margin-right: 1px;
 }
 
 /* ─── 핸들 (투명) ─── */
@@ -191,20 +198,22 @@ body {
 }
 
 /* ==============================
-   FTC 소유지분도 — 엣지 라벨
+   FTC 소유지분도 — 엣지 라벨 (지분율 %)
    ============================== */
 .ftc-pct {
   font-size: 9px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 700;
+  color: #222;
   background: #fff;
-  padding: 0 2px;
+  padding: 0 3px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+  line-height: 1.2;
 }
 
 /* ==============================
-   FTC 소유지분도 — 도구 모음 & 범례
+   FTC 소유지분도 — 도구 모음
    ============================== */
 .ftc-toolbar {
   position: absolute;
@@ -319,7 +328,7 @@ body {
   display: inline-block;
   width: 14px;
   height: 10px;
-  border: 1.5px solid #333;
+  border: 1.5px solid #222;
   border-radius: 50%;
   background: #fff;
 }
@@ -334,7 +343,7 @@ body {
   display: inline-block;
   width: 14px;
   height: 10px;
-  border: 1px solid #333;
+  border: 1px solid #222;
   background: #d9d9d9;
 }
 
@@ -351,7 +360,7 @@ body {
 }
 
 .ftc-legend-line-tree {
-  border-top: 2px solid #333;
+  border-top: 2px solid #222;
 }
 
 .ftc-legend-line-cross {

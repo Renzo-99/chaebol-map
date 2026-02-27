@@ -24,15 +24,38 @@ export const OwnershipEdge = memo(function OwnershipEdge({
   const isTreeEdge = (data?.isTreeEdge as boolean) ?? true;
   const dimmed = (data?.dimmed as boolean) ?? false;
 
-  const [edgePath, labelX, labelY] = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-    borderRadius: isTreeEdge ? 0 : 8,
-  });
+  let edgePath: string;
+  let labelX: number;
+  let labelY: number;
+
+  if (isTreeEdge) {
+    // FTC 조직도 스타일: 직각 꺾임 경로
+    // Parent(bottom) → 아래로 → 수평 → 아래로 → Child(top)
+    const midY = sourceY + (targetY - sourceY) * 0.5;
+    edgePath = `M ${sourceX},${sourceY} L ${sourceX},${midY} L ${targetX},${midY} L ${targetX},${targetY}`;
+
+    // 라벨 위치: 수직 구간 중간
+    if (Math.abs(sourceX - targetX) < 10) {
+      // 거의 수직 — 오른쪽에 라벨
+      labelX = sourceX + 12;
+      labelY = (sourceY + targetY) * 0.5;
+    } else {
+      // 수평 구간 중간에 라벨
+      labelX = (sourceX + targetX) * 0.5;
+      labelY = midY - 8;
+    }
+  } else {
+    // 비트리 엣지: 스무스 스텝 (교차출자 등)
+    [edgePath, labelX, labelY] = getSmoothStepPath({
+      sourceX,
+      sourceY,
+      sourcePosition,
+      targetX,
+      targetY,
+      targetPosition,
+      borderRadius: 6,
+    });
+  }
 
   // FTC 공정위 스타일 색상
   let strokeColor: string;
@@ -40,7 +63,7 @@ export const OwnershipEdge = memo(function OwnershipEdge({
   let strokeDasharray: string | undefined;
 
   if (isController) {
-    // 동일인 → 회사: 녹색 점선 (FTC 원본과 동일)
+    // 동일인 → 회사: 녹색 점선 (FTC 원본)
     strokeColor = "#16A34A";
     strokeWidth = 1.5;
     strokeDasharray = "6 3";
@@ -51,16 +74,16 @@ export const OwnershipEdge = memo(function OwnershipEdge({
     strokeDasharray = "4 3";
   } else if (pct >= 50) {
     strokeColor = "#111";
-    strokeWidth = 1.8;
+    strokeWidth = 2;
   } else if (pct >= 20) {
     strokeColor = "#333";
-    strokeWidth = 1.3;
+    strokeWidth = 1.5;
   } else if (pct >= 5) {
-    strokeColor = "#666";
-    strokeWidth = 1;
+    strokeColor = "#555";
+    strokeWidth = 1.2;
   } else {
-    strokeColor = "#999";
-    strokeWidth = 0.8;
+    strokeColor = "#888";
+    strokeWidth = 1;
     strokeDasharray = "4 3";
   }
 
