@@ -111,7 +111,7 @@ body {
    커스텀 노드 스타일
    ============================== */
 .ownership-node {
-  min-width: 160px;
+  min-width: 180px;
   border-radius: 14px;
   font-family: inherit;
   cursor: pointer;
@@ -128,37 +128,37 @@ body {
 .node-controller {
   background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
   border: 2px solid #FCD34D;
-  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25), 0 0 0 1px rgba(252, 211, 77, 0.15);
-  min-width: 140px;
+  box-shadow: 0 4px 24px rgba(245, 158, 11, 0.3), 0 0 0 1px rgba(252, 211, 77, 0.2);
+  min-width: 160px;
 }
 
 .node-controller:hover {
-  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35), 0 0 0 1px rgba(252, 211, 77, 0.25);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4), 0 0 0 1px rgba(252, 211, 77, 0.3);
 }
 
 .node-controller-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 20px;
-  gap: 2px;
+  padding: 14px 24px;
+  gap: 3px;
 }
 
 .node-controller-icon {
-  font-size: 22px;
+  font-size: 26px;
   line-height: 1;
 }
 
 .node-controller-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .node-controller-name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
   color: #000;
   white-space: nowrap;
@@ -166,67 +166,66 @@ body {
 
 /* ─── 지주회사 노드 ─── */
 .node-holding {
-  background: rgba(34, 197, 94, 0.08);
+  background: #1a2e22;
   border: 2px solid #22C55E;
-  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.12);
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.15);
 }
 
 .node-holding:hover {
-  background: rgba(34, 197, 94, 0.14);
-  box-shadow: 0 6px 24px rgba(34, 197, 94, 0.2);
+  background: #1f3628;
+  box-shadow: 0 6px 24px rgba(34, 197, 94, 0.25);
 }
 
 /* ─── 상장회사 노드 ─── */
 .node-listed {
-  background: rgba(49, 130, 246, 0.06);
-  border: 2px solid rgba(49, 130, 246, 0.5);
-  box-shadow: 0 2px 12px rgba(49, 130, 246, 0.08);
+  background: #192438;
+  border: 2px solid #3182F6;
+  box-shadow: 0 2px 12px rgba(49, 130, 246, 0.1);
 }
 
 .node-listed:hover {
-  background: rgba(49, 130, 246, 0.12);
-  border-color: #3182F6;
-  box-shadow: 0 6px 24px rgba(49, 130, 246, 0.18);
+  background: #1d2a42;
+  box-shadow: 0 6px 24px rgba(49, 130, 246, 0.22);
 }
 
 /* ─── 비상장 노드 ─── */
 .node-unlisted {
-  background: rgba(100, 116, 139, 0.06);
-  border: 1px solid rgba(100, 116, 139, 0.3);
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  background: #1e2530;
+  border: 1.5px solid #4B5563;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
 }
 
 .node-unlisted:hover {
-  background: rgba(100, 116, 139, 0.12);
-  border-color: rgba(100, 116, 139, 0.5);
+  background: #252d3a;
+  border-color: #6B7280;
 }
 
 /* ─── 선택 상태 ─── */
 .node-selected {
-  box-shadow: 0 0 0 2px #3182F6, 0 8px 30px rgba(49, 130, 246, 0.25) !important;
+  box-shadow: 0 0 0 3px #3182F6, 0 8px 30px rgba(49, 130, 246, 0.3) !important;
 }
 
 /* ─── 노드 내부 요소 ─── */
 .node-header {
-  padding: 10px 16px 6px;
+  padding: 12px 16px 8px;
 }
 
 .node-name-row {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .node-star {
   color: #FBBF24;
-  font-size: 13px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
 .node-name {
-  font-size: 13px;
-  font-weight: 700;
-  color: #F2F4F6;
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -234,9 +233,9 @@ body {
 
 .node-category {
   display: inline-block;
-  margin-top: 2px;
-  font-size: 10px;
-  color: #8B95A1;
+  margin-top: 3px;
+  font-size: 11px;
+  color: #B0B8C1;
   font-weight: 500;
 }
 
@@ -244,41 +243,40 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 16px 10px;
+  padding: 4px 16px 12px;
   gap: 8px;
 }
 
 .node-price {
-  font-size: 12px;
-  font-weight: 700;
-  color: #F2F4F6;
+  font-size: 13px;
+  font-weight: 800;
+  color: #FFFFFF;
   font-variant-numeric: tabular-nums;
 }
 
 .node-change {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .change-up {
-  color: #F04452;
+  color: #FF5A65;
 }
 
 .change-down {
-  color: #3182F6;
+  color: #5B9CF6;
 }
 
 .change-flat {
-  color: #8B95A1;
+  color: #B0B8C1;
 }
 
 .node-holding-badge {
-  padding: 2px 16px 10px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #22C55E;
-  opacity: 0.8;
+  padding: 2px 16px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4ADE80;
 }
 
 /* ─── 핸들 (연결점) ─── */
@@ -299,9 +297,9 @@ body {
    커스텀 엣지 레이블
    ============================== */
 .edge-label {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
   border-radius: 6px;
   border: 1px solid;
   white-space: nowrap;
