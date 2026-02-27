@@ -5,7 +5,7 @@
     "slug": "hanwha",
     "controllerName": "김승연",
     "description": "한화그룹은 방산, 에너지, 금융을 3대 축으로 하는 대한민국 대표 재벌그룹이다. 태양광·수소 등 친환경 에너지와 항공우주·방산 분야에서 글로벌 사업을 확장하고 있다.",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 25,
     "listedCompanies": 7
   },
@@ -19,10 +19,10 @@
       "isController": false,
       "category": "에너지/화학",
       "stockCode": "000880",
-      "stockPrice": 28350,
-      "priceChange": 450,
-      "priceChangePercent": 1.61,
-      "marketCap": 21300000000000,
+      "stockPrice": 42000,
+      "priceChange": 500,
+      "priceChangePercent": 1.2,
+      "marketCap": 126000,
       "sector": "화학·방산"
     },
     {
@@ -34,10 +34,10 @@
       "isController": false,
       "category": "에너지/화학",
       "stockCode": "009830",
-      "stockPrice": 24800,
-      "priceChange": -650,
-      "priceChangePercent": -2.55,
-      "marketCap": 46200000000000,
+      "stockPrice": 7500,
+      "priceChange": 120,
+      "priceChangePercent": 1.63,
+      "marketCap": 14000,
       "sector": "태양광·화학"
     },
     {
@@ -49,10 +49,10 @@
       "isController": false,
       "category": "기타",
       "stockCode": "012450",
-      "stockPrice": 352000,
-      "priceChange": 12000,
-      "priceChangePercent": 3.53,
-      "marketCap": 346000000000000,
+      "stockPrice": 1185000,
+      "priceChange": -27000,
+      "priceChangePercent": -2.23,
+      "marketCap": 611000,
       "sector": "항공우주·방산"
     },
     {
@@ -333,70 +333,70 @@
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-general-chemical",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-009",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-defense",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-010",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-power-systems",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-011",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-land",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-012",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-impact",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-013",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-cimarron",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-014",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-moment",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-015",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-solutions",
       "toCompanyId": "hanwha-qcells",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-016",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-solutions",
       "toCompanyId": "hanwha-advanced-materials",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-017",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-solutions",
       "toCompanyId": "hanwha-convergence",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-018",
@@ -424,14 +424,14 @@
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-life",
       "toCompanyId": "hanwha-asset-management",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "hanwha-rel-022",
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-life",
       "toCompanyId": "hanwha-general-insurance",
-      "ownershipPct": 51.0
+      "ownershipPct": 51
     },
     {
       "id": "hanwha-rel-023",
@@ -452,7 +452,7 @@
       "groupId": "hanwha",
       "fromCompanyId": "hanwha-corp",
       "toCompanyId": "hanwha-connect",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ],
   "controllerHoldings": [
@@ -464,7 +464,7 @@
     {
       "groupId": "hanwha",
       "companyId": "hanwha-eagles",
-      "ownershipPct": 10.0
+      "ownershipPct": 10
     },
     {
       "groupId": "hanwha",
@@ -474,7 +474,7 @@
     {
       "groupId": "hanwha",
       "companyId": "hanwha-energy",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ]
 }

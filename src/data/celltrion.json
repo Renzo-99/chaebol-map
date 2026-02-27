@@ -5,7 +5,7 @@
     "slug": "celltrion",
     "controllerName": "서정진",
     "description": "셀트리온그룹은 바이오시밀러 분야의 글로벌 리더로 바이오의약품 개발·생산·판매를 핵심 사업으로 영위",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 20,
     "listedCompanies": 2
   },
@@ -28,10 +28,10 @@
       "isController": false,
       "category": "바이오",
       "stockCode": "068270",
-      "stockPrice": 183500,
-      "priceChange": 3500,
-      "priceChangePercent": 1.94,
-      "marketCap": 432000,
+      "stockPrice": 200000,
+      "priceChange": 4500,
+      "priceChangePercent": 2.3,
+      "marketCap": 274000,
       "sector": "바이오시밀러"
     },
     {
@@ -43,10 +43,10 @@
       "isController": false,
       "category": "제약",
       "stockCode": "068760",
-      "stockPrice": 72800,
-      "priceChange": -1200,
-      "priceChangePercent": -1.62,
-      "marketCap": 46500,
+      "stockPrice": 82000,
+      "priceChange": 1000,
+      "priceChangePercent": 1.23,
+      "marketCap": 56000,
       "sector": "의약품유통"
     },
     {
@@ -209,7 +209,7 @@
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-pharm",
-      "ownershipPct": 56.0
+      "ownershipPct": 56
     },
     {
       "id": "ct-rel-002",
@@ -223,112 +223,112 @@
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-skincure",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-004",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-chemical",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-005",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-diagnostics",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-006",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-partner",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-007",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-logistics",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-008",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-usa",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-009",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-healthcare-eu",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-010",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-life-sciences",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-011",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-advanced-bio",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-012",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-cm",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-013",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-bio-japan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-014",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-asia-pacific",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-015",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-ct",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-016",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-global",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-017",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-fe",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "ct-rel-018",
       "groupId": "celltrion",
       "fromCompanyId": "celltrion-inc",
       "toCompanyId": "celltrion-investment",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ],
   "controllerHoldings": [

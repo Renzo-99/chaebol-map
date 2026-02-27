@@ -5,7 +5,7 @@
     "slug": "samsung",
     "controllerName": "이재용",
     "description": "삼성그룹은 대한민국 최대 재벌그룹으로 전자, 금융, 바이오 등 다양한 분야에 걸쳐 사업을 영위",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 59,
     "listedCompanies": 16
   },
@@ -16,11 +16,12 @@
       "name": "삼성전자",
       "isListed": true,
       "category": "전자/IT",
-      "stockPrice": 67800,
-      "priceChange": -1200,
-      "priceChangePercent": -1.74,
-      "marketCap": 4048000,
-      "sector": "반도체·전자"
+      "stockPrice": 194500,
+      "priceChange": 3500,
+      "priceChangePercent": 1.83,
+      "marketCap": 11614000,
+      "sector": "반도체·전자",
+      "stockCode": "005930"
     },
     {
       "id": "samsung-ct",
@@ -29,10 +30,11 @@
       "isListed": true,
       "category": "건설",
       "stockPrice": 128500,
-      "priceChange": 500,
-      "priceChangePercent": 0.39,
+      "priceChange": 1500,
+      "priceChangePercent": 1.18,
       "marketCap": 242000,
-      "sector": "건설·상사"
+      "sector": "건설·상사",
+      "stockCode": "028260"
     },
     {
       "id": "samsung-life",
@@ -40,11 +42,12 @@
       "name": "삼성생명보험",
       "isListed": true,
       "category": "금융/보험",
-      "stockPrice": 92300,
-      "priceChange": 1300,
-      "priceChangePercent": 1.43,
-      "marketCap": 184600,
-      "sector": "생명보험"
+      "stockPrice": 105000,
+      "priceChange": 2000,
+      "priceChangePercent": 1.94,
+      "marketCap": 210000,
+      "sector": "생명보험",
+      "stockCode": "032830"
     },
     {
       "id": "samsung-fire",
@@ -52,11 +55,12 @@
       "name": "삼성화재해상보험",
       "isListed": true,
       "category": "금융/보험",
-      "stockPrice": 345000,
+      "stockPrice": 385000,
       "priceChange": 5000,
-      "priceChangePercent": 1.47,
-      "marketCap": 163000,
-      "sector": "손해보험"
+      "priceChangePercent": 1.32,
+      "marketCap": 182000,
+      "sector": "손해보험",
+      "stockCode": "000810"
     },
     {
       "id": "samsung-sdi",
@@ -64,11 +68,12 @@
       "name": "삼성SDI",
       "isListed": true,
       "category": "화학",
-      "stockPrice": 372000,
-      "priceChange": -8000,
-      "priceChangePercent": -2.11,
-      "marketCap": 255600,
-      "sector": "2차전지·소재"
+      "stockPrice": 380000,
+      "priceChange": -5500,
+      "priceChangePercent": -1.43,
+      "marketCap": 261400,
+      "sector": "2차전지·소재",
+      "stockCode": "006400"
     },
     {
       "id": "samsung-electro-mechanics",
@@ -76,11 +81,12 @@
       "name": "삼성전기",
       "isListed": true,
       "category": "전자/IT",
-      "stockPrice": 158200,
-      "priceChange": 2200,
-      "priceChangePercent": 1.41,
-      "marketCap": 117800,
-      "sector": "전자부품"
+      "stockPrice": 421500,
+      "priceChange": 44500,
+      "priceChangePercent": 11.8,
+      "marketCap": 314000,
+      "sector": "전자부품",
+      "stockCode": "009150"
     },
     {
       "id": "samsung-sds",
@@ -88,11 +94,12 @@
       "name": "삼성에스디에스",
       "isListed": true,
       "category": "전자/IT",
-      "stockPrice": 152000,
-      "priceChange": -3000,
-      "priceChangePercent": -1.94,
-      "marketCap": 117600,
-      "sector": "IT서비스"
+      "stockPrice": 168000,
+      "priceChange": 2000,
+      "priceChangePercent": 1.2,
+      "marketCap": 130000,
+      "sector": "IT서비스",
+      "stockCode": "018260"
     },
     {
       "id": "samsung-biologics",
@@ -100,11 +107,12 @@
       "name": "삼성바이오로직스",
       "isListed": true,
       "category": "바이오",
-      "stockPrice": 812000,
-      "priceChange": 12000,
-      "priceChangePercent": 1.50,
-      "marketCap": 578000,
-      "sector": "바이오의약품"
+      "stockPrice": 1715000,
+      "priceChange": -35000,
+      "priceChangePercent": -2,
+      "marketCap": 1133900,
+      "sector": "바이오의약품",
+      "stockCode": "207940"
     },
     {
       "id": "samsung-securities",
@@ -112,11 +120,12 @@
       "name": "삼성증권",
       "isListed": true,
       "category": "금융/보험",
-      "stockPrice": 42800,
-      "priceChange": 300,
-      "priceChangePercent": 0.71,
-      "marketCap": 33100,
-      "sector": "증권"
+      "stockPrice": 62000,
+      "priceChange": 800,
+      "priceChangePercent": 1.31,
+      "marketCap": 47800,
+      "sector": "증권",
+      "stockCode": "016360"
     },
     {
       "id": "hotel-shilla",
@@ -124,11 +133,12 @@
       "name": "호텔신라",
       "isListed": true,
       "category": "서비스",
-      "stockPrice": 68200,
-      "priceChange": -800,
-      "priceChangePercent": -1.16,
-      "marketCap": 26700,
-      "sector": "호텔·면세"
+      "stockPrice": 78000,
+      "priceChange": 500,
+      "priceChangePercent": 0.65,
+      "marketCap": 30600,
+      "sector": "호텔·면세",
+      "stockCode": "008770"
     },
     {
       "id": "cheil-worldwide",
@@ -136,11 +146,12 @@
       "name": "제일기획",
       "isListed": true,
       "category": "서비스",
-      "stockPrice": 21450,
-      "priceChange": 150,
-      "priceChangePercent": 0.70,
-      "marketCap": 24700,
-      "sector": "광고"
+      "stockPrice": 23000,
+      "priceChange": 200,
+      "priceChangePercent": 0.88,
+      "marketCap": 27300,
+      "sector": "광고",
+      "stockCode": "030000"
     },
     {
       "id": "samsung-card",
@@ -148,11 +159,12 @@
       "name": "삼성카드",
       "isListed": true,
       "category": "금융/보험",
-      "stockPrice": 38600,
-      "priceChange": 400,
-      "priceChangePercent": 1.05,
-      "marketCap": 45200,
-      "sector": "카드·할부금융"
+      "stockPrice": 40800,
+      "priceChange": 350,
+      "priceChangePercent": 0.87,
+      "marketCap": 24500,
+      "sector": "카드·할부금융",
+      "stockCode": "029780"
     },
     {
       "id": "samsung-heavy",
@@ -160,11 +172,12 @@
       "name": "삼성중공업",
       "isListed": true,
       "category": "건설",
-      "stockPrice": 9850,
-      "priceChange": 250,
-      "priceChangePercent": 2.60,
-      "marketCap": 69300,
-      "sector": "조선"
+      "stockPrice": 62300,
+      "priceChange": 300,
+      "priceChangePercent": 0.48,
+      "marketCap": 37200,
+      "sector": "조선",
+      "stockCode": "010140"
     },
     {
       "id": "s1-corp",
@@ -172,11 +185,12 @@
       "name": "에스원",
       "isListed": true,
       "category": "서비스",
-      "stockPrice": 62500,
-      "priceChange": -500,
-      "priceChangePercent": -0.79,
-      "marketCap": 23700,
-      "sector": "보안서비스"
+      "stockPrice": 62000,
+      "priceChange": 500,
+      "priceChangePercent": 0.81,
+      "marketCap": 23400,
+      "sector": "보안서비스",
+      "stockCode": "012750"
     },
     {
       "id": "samsung-ena",
@@ -184,11 +198,12 @@
       "name": "삼성이엔에이",
       "isListed": true,
       "category": "건설",
-      "stockPrice": 58300,
-      "priceChange": 800,
-      "priceChangePercent": 1.39,
-      "marketCap": 14200,
-      "sector": "엔지니어링"
+      "stockPrice": 8500,
+      "priceChange": 100,
+      "priceChangePercent": 1.19,
+      "marketCap": 2800,
+      "sector": "엔지니어링",
+      "stockCode": "028050"
     },
     {
       "id": "samsung-display",
@@ -456,7 +471,7 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-life",
       "toCompanyId": "hotel-shilla",
-      "ownershipPct": 3.0
+      "ownershipPct": 3
     },
     {
       "id": "rel-014",
@@ -491,21 +506,21 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-securities",
       "toCompanyId": "samsung-futures",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-019",
       "groupId": "samsung",
       "fromCompanyId": "samsung-s1a-asset",
       "toCompanyId": "samsung-life-financial",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-020",
       "groupId": "samsung",
       "fromCompanyId": "samsung-s1a-asset",
       "toCompanyId": "samsung-asset",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-021",
@@ -526,14 +541,14 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-electronics",
       "toCompanyId": "samsung-venture",
-      "ownershipPct": 17.0
+      "ownershipPct": 17
     },
     {
       "id": "rel-024",
       "groupId": "samsung",
       "fromCompanyId": "samsung-biologics",
       "toCompanyId": "samsung-bioepis",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-025",
@@ -554,7 +569,7 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-electronics",
       "toCompanyId": "samsung-electronics-logitech",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-028",
@@ -568,21 +583,21 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-electronics",
       "toCompanyId": "steco",
-      "ownershipPct": 70.0
+      "ownershipPct": 70
     },
     {
       "id": "rel-030",
       "groupId": "samsung",
       "fromCompanyId": "samsung-ct",
       "toCompanyId": "suwon-samsung-fc",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-031",
       "groupId": "samsung",
       "fromCompanyId": "samsung-card",
       "toCompanyId": "samsung-card-cs",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-032",
@@ -610,7 +625,7 @@
       "groupId": "samsung",
       "fromCompanyId": "samsung-life",
       "toCompanyId": "s1-corp",
-      "ownershipPct": 1.0
+      "ownershipPct": 1
     },
     {
       "id": "rel-036",
@@ -624,7 +639,7 @@
       "groupId": "samsung",
       "fromCompanyId": "mirakom-inc",
       "toCompanyId": "openhands",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-038",
@@ -645,21 +660,21 @@
       "groupId": "samsung",
       "fromCompanyId": "s1-corp",
       "toCompanyId": "s1-crm",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-041",
       "groupId": "samsung",
       "fromCompanyId": "samsung-life",
       "toCompanyId": "samsung-active-asset",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-042",
       "groupId": "samsung",
       "fromCompanyId": "samsung-life",
       "toCompanyId": "samsung-hedge-asset",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "rel-043",

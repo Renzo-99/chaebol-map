@@ -5,7 +5,7 @@
     "slug": "dl",
     "controllerName": "이준용",
     "description": "DL그룹은 건설, 화학, 에너지 분야를 중심으로 사업을 영위하는 대한민국의 주요 재벌그룹",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 30,
     "listedCompanies": 3
   },
@@ -28,10 +28,10 @@
       "isController": false,
       "category": "지주",
       "stockCode": "000210",
-      "stockPrice": 52400,
-      "priceChange": 700,
-      "priceChangePercent": 1.35,
-      "marketCap": 27500,
+      "stockPrice": 78000,
+      "priceChange": 1500,
+      "priceChangePercent": 1.96,
+      "marketCap": 41000,
       "sector": "지주회사"
     },
     {
@@ -43,10 +43,10 @@
       "isController": false,
       "category": "건설",
       "stockCode": "375500",
-      "stockPrice": 34150,
-      "priceChange": -350,
-      "priceChangePercent": -1.01,
-      "marketCap": 33800,
+      "stockPrice": 42000,
+      "priceChange": 500,
+      "priceChangePercent": 1.2,
+      "marketCap": 22000,
       "sector": "건설"
     },
     {
@@ -319,182 +319,182 @@
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-energy",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-004",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-global",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-005",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-partners",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-006",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "yido",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-007",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-asset",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-008",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-data-center",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-009",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-living",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-010",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-creative",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-011",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-construction",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-012",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-ld",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-013",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-cm",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-014",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-prime",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-015",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-enc-vietnam",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-016",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-stm",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-017",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-concrete",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-018",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-infra",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-019",
       "groupId": "dl",
       "fromCompanyId": "dl-enc",
       "toCompanyId": "dl-smart-city",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-020",
       "groupId": "dl",
       "fromCompanyId": "dl-chemical",
       "toCompanyId": "dl-industrial",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-021",
       "groupId": "dl",
       "fromCompanyId": "dl-chemical",
       "toCompanyId": "cabot-korea",
-      "ownershipPct": 50.0
+      "ownershipPct": 50
     },
     {
       "id": "dl-rel-022",
       "groupId": "dl",
       "fromCompanyId": "dl-chemical",
       "toCompanyId": "dl-solvent",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-023",
       "groupId": "dl",
       "fromCompanyId": "dl-chemical",
       "toCompanyId": "dl-polychem",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-024",
       "groupId": "dl",
       "fromCompanyId": "dl-chemical",
       "toCompanyId": "dl-chemical-usa",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-025",
       "groupId": "dl",
       "fromCompanyId": "dl-energy",
       "toCompanyId": "dl-power",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-026",
       "groupId": "dl",
       "fromCompanyId": "dl-energy",
       "toCompanyId": "dl-ecowin",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-027",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-mates",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "dl-rel-028",
       "groupId": "dl",
       "fromCompanyId": "dl-holdings",
       "toCompanyId": "dl-logistics",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ],
   "controllerHoldings": [

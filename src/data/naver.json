@@ -5,7 +5,7 @@
     "slug": "naver",
     "controllerName": "최수연",
     "description": "네이버그룹은 대한민국 최대 IT플랫폼 기업으로 검색, 커머스, 웹툰, 클라우드, AI 등 다양한 디지털 서비스를 운영",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 60,
     "listedCompanies": 2
   },
@@ -28,10 +28,10 @@
       "isController": false,
       "category": "IT플랫폼",
       "stockCode": "035420",
-      "stockPrice": 218000,
-      "priceChange": 4500,
-      "priceChangePercent": 2.11,
-      "marketCap": 357800,
+      "stockPrice": 263750,
+      "priceChange": 10750,
+      "priceChangePercent": 4.25,
+      "marketCap": 432000,
       "sector": "인터넷서비스"
     },
     {
@@ -569,14 +569,14 @@
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-cloud",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-002",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-financial",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-003",
@@ -590,7 +590,7 @@
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "line-plus",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-005",
@@ -604,14 +604,14 @@
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-labs",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-007",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-i-and-s",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-008",
@@ -632,343 +632,343 @@
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-business-platform",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-011",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-data-center",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-012",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "spring-camp",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-013",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-dna-plus",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-014",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-investment",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-015",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "cream",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-016",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-1784",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-017",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "happybean",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-018",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-connect",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-019",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-cultural",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-020",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-clova",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-021",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-ai-lab",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-022",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-square",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-023",
       "groupId": "naver",
       "fromCompanyId": "naver-cloud",
       "toCompanyId": "naver-cloud-japan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-024",
       "groupId": "naver",
       "fromCompanyId": "naver-cloud",
       "toCompanyId": "naver-cloud-asia-pacific",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-025",
       "groupId": "naver",
       "fromCompanyId": "naver-cloud",
       "toCompanyId": "naver-cloud-europe",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-026",
       "groupId": "naver",
       "fromCompanyId": "naver-cloud",
       "toCompanyId": "naver-cloud-trust",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-027",
       "groupId": "naver",
       "fromCompanyId": "naver-cloud",
       "toCompanyId": "naver-cloud-platform",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-028",
       "groupId": "naver",
       "fromCompanyId": "naver-financial",
       "toCompanyId": "naver-pay",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-029",
       "groupId": "naver",
       "fromCompanyId": "naver-financial",
       "toCompanyId": "naver-financial-plus",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-030",
       "groupId": "naver",
       "fromCompanyId": "naver-financial",
       "toCompanyId": "naver-insurance",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-031",
       "groupId": "naver",
       "fromCompanyId": "naver-labs",
       "toCompanyId": "naver-labs-europe",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-032",
       "groupId": "naver",
       "fromCompanyId": "naver-labs",
       "toCompanyId": "naver-labs-japan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-033",
       "groupId": "naver",
       "fromCompanyId": "naver-webtoon",
       "toCompanyId": "wattpad",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-034",
       "groupId": "naver",
       "fromCompanyId": "naver-webtoon",
       "toCompanyId": "munpia",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-035",
       "groupId": "naver",
       "fromCompanyId": "line-plus",
       "toCompanyId": "line-studio",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-036",
       "groupId": "naver",
       "fromCompanyId": "line-plus",
       "toCompanyId": "line-friends",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-037",
       "groupId": "naver",
       "fromCompanyId": "line-plus",
       "toCompanyId": "line-taiwan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-038",
       "groupId": "naver",
       "fromCompanyId": "line-plus",
       "toCompanyId": "line-thailand",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-039",
       "groupId": "naver",
       "fromCompanyId": "line-plus",
       "toCompanyId": "line-financial",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-040",
       "groupId": "naver",
       "fromCompanyId": "line-financial",
       "toCompanyId": "line-pay",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-041",
       "groupId": "naver",
       "fromCompanyId": "works-mobile",
       "toCompanyId": "works-mobile-japan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-042",
       "groupId": "naver",
       "fromCompanyId": "snow-corp",
       "toCompanyId": "snow-japan",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-043",
       "groupId": "naver",
       "fromCompanyId": "snow-corp",
       "toCompanyId": "snowbell",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-044",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-search-trend",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-045",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "smart-studio",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-046",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "playlist-corp",
-      "ownershipPct": 72.0
+      "ownershipPct": 72
     },
     {
       "id": "nv-rel-047",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-vibe",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-048",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-series-on",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-049",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "audioclip",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-050",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "clova-care",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-051",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "v-live",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-052",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-genie",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-053",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "nhn-edutech",
-      "ownershipPct": 51.0
+      "ownershipPct": 51
     },
     {
       "id": "nv-rel-054",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-property",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-055",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-maps",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-056",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-shopping",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-057",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-place",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "nv-rel-058",
       "groupId": "naver",
       "fromCompanyId": "naver-corp",
       "toCompanyId": "naver-plus-membership",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ],
   "controllerHoldings": [

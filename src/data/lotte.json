@@ -5,7 +5,7 @@
     "slug": "lotte",
     "controllerName": "신동빈",
     "description": "롯데그룹은 유통, 식품, 화학, 건설, 관광 등 다양한 사업 분야에 걸친 대한민국의 대표 재벌 그룹이다. 롯데지주를 중심으로 롯데쇼핑, 롯데케미칼, 롯데칠성음료, 호텔롯데 등 주요 계열사를 보유하고 있다.",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 12,
     "listedCompanies": 7
   },
@@ -19,10 +19,10 @@
       "isController": false,
       "category": "기타",
       "stockCode": "004990",
-      "stockPrice": 28650,
-      "priceChange": -350,
-      "priceChangePercent": -1.21,
-      "marketCap": 28500000000000,
+      "stockPrice": 33000,
+      "priceChange": 300,
+      "priceChangePercent": 0.92,
+      "marketCap": 30000,
       "sector": "지주회사"
     },
     {
@@ -34,10 +34,10 @@
       "isController": false,
       "category": "에너지/화학",
       "stockCode": "011170",
-      "stockPrice": 87600,
-      "priceChange": -1400,
-      "priceChangePercent": -1.57,
-      "marketCap": 30000000000000,
+      "stockPrice": 85000,
+      "priceChange": 2000,
+      "priceChangePercent": 2.41,
+      "marketCap": 29100,
       "sector": "화학"
     },
     {
@@ -49,10 +49,10 @@
       "isController": false,
       "category": "유통",
       "stockCode": "023530",
-      "stockPrice": 78200,
-      "priceChange": 800,
-      "priceChangePercent": 1.03,
-      "marketCap": 22600000000000,
+      "stockPrice": 16000,
+      "priceChange": -200,
+      "priceChangePercent": -1.23,
+      "marketCap": 10700,
       "sector": "유통"
     },
     {
@@ -109,10 +109,10 @@
       "isController": false,
       "category": "에너지/화학",
       "stockCode": "004000",
-      "stockPrice": 54800,
-      "priceChange": 300,
-      "priceChangePercent": 0.55,
-      "marketCap": 14200000000000,
+      "stockPrice": 135000,
+      "priceChange": 1500,
+      "priceChangePercent": 1.12,
+      "marketCap": 8100,
       "sector": "정밀화학"
     },
     {
@@ -162,25 +162,127 @@
     }
   ],
   "relations": [
-    { "id": "r-lt-01", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-chemical", "ownershipPct": 45.27 },
-    { "id": "r-lt-02", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-shopping", "ownershipPct": 42.61 },
-    { "id": "r-lt-03", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-chilsung", "ownershipPct": 54.00 },
-    { "id": "r-lt-04", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-wellfood", "ownershipPct": 33.25 },
-    { "id": "r-lt-05", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-rental", "ownershipPct": 57.55 },
-    { "id": "r-lt-06", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-construction", "ownershipPct": 100.00 },
-    { "id": "r-lt-07", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "hotel-lotte", "ownershipPct": 100.00 },
-    { "id": "r-lt-08", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-capital", "ownershipPct": 100.00 },
-    { "id": "r-lt-09", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-data", "ownershipPct": 100.00 },
-    { "id": "r-lt-10", "groupId": "lotte", "fromCompanyId": "lotte-chemical", "toCompanyId": "lotte-fine-chemical", "ownershipPct": 37.48 },
-    { "id": "r-lt-11", "groupId": "lotte", "fromCompanyId": "hotel-lotte", "toCompanyId": "lotte-property", "ownershipPct": 100.00 },
-    { "id": "r-lt-12", "groupId": "lotte", "fromCompanyId": "lotte-shopping", "toCompanyId": "lotte-construction", "ownershipPct": 0.00 },
-    { "id": "r-lt-13", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-property", "ownershipPct": 0.00 },
-    { "id": "r-lt-14", "groupId": "lotte", "fromCompanyId": "lotte-chilsung", "toCompanyId": "lotte-wellfood", "ownershipPct": 13.70 },
-    { "id": "r-lt-15", "groupId": "lotte", "fromCompanyId": "lotte-holding", "toCompanyId": "lotte-fine-chemical", "ownershipPct": 13.31 }
+    {
+      "id": "r-lt-01",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-chemical",
+      "ownershipPct": 45.27
+    },
+    {
+      "id": "r-lt-02",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-shopping",
+      "ownershipPct": 42.61
+    },
+    {
+      "id": "r-lt-03",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-chilsung",
+      "ownershipPct": 54
+    },
+    {
+      "id": "r-lt-04",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-wellfood",
+      "ownershipPct": 33.25
+    },
+    {
+      "id": "r-lt-05",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-rental",
+      "ownershipPct": 57.55
+    },
+    {
+      "id": "r-lt-06",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-construction",
+      "ownershipPct": 100
+    },
+    {
+      "id": "r-lt-07",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "hotel-lotte",
+      "ownershipPct": 100
+    },
+    {
+      "id": "r-lt-08",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-capital",
+      "ownershipPct": 100
+    },
+    {
+      "id": "r-lt-09",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-data",
+      "ownershipPct": 100
+    },
+    {
+      "id": "r-lt-10",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-chemical",
+      "toCompanyId": "lotte-fine-chemical",
+      "ownershipPct": 37.48
+    },
+    {
+      "id": "r-lt-11",
+      "groupId": "lotte",
+      "fromCompanyId": "hotel-lotte",
+      "toCompanyId": "lotte-property",
+      "ownershipPct": 100
+    },
+    {
+      "id": "r-lt-12",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-shopping",
+      "toCompanyId": "lotte-construction",
+      "ownershipPct": 0
+    },
+    {
+      "id": "r-lt-13",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-property",
+      "ownershipPct": 0
+    },
+    {
+      "id": "r-lt-14",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-chilsung",
+      "toCompanyId": "lotte-wellfood",
+      "ownershipPct": 13.7
+    },
+    {
+      "id": "r-lt-15",
+      "groupId": "lotte",
+      "fromCompanyId": "lotte-holding",
+      "toCompanyId": "lotte-fine-chemical",
+      "ownershipPct": 13.31
+    }
   ],
   "controllerHoldings": [
-    { "groupId": "lotte", "companyId": "lotte-holding", "ownershipPct": 13.00 },
-    { "groupId": "lotte", "companyId": "lotte-chemical", "ownershipPct": 0.00 },
-    { "groupId": "lotte", "companyId": "hotel-lotte", "ownershipPct": 5.44 }
+    {
+      "groupId": "lotte",
+      "companyId": "lotte-holding",
+      "ownershipPct": 13
+    },
+    {
+      "groupId": "lotte",
+      "companyId": "lotte-chemical",
+      "ownershipPct": 0
+    },
+    {
+      "groupId": "lotte",
+      "companyId": "hotel-lotte",
+      "ownershipPct": 5.44
+    }
   ]
 }

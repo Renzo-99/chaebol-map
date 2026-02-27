@@ -5,7 +5,7 @@
     "slug": "kt",
     "controllerName": "케이티(KT)",
     "description": "KT그룹은 대한민국 대표 통신 그룹으로 유무선 통신, 미디어, 금융, 부동산 등 다양한 사업을 영위하고 있다. 동일인은 KT 법인 자체이며 자기주식을 통해 지배구조를 형성하고 있다.",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 20,
     "listedCompanies": 7
   },
@@ -19,10 +19,10 @@
       "isController": true,
       "category": "전자/IT",
       "stockCode": "030200",
-      "stockPrice": 38750,
-      "priceChange": 450,
-      "priceChangePercent": 1.18,
-      "marketCap": 95200,
+      "stockPrice": 54000,
+      "priceChange": 700,
+      "priceChangePercent": 1.31,
+      "marketCap": 141000,
       "sector": "통신"
     },
     {
@@ -234,26 +234,138 @@
     }
   ],
   "relations": [
-    { "id": "rel-001", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-bc-card", "ownershipPct": 69.50 },
-    { "id": "rel-002", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-studio-genie", "ownershipPct": 90.90 },
-    { "id": "rel-003", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-skylife", "ownershipPct": 50.30 },
-    { "id": "rel-004", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-sports", "ownershipPct": 52.60 },
-    { "id": "rel-005", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-nas-media", "ownershipPct": 43.10 },
-    { "id": "rel-006", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-is", "ownershipPct": 29.30 },
-    { "id": "rel-007", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-alpha", "ownershipPct": 70.50 },
-    { "id": "rel-008", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-ds", "ownershipPct": 91.10 },
-    { "id": "rel-009", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-sat", "ownershipPct": 100.00 },
-    { "id": "rel-010", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-mns", "ownershipPct": 100.00 },
-    { "id": "rel-011", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-telecop", "ownershipPct": 100.00 },
-    { "id": "rel-012", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-cs", "ownershipPct": 100.00 },
-    { "id": "rel-013", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-cloud", "ownershipPct": 100.00 },
-    { "id": "rel-014", "groupId": "kt", "fromCompanyId": "kt-ds", "toCompanyId": "kt-estate", "ownershipPct": 100.00 },
-    { "id": "rel-015", "groupId": "kt", "fromCompanyId": "kt-ds", "toCompanyId": "kt-engineering", "ownershipPct": 59.80 },
-    { "id": "rel-016", "groupId": "kt", "fromCompanyId": "kt-studio-genie", "toCompanyId": "kt-genie-music", "ownershipPct": 60.40 },
-    { "id": "rel-017", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-service-north", "ownershipPct": 100.00 },
-    { "id": "rel-018", "groupId": "kt", "fromCompanyId": "kt-corp", "toCompanyId": "kt-service-south", "ownershipPct": 100.00 }
+    {
+      "id": "rel-001",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-bc-card",
+      "ownershipPct": 69.5
+    },
+    {
+      "id": "rel-002",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-studio-genie",
+      "ownershipPct": 90.9
+    },
+    {
+      "id": "rel-003",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-skylife",
+      "ownershipPct": 50.3
+    },
+    {
+      "id": "rel-004",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-sports",
+      "ownershipPct": 52.6
+    },
+    {
+      "id": "rel-005",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-nas-media",
+      "ownershipPct": 43.1
+    },
+    {
+      "id": "rel-006",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-is",
+      "ownershipPct": 29.3
+    },
+    {
+      "id": "rel-007",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-alpha",
+      "ownershipPct": 70.5
+    },
+    {
+      "id": "rel-008",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-ds",
+      "ownershipPct": 91.1
+    },
+    {
+      "id": "rel-009",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-sat",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-010",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-mns",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-011",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-telecop",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-012",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-cs",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-013",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-cloud",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-014",
+      "groupId": "kt",
+      "fromCompanyId": "kt-ds",
+      "toCompanyId": "kt-estate",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-015",
+      "groupId": "kt",
+      "fromCompanyId": "kt-ds",
+      "toCompanyId": "kt-engineering",
+      "ownershipPct": 59.8
+    },
+    {
+      "id": "rel-016",
+      "groupId": "kt",
+      "fromCompanyId": "kt-studio-genie",
+      "toCompanyId": "kt-genie-music",
+      "ownershipPct": 60.4
+    },
+    {
+      "id": "rel-017",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-service-north",
+      "ownershipPct": 100
+    },
+    {
+      "id": "rel-018",
+      "groupId": "kt",
+      "fromCompanyId": "kt-corp",
+      "toCompanyId": "kt-service-south",
+      "ownershipPct": 100
+    }
   ],
   "controllerHoldings": [
-    { "groupId": "kt", "companyId": "kt-corp", "ownershipPct": 2.80 }
+    {
+      "groupId": "kt",
+      "companyId": "kt-corp",
+      "ownershipPct": 2.8
+    }
   ]
 }

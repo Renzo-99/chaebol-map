@@ -5,7 +5,7 @@
     "slug": "doosan",
     "controllerName": "박정원",
     "description": "두산그룹은 에너지, 인프라, 산업기계 분야를 중심으로 사업을 영위하는 대한민국의 주요 재벌그룹",
-    "dataDate": "2025-05-01",
+    "dataDate": "2026-02-27",
     "totalCompanies": 35,
     "listedCompanies": 8
   },
@@ -28,10 +28,10 @@
       "isController": false,
       "category": "지주",
       "stockCode": "000150",
-      "stockPrice": 97800,
-      "priceChange": 1300,
-      "priceChangePercent": 1.35,
-      "marketCap": 23800,
+      "stockPrice": 210000,
+      "priceChange": 3000,
+      "priceChangePercent": 1.45,
+      "marketCap": 38500,
       "sector": "지주회사"
     },
     {
@@ -43,10 +43,10 @@
       "isController": false,
       "category": "에너지/인프라",
       "stockCode": "034020",
-      "stockPrice": 19850,
-      "priceChange": 450,
-      "priceChangePercent": 2.32,
-      "marketCap": 118500,
+      "stockPrice": 145000,
+      "priceChange": 2500,
+      "priceChangePercent": 1.75,
+      "marketCap": 97000,
       "sector": "발전설비"
     },
     {
@@ -58,10 +58,10 @@
       "isController": false,
       "category": "기계",
       "stockCode": "241560",
-      "stockPrice": 38400,
-      "priceChange": -600,
-      "priceChangePercent": -1.54,
-      "marketCap": 39400,
+      "stockPrice": 58000,
+      "priceChange": 800,
+      "priceChangePercent": 1.4,
+      "marketCap": 54000,
       "sector": "건설기계"
     },
     {
@@ -90,7 +90,7 @@
       "stockCode": "336260",
       "stockPrice": 14200,
       "priceChange": -320,
-      "priceChangePercent": -2.20,
+      "priceChangePercent": -2.2,
       "marketCap": 9200,
       "sector": "연료전지"
     },
@@ -408,49 +408,49 @@
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-bears",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-006",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-digital-innovation",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-007",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-cuvex",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-008",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-magazine",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-009",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-tower",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-010",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-corporate-business",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-011",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-electrolyte",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-012",
@@ -478,91 +478,91 @@
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-turbomachinery",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-016",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-gridtech",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-017",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-skoda-power",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-018",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-vina",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-019",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-energy-solution",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-020",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-enerbility-service",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-021",
       "groupId": "doosan",
       "fromCompanyId": "doosan-enerbility",
       "toCompanyId": "doosan-heavy-industries-vn",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-022",
       "groupId": "doosan",
       "fromCompanyId": "doosan-bobcat",
       "toCompanyId": "doosan-industrial-vehicle",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-023",
       "groupId": "doosan",
       "fromCompanyId": "doosan-bobcat",
       "toCompanyId": "doosan-bobcat-korea",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-024",
       "groupId": "doosan",
       "fromCompanyId": "doosan-bobcat",
       "toCompanyId": "doosan-infracore-china",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-025",
       "groupId": "doosan",
       "fromCompanyId": "doosan-bobcat",
       "toCompanyId": "doosan-logistics",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-026",
       "groupId": "doosan",
       "fromCompanyId": "doosan-robotics",
       "toCompanyId": "doosan-mecatec",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-027",
       "groupId": "doosan",
       "fromCompanyId": "doosan-robotics",
       "toCompanyId": "doosan-connect-motion",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-028",
@@ -576,35 +576,35 @@
       "groupId": "doosan",
       "fromCompanyId": "doosan-fuelcell",
       "toCompanyId": "doosan-fuel-cell-america",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-030",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "nexter",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-031",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "hancom-with",
-      "ownershipPct": 51.0
+      "ownershipPct": 51
     },
     {
       "id": "doosan-rel-032",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-tech-pack",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     },
     {
       "id": "doosan-rel-033",
       "groupId": "doosan",
       "fromCompanyId": "doosan-corp",
       "toCompanyId": "doosan-yonkang-foundation",
-      "ownershipPct": 100.0
+      "ownershipPct": 100
     }
   ],
   "controllerHoldings": [
