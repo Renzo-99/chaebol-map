@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowLeft, Building2, Star, TrendingUp, TrendingDown, List } from "lucide-react";
+import { ArrowLeft, Building2, Star, TrendingUp, TrendingDown, List, Wifi, WifiOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { GroupData } from "@/types";
@@ -14,6 +14,7 @@ const OwnershipGraph = dynamic(
 );
 import { formatNumber, formatPrice } from "@/lib/utils";
 import { getGroupIcon } from "@/lib/constants";
+import { useLiveStockPrices } from "@/hooks/useLiveStockPrices";
 
 interface GroupDetailClientProps {
   data: GroupData;
@@ -21,7 +22,16 @@ interface GroupDetailClientProps {
 
 export function GroupDetailClient({ data }: GroupDetailClientProps) {
   const [view, setView] = useState<"graph" | "list">("graph");
-  const { group, companies } = data;
+  const { group } = data;
+
+  // 실시간 주가 조회
+  const { companies, loading: priceLoading, lastUpdate, isLive } = useLiveStockPrices(data.companies);
+
+  // 실시간 데이터가 있으면 그래프에도 반영
+  const liveData: GroupData = {
+    ...data,
+    companies,
+  };
 
   const listedCompanies = companies
     .filter((c) => c.isListed && !c.isController)
@@ -47,8 +57,27 @@ export function GroupDetailClient({ data }: GroupDetailClientProps) {
               <span className="text-2xl">{getGroupIcon(group.slug)}</span>
               <div>
                 <h1 className="text-xl font-bold">{group.name}그룹 소유지분도</h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground flex items-center gap-2">
                   동일인: {group.controllerName} · {group.dataDate} 기준
+                  {/* 실시간 상태 표시 */}
+                  {priceLoading && (
+                    <span className="inline-flex items-center gap-1 text-xs text-amber-400 animate-pulse">
+                      <Wifi className="w-3 h-3" />
+                      주가 로딩중...
+                    </span>
+                  )}
+                  {!priceLoading && isLive && lastUpdate && (
+                    <span className="inline-flex items-center gap-1 text-xs text-green-400">
+                      <Wifi className="w-3 h-3" />
+                      실시간 ({lastUpdate.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })})
+                    </span>
+                  )}
+                  {!priceLoading && !isLive && (
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <WifiOff className="w-3 h-3" />
+                      저장된 데이터
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
@@ -107,7 +136,7 @@ export function GroupDetailClient({ data }: GroupDetailClientProps) {
       {/* Content */}
       {view === "graph" ? (
         <div className="flex-1">
-          <OwnershipGraph data={data} />
+          <OwnershipGraph data={liveData} />
         </div>
       ) : (
         <div className="flex-1 overflow-auto px-6 py-6">

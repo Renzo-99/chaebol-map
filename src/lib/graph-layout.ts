@@ -7,103 +7,181 @@ export interface CompanyNodeData {
   [key: string]: unknown;
 }
 
-// 노드 크기 상수 (CSS와 동기화)
-const NODE_W = 180;
-const NODE_H_LISTED = 82;
-const NODE_H_UNLISTED = 52;
-const NODE_H_CONTROLLER = 90;
+// 노드 크기 상수
+const NODE_W = 200;
+const NODE_H_LISTED = 88;
+const NODE_H_UNLISTED = 56;
+const NODE_H_CONTROLLER = 96;
 
 export function buildGraphData(
   companies: Company[],
   relations: OwnershipRelation[],
   controllerHoldings: ControllerHolding[]
 ): { nodes: Node<CompanyNodeData>[]; edges: Edge[] } {
+  if (companies.length === 0) return { nodes: [], edges: [] };
+
   const companyMap = new Map(companies.map((c) => [c.id, c]));
 
-  // 카테고리별 분류
+  // 소유 관계 그래프 구성 (부모 → 자식 매핑)
+  const childrenOf = new Map<string, { id: string; pct: number }[]>();
+  const parentsOf = new Map<string, { id: string; pct: number }[]>();
+
+  relations.forEach((r) => {
+    if (!companyMap.has(r.fromCompanyId) || !companyMap.has(r.toCompanyId)) return;
+    // 자기 자신 참조 무시
+    if (r.fromCompanyId === r.toCompanyId) return;
+
+    const children = childrenOf.get(r.fromCompanyId) ?? [];
+    children.push({ id: r.toCompanyId, pct: r.ownershipPct });
+    childrenOf.set(r.fromCompanyId, children);
+
+    const parents = parentsOf.get(r.toCompanyId) ?? [];
+    parents.push({ id: r.fromCompanyId, pct: r.ownershipPct });
+    parentsOf.set(r.toCompanyId, parents);
+  });
+
+  // 총수(동일인) 찾기
   const controller = companies.find((c) => c.isController);
-  const holding = companies.filter((c) => c.isHolding && !c.isController);
-  const listed = companies.filter(
-    (c) => c.isListed && !c.isController && !c.isHolding
-  );
-  const unlisted = companies.filter(
-    (c) => !c.isListed && !c.isController && !c.isHolding
-  );
 
-  // 적응형 스케일링
+  // 총수 직접 소유 대상 (controllerHoldings)
+  const ctrlTargets = new Set(controllerHoldings.map((h) => h.companyId));
+
+  // ── BFS로 트리 레벨 할당 ──
+  // 레벨 0: 총수
+  // 레벨 1: 총수 직접 소유 기업 (지주회사 포함)
+  // 레벨 2+: 하위 계열사
+  const level = new Map<string, number>();
+  const visited = new Set<string>();
+  const queue: string[] = [];
+
+  if (controller) {
+    level.set(controller.id, 0);
+    visited.add(controller.id);
+
+    // 총수 직접 소유 기업 → 레벨 1
+    // 지분율 높은 순 정렬
+    const ctrlHoldSorted = [...controllerHoldings].sort((a, b) => b.ownershipPct - a.ownershipPct);
+    ctrlHoldSorted.forEach((h) => {
+      if (companyMap.has(h.companyId) && !visited.has(h.companyId)) {
+        level.set(h.companyId, 1);
+        visited.add(h.companyId);
+        queue.push(h.companyId);
+      }
+    });
+  }
+
+  // BFS 순회 — 주요 소유 관계 따라 레벨 할당
+  while (queue.length > 0) {
+    const current = queue.shift()!;
+    const currentLevel = level.get(current)!;
+    const children = childrenOf.get(current) ?? [];
+
+    // 지분율 높은 순 정렬 (주요 자회사 우선)
+    children.sort((a, b) => b.pct - a.pct);
+
+    children.forEach((child) => {
+      if (!visited.has(child.id)) {
+        level.set(child.id, currentLevel + 1);
+        visited.add(child.id);
+        queue.push(child.id);
+      }
+    });
+  }
+
+  // 미방문 노드 → 연결되지 않은 회사들
+  companies.forEach((c) => {
+    if (!visited.has(c.id)) {
+      // 부모가 있으면 부모 레벨 + 1
+      const parents = parentsOf.get(c.id);
+      if (parents && parents.length > 0) {
+        const bestParent = parents.sort((a, b) => b.pct - a.pct)[0];
+        const parentLevel = level.get(bestParent.id);
+        if (parentLevel !== undefined) {
+          level.set(c.id, parentLevel + 1);
+        } else {
+          // 지주회사이면 1, 상장사이면 2, 비상장이면 3
+          level.set(c.id, c.isHolding ? 1 : c.isListed ? 2 : 3);
+        }
+      } else {
+        level.set(c.id, c.isHolding ? 1 : c.isListed ? 2 : 3);
+      }
+      visited.add(c.id);
+    }
+  });
+
+  // ── 레벨별 노드 분류 ──
+  const levelGroups = new Map<number, Company[]>();
+  companies.forEach((c) => {
+    const lv = level.get(c.id) ?? 3;
+    const group = levelGroups.get(lv) ?? [];
+    group.push(c);
+    levelGroups.set(lv, group);
+  });
+
+  // 레벨 내 정렬: 지주회사 > 상장사(시총 순) > 비상장
+  levelGroups.forEach((group) => {
+    group.sort((a, b) => {
+      // 지주회사 우선
+      if (a.isHolding && !b.isHolding) return -1;
+      if (!a.isHolding && b.isHolding) return 1;
+      // 상장사 우선
+      if (a.isListed && !b.isListed) return -1;
+      if (!a.isListed && b.isListed) return 1;
+      // 상장사끼리는 시총 순
+      if (a.isListed && b.isListed) return (b.marketCap ?? 0) - (a.marketCap ?? 0);
+      return 0;
+    });
+  });
+
+  // ── 적응형 스케일링 ──
   const totalNodes = companies.length;
-  const scale = totalNodes > 50 ? 0.75 : totalNodes > 35 ? 0.85 : totalNodes > 20 ? 0.92 : 1;
+  const scale = totalNodes > 50 ? 0.72 : totalNodes > 35 ? 0.82 : totalNodes > 20 ? 0.9 : 1;
 
-  const hGap = Math.round(220 * scale);
-  const vGap = Math.round(160 * scale);
+  const hGap = Math.round(240 * scale);
+  const vGap = Math.round(180 * scale);
 
+  // ── 노드 배치 ──
   const nodes: Node<CompanyNodeData>[] = [];
-  let yOffset = 0;
+  const sortedLevels = [...levelGroups.keys()].sort((a, b) => a - b);
 
-  // 그리드 중앙 정렬 헬퍼
-  function layoutRow(
-    items: Company[],
-    perRow: number,
-    startY: number,
-    nodeType: string
-  ) {
-    const rows = Math.ceil(items.length / perRow);
-    for (let i = 0; i < items.length; i++) {
+  sortedLevels.forEach((lv) => {
+    const group = levelGroups.get(lv)!;
+    const perRow = lv === 0 ? 1 : Math.min(group.length, totalNodes > 35 ? 8 : totalNodes > 20 ? 7 : 6);
+    const rows = Math.ceil(group.length / perRow);
+
+    for (let i = 0; i < group.length; i++) {
       const row = Math.floor(i / perRow);
-      const colsInRow = Math.min(perRow, items.length - row * perRow);
       const col = i % perRow;
-      // 중앙 정렬: 전체 폭 기준으로 해당 row의 아이템을 가운데 배치
+      const colsInRow = Math.min(perRow, group.length - row * perRow);
       const totalWidth = (colsInRow - 1) * hGap;
-      const offsetX = -totalWidth / 2 + col * hGap;
+      const x = -totalWidth / 2 + col * hGap;
+
+      const nodeH = group[i].isController
+        ? NODE_H_CONTROLLER
+        : group[i].isListed
+        ? NODE_H_LISTED
+        : NODE_H_UNLISTED;
+
+      // Y 위치: 레벨 기반 + 행 오프셋
+      const baseY = lv * vGap * 1.2;
+      const y = baseY + row * (nodeH + 40 * scale);
 
       nodes.push({
-        id: items[i].id,
-        type: nodeType,
-        position: { x: offsetX, y: startY + row * vGap },
-        data: { company: items[i], label: items[i].name },
+        id: group[i].id,
+        type: "company",
+        position: { x, y },
+        data: { company: group[i], label: group[i].name },
       });
     }
-    return startY + rows * vGap;
-  }
+  });
 
-  // ── 동일인(총수) ──
-  if (controller) {
-    nodes.push({
-      id: controller.id,
-      type: "company",
-      position: { x: -NODE_W / 2, y: 0 },
-      data: { company: controller, label: controller.name },
-    });
-    yOffset = NODE_H_CONTROLLER + Math.round(60 * scale);
-  }
-
-  // ── 지주회사 ──
-  if (holding.length > 0) {
-    const holdPerRow = Math.min(holding.length, 4);
-    yOffset = layoutRow(holding, holdPerRow, yOffset, "company");
-    yOffset += Math.round(40 * scale);
-  }
-
-  // ── 상장회사 ──
-  if (listed.length > 0) {
-    const listedPerRow = totalNodes > 35 ? 7 : totalNodes > 20 ? 6 : 5;
-    yOffset = layoutRow(listed, listedPerRow, yOffset, "company");
-    yOffset += Math.round(40 * scale);
-  }
-
-  // ── 비상장회사 ──
-  if (unlisted.length > 0) {
-    const unlistedPerRow = totalNodes > 35 ? 8 : totalNodes > 20 ? 7 : 6;
-    layoutRow(unlisted, unlistedPerRow, yOffset, "company");
-  }
-
-  // ── 엣지 (회사 간 지분관계) ──
+  // ── 엣지 생성 ──
   const edges: Edge[] = [];
+  const nodeIdSet = new Set(companies.map((c) => c.id));
 
   relations.forEach((rel) => {
-    const from = companyMap.get(rel.fromCompanyId);
-    const to = companyMap.get(rel.toCompanyId);
-    if (!from || !to) return;
+    if (!nodeIdSet.has(rel.fromCompanyId) || !nodeIdSet.has(rel.toCompanyId)) return;
+    if (rel.fromCompanyId === rel.toCompanyId) return;
 
     edges.push({
       id: rel.id,
@@ -121,6 +199,7 @@ export function buildGraphData(
   // ── 동일인 지분 엣지 ──
   if (controller) {
     controllerHoldings.forEach((h, i) => {
+      if (!nodeIdSet.has(h.companyId)) return;
       edges.push({
         id: `ctrl-${i}`,
         source: controller.id,
