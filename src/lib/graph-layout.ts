@@ -1,4 +1,4 @@
-import { type Node, type Edge } from "@xyflow/react";
+import { type Node, type Edge, MarkerType } from "@xyflow/react";
 import type { Company, OwnershipRelation, ControllerHolding } from "@/types";
 
 export interface CompanyNodeData {
@@ -11,8 +11,14 @@ export interface CompanyNodeData {
 // ── FTC 소유지분도 레이아웃 상수 ──
 const NODE_W = 130;
 const NODE_H = 38;
-const H_GAP = 14;
-const V_GAP = 52;
+
+// 노드 수에 따른 간격 조정
+function getSpacing(count: number) {
+  if (count > 50) return { hGap: 6, vGap: 38 };
+  if (count > 35) return { hGap: 10, vGap: 44 };
+  if (count > 20) return { hGap: 14, vGap: 52 };
+  return { hGap: 18, vGap: 60 };
+}
 
 export function buildGraphData(
   companies: Company[],
@@ -54,7 +60,7 @@ export function buildGraphData(
     (h) => companyMap.has(h.companyId) && h.ownershipPct > 0
   );
 
-  // ── 소유자 맵 ──
+  // ── 소유자 맵 (incoming: 누가 이 회사를 소유하나) ──
   const incoming = new Map<string, { from: string; pct: number }[]>();
   for (const r of rels) {
     const arr = incoming.get(r.toCompanyId) ?? [];
@@ -69,11 +75,7 @@ export function buildGraphData(
     }
   }
 
-  // ── 트리 구축 (BFS, 주요 부모 = 최대 지분율) ──
-  const children = new Map<string, string[]>();
-  const visited = new Set<string>();
-  const queue: string[] = [];
-
+  // ── bestParent 계산 (최대 지분율 부모) ──
   const bestParent = new Map<string, string>();
   for (const c of all) {
     if (c.id === ctrl?.id) continue;
@@ -83,33 +85,73 @@ export function buildGraphData(
     bestParent.set(c.id, best.from);
   }
 
+  // ── 트리 구축 (BFS + 순환 참조 해결) ──
+  const children = new Map<string, string[]>();
+  const visited = new Set<string>();
+  const queue: string[] = [];
+
+  // BFS 처리 함수 (Phase 1, 2 공용)
+  function processBFS() {
+    while (queue.length > 0) {
+      const pid = queue.shift()!;
+      const kids: string[] = [];
+      for (const c of all) {
+        if (visited.has(c.id)) continue;
+        if (bestParent.get(c.id) === pid) kids.push(c.id);
+      }
+      kids.sort((a, b) => {
+        const ap =
+          (incoming.get(a) ?? []).find((e) => e.from === pid)?.pct ?? 0;
+        const bp =
+          (incoming.get(b) ?? []).find((e) => e.from === pid)?.pct ?? 0;
+        return bp - ap;
+      });
+      for (const kid of kids) {
+        visited.add(kid);
+        children.set(kid, []);
+        queue.push(kid);
+      }
+      const existing = children.get(pid) ?? [];
+      children.set(pid, [...existing, ...kids]);
+    }
+  }
+
+  // Phase 1: 동일인으로부터 BFS
   if (ctrl) {
     visited.add(ctrl.id);
     queue.push(ctrl.id);
     children.set(ctrl.id, []);
   }
+  processBFS();
 
-  while (queue.length > 0) {
-    const pid = queue.shift()!;
-    const kids: string[] = [];
+  // Phase 2: 순환 참조로 인한 미방문 노드 해결
+  // 이미 방문된 부모가 있는 미방문 노드를 반복 탐색
+  let changed = true;
+  while (changed) {
+    changed = false;
     for (const c of all) {
       if (visited.has(c.id)) continue;
-      if (bestParent.get(c.id) === pid) kids.push(c.id);
+      const inc = incoming.get(c.id) ?? [];
+      const visitedInc = inc
+        .filter((e) => visited.has(e.from))
+        .sort((a, b) => b.pct - a.pct);
+      if (visitedInc.length === 0) continue;
+
+      // 가장 높은 지분율의 방문된 부모에 연결
+      const best = visitedInc[0];
+      visited.add(c.id);
+      children.set(c.id, []);
+      children.get(best.from)!.push(c.id);
+
+      // 이 노드로부터 BFS 계속
+      queue.push(c.id);
+      processBFS();
+
+      changed = true;
     }
-    kids.sort((a, b) => {
-      const ap = (incoming.get(a) ?? []).find((e) => e.from === pid)?.pct ?? 0;
-      const bp = (incoming.get(b) ?? []).find((e) => e.from === pid)?.pct ?? 0;
-      return bp - ap;
-    });
-    for (const kid of kids) {
-      visited.add(kid);
-      children.set(kid, []);
-      queue.push(kid);
-    }
-    children.set(pid, kids);
   }
 
-  // 고아 노드
+  // Phase 3: 나머지 고아 노드 → 동일인에 연결
   for (const c of all) {
     if (visited.has(c.id)) continue;
     visited.add(c.id);
@@ -123,6 +165,9 @@ export function buildGraphData(
     for (const kid of kids) treeEdges.add(`${pid}->${kid}`);
   });
 
+  // ── 간격 계산 ──
+  const { hGap, vGap } = getSpacing(all.length);
+
   // ── 서브트리 너비 계산 ──
   const subtreeW = new Map<string, number>();
 
@@ -134,7 +179,7 @@ export function buildGraphData(
     }
     let total = 0;
     for (const kid of kids) total += calcWidth(kid);
-    total += (kids.length - 1) * H_GAP;
+    total += (kids.length - 1) * hGap;
     const w = Math.max(NODE_W, total);
     subtreeW.set(id, w);
     return w;
@@ -156,8 +201,8 @@ export function buildGraphData(
 
     for (const kid of kids) {
       const kw = subtreeW.get(kid) ?? NODE_W;
-      layout(kid, sx + kw / 2, y + NODE_H + V_GAP, depth + 1);
-      sx += kw + H_GAP;
+      layout(kid, sx + kw / 2, y + NODE_H + vGap, depth + 1);
+      sx += kw + hGap;
     }
   }
 
@@ -171,7 +216,7 @@ export function buildGraphData(
         calcWidth(c.id);
         const w = subtreeW.get(c.id) ?? NODE_W;
         layout(c.id, ox + w / 2, 0, 0);
-        ox += w + H_GAP * 2;
+        ox += w + hGap * 2;
       }
     }
   }
@@ -196,14 +241,50 @@ export function buildGraphData(
   for (const r of rels) {
     if (!idSet.has(r.fromCompanyId) || !idSet.has(r.toCompanyId)) continue;
     const isTree = treeEdges.has(`${r.fromCompanyId}->${r.toCompanyId}`);
+
+    // 트리 엣지: bottom → top, 비트리 엣지: 위치 기반 핸들
+    let sourceHandle = "bottom";
+    let targetHandle = "top";
+
+    if (!isTree) {
+      const sp = positions.get(r.fromCompanyId);
+      const tp = positions.get(r.toCompanyId);
+      if (sp && tp) {
+        const scx = sp.x + NODE_W / 2;
+        const scy = sp.y + NODE_H / 2;
+        const tcx = tp.x + NODE_W / 2;
+        const tcy = tp.y + NODE_H / 2;
+        const dx = tcx - scx;
+        const dy = tcy - scy;
+
+        if (Math.abs(dy) < NODE_H) {
+          // 같은 레벨 (수평 관계)
+          sourceHandle = dx > 0 ? "right" : "left";
+          targetHandle = dx > 0 ? "left" : "right";
+        } else if (dy > 0) {
+          sourceHandle = "bottom";
+          targetHandle = "top";
+        } else {
+          // 역방향 (자식 → 부모)
+          sourceHandle = "top";
+          targetHandle = "bottom";
+        }
+      }
+    }
+
     edges.push({
       id: r.id,
       source: r.fromCompanyId,
       target: r.toCompanyId,
       type: "ownership",
-      sourceHandle: isTree ? "bottom" : "right",
-      targetHandle: isTree ? "top" : "left",
-      data: { ownershipPct: r.ownershipPct, isControllerEdge: false, isTreeEdge: isTree },
+      sourceHandle,
+      targetHandle,
+      markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8 },
+      data: {
+        ownershipPct: r.ownershipPct,
+        isControllerEdge: false,
+        isTreeEdge: isTree,
+      },
     });
   }
 
@@ -219,7 +300,12 @@ export function buildGraphData(
         type: "ownership",
         sourceHandle: "bottom",
         targetHandle: "top",
-        data: { ownershipPct: h.ownershipPct, isControllerEdge: true, isTreeEdge: isTree },
+        markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8 },
+        data: {
+          ownershipPct: h.ownershipPct,
+          isControllerEdge: true,
+          isTreeEdge: isTree,
+        },
       });
     }
   }
