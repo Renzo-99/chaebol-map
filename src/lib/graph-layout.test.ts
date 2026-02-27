@@ -85,10 +85,10 @@ describe("buildGraphData", () => {
     expect(edges[0].source).toBe("a");
     expect(edges[0].target).toBe("b");
     expect(edges[0].data?.ownershipPct).toBe(51);
-    expect(edges[0].animated).toBe(true); // ≥50%
+    expect(edges[0].markerEnd).toBeDefined(); // 화살표 마커 존재
   });
 
-  it("marks edges <50% as non-animated", () => {
+  it("all edges have arrow markers", () => {
     const companies: Company[] = [
       makeCompany({ id: "a", name: "회사A" }),
       makeCompany({ id: "b", name: "회사B" }),
@@ -98,7 +98,7 @@ describe("buildGraphData", () => {
     ];
 
     const { edges } = buildGraphData(companies, relations, []);
-    expect(edges[0].animated).toBe(false);
+    expect(edges[0].markerEnd).toBeDefined();
   });
 
   it("creates controller holding edges", () => {

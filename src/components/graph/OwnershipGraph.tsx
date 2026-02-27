@@ -74,51 +74,22 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
   return (
     <div className="relative h-full w-full">
       {/* 필터 바 */}
-      <div className="graph-filter-bar">
-        <span className="graph-filter-label">지분율</span>
+      <div className="ftc-filter-bar">
+        <span className="ftc-filter-label">지분율</span>
         <input
           type="range"
           min={0}
           max={50}
           value={minPct}
           onChange={(e) => setMinPct(Number(e.target.value))}
-          className="graph-filter-slider"
+          className="ftc-filter-slider"
         />
-        <span className="graph-filter-value">{minPct}%+</span>
+        <span className="ftc-filter-value">{minPct}%+</span>
       </div>
 
-      {/* 범례 */}
-      <div className="graph-legend">
-        <div className="graph-legend-title">범례</div>
-        <div className="graph-legend-item">
-          <div className="legend-dot legend-controller" />
-          <span>동일인(총수)</span>
-        </div>
-        <div className="graph-legend-item">
-          <div className="legend-dot legend-listed" />
-          <span>상장회사 ★</span>
-        </div>
-        <div className="graph-legend-item">
-          <div className="legend-dot legend-holding" />
-          <span>지주회사</span>
-        </div>
-        <div className="graph-legend-item">
-          <div className="legend-dot legend-unlisted" />
-          <span>비상장</span>
-        </div>
-        <div className="graph-legend-divider" />
-        <div className="graph-legend-item">
-          <div className="legend-line legend-line-major" />
-          <span>50%+ 지분</span>
-        </div>
-        <div className="graph-legend-item">
-          <div className="legend-line legend-line-mid" />
-          <span>20%+ 지분</span>
-        </div>
-        <div className="graph-legend-item">
-          <div className="legend-line legend-line-minor" />
-          <span>&lt;5% 지분</span>
-        </div>
+      {/* 범례 (FTC 스타일) */}
+      <div className="ftc-legend">
+        <span>음영은 지주회사, ★은 상장회사, 단위: %</span>
       </div>
 
       <ReactFlow
@@ -130,9 +101,9 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
         fitView
-        fitViewOptions={{ padding: 0.15 }}
-        minZoom={0.05}
-        maxZoom={2.5}
+        fitViewOptions={{ padding: 0.12 }}
+        minZoom={0.03}
+        maxZoom={3}
         proOptions={{ hideAttribution: true }}
         defaultEdgeOptions={{ type: "ownership" }}
       >
@@ -141,20 +112,20 @@ export function OwnershipGraph({ data }: OwnershipGraphProps) {
           position="bottom-right"
           nodeColor={(node) => {
             const company = (node.data as CompanyNodeData)?.company;
-            if (!company) return "#475569";
+            if (!company) return "#CBD5E1";
             if (company.isController) return "#F59E0B";
-            if (company.isHolding) return "#22C55E";
-            if (company.isListed) return "#3182F6";
-            return "#475569";
+            if (company.isHolding) return "#94A3B8";
+            if (company.isListed) return "#475569";
+            return "#CBD5E1";
           }}
-          maskColor="rgba(25, 31, 40, 0.7)"
-          style={{ background: "#212830" }}
+          maskColor="rgba(0, 0, 0, 0.06)"
+          style={{ background: "#F8FAFC" }}
         />
         <Background
           variant={BackgroundVariant.Dots}
-          gap={24}
-          size={1}
-          color="#2C3542"
+          gap={20}
+          size={0.5}
+          color="#E2E8F0"
         />
       </ReactFlow>
 

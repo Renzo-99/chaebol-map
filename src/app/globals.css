@@ -78,367 +78,191 @@ body {
 }
 
 /* ==============================
-   React Flow 기본 오버라이드
+   React Flow — Light Theme
    ============================== */
 .react-flow__background {
-  background: var(--background) !important;
+  background: #FFFFFF !important;
 }
 
 .react-flow__minimap {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   overflow: hidden;
-  border: 1px solid var(--border) !important;
+  border: 1px solid #E2E8F0 !important;
 }
 
 .react-flow__controls {
-  border-radius: 12px !important;
+  border-radius: 8px !important;
   overflow: hidden;
-  border: 1px solid var(--border) !important;
-  background: var(--card) !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 .react-flow__controls-button {
-  background: var(--card) !important;
-  border-bottom: 1px solid var(--border) !important;
-  fill: var(--foreground) !important;
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  fill: #475569 !important;
 }
 
 .react-flow__controls-button:hover {
-  background: var(--muted) !important;
+  background: #F8FAFC !important;
 }
 
 /* ==============================
-   커스텀 노드 스타일
+   FTC-style 노드 (Light)
    ============================== */
-.ownership-node {
-  min-width: 200px;
-  max-width: 220px;
-  border-radius: 16px;
+.ftc-node {
+  background: #FFFFFF;
+  border: 1px solid #555;
+  padding: 5px 10px;
+  font-size: 11px;
   font-family: inherit;
+  color: #1E293B;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  position: relative;
-}
-
-.ownership-node:hover {
-  transform: translateY(-3px) scale(1.03);
-  z-index: 10;
-}
-
-/* ─── 동일인(총수) 노드 ─── */
-.node-controller {
-  background: linear-gradient(145deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
-  border: 2.5px solid #FCD34D;
-  box-shadow: 0 6px 32px rgba(245, 158, 11, 0.35), 0 0 0 1px rgba(252, 211, 77, 0.2), inset 0 1px 0 rgba(255,255,255,0.15);
-  min-width: 180px;
-}
-
-.node-controller:hover {
-  box-shadow: 0 10px 40px rgba(245, 158, 11, 0.5), 0 0 0 1px rgba(252, 211, 77, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-}
-
-.node-controller-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px 28px;
-  gap: 4px;
-}
-
-.node-controller-icon {
-  font-size: 28px;
-  line-height: 1;
-}
-
-.node-controller-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.55);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.node-controller-name {
-  font-size: 18px;
-  font-weight: 900;
-  color: #000;
   white-space: nowrap;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+  line-height: 1.4;
+  transition: background 0.12s, box-shadow 0.12s;
 }
 
-/* ─── 지주회사 노드 ─── */
-.node-holding {
-  background: linear-gradient(180deg, #1a3225 0%, #162b1e 100%);
-  border: 2px solid #22C55E;
-  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.18);
+.ftc-node:hover {
+  background: #F0F7FF;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.node-holding:hover {
-  border-color: #4ADE80;
-  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+/* 지주회사 — 음영 처리 (공정위 스타일) */
+.ftc-holding {
+  background: #E5E5E5;
 }
 
-/* ─── 상장회사 노드 ─── */
-.node-listed {
-  background: linear-gradient(180deg, #1a2840 0%, #162035 100%);
-  border: 2px solid #3182F6;
-  box-shadow: 0 4px 20px rgba(49, 130, 246, 0.12);
+.ftc-holding:hover {
+  background: #DBEAFE;
 }
 
-.node-listed:hover {
-  border-color: #60A5FA;
-  box-shadow: 0 8px 32px rgba(49, 130, 246, 0.28);
+/* 동일인(총수) 노드 */
+.ftc-ctrl {
+  border: 1.5px solid #333;
+  text-align: center;
+  padding: 6px 16px;
+  background: #FFFBEB;
 }
 
-/* ─── 비상장 노드 ─── */
-.node-unlisted {
-  background: linear-gradient(180deg, #1e2733 0%, #1a222c 100%);
-  border: 1.5px solid #4B5563;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+.ftc-ctrl:hover {
+  background: #FEF3C7;
 }
 
-.node-unlisted:hover {
-  background: linear-gradient(180deg, #252e3c 0%, #1e2733 100%);
-  border-color: #6B7280;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* ─── 선택 상태 ─── */
-.node-selected {
-  box-shadow: 0 0 0 3px #3182F6, 0 8px 30px rgba(49, 130, 246, 0.35) !important;
-}
-
-/* ─── 노드 내부 요소 ─── */
-.node-header {
-  padding: 12px 16px 6px;
-}
-
-.node-name-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.node-star {
-  color: #FBBF24;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-
-.node-name {
-  font-size: 14px;
-  font-weight: 800;
-  color: #FFFFFF;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.01em;
-}
-
-.node-category {
-  display: inline-block;
-  margin-top: 4px;
+.ftc-ctrl-sub {
+  display: block;
   font-size: 10px;
-  color: #8B95A1;
   font-weight: 600;
-  background: rgba(255,255,255,0.06);
-  padding: 1px 6px;
-  border-radius: 4px;
+  color: #666;
 }
 
-.node-stock {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 16px 12px;
-  gap: 8px;
-}
-
-.node-price {
-  font-size: 14px;
+.ftc-ctrl-name {
+  display: block;
+  font-size: 13px;
   font-weight: 800;
-  color: #FFFFFF;
-  font-variant-numeric: tabular-nums;
+  color: #111;
 }
 
-.node-change {
-  font-size: 12px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  padding: 2px 6px;
-  border-radius: 5px;
+/* 선택 상태 */
+.ftc-sel {
+  outline: 2px solid #3182F6;
+  outline-offset: 1px;
+  box-shadow: 0 2px 10px rgba(49, 130, 246, 0.2) !important;
 }
 
-.change-up {
-  color: #FF5A65;
-  background: rgba(255, 90, 101, 0.12);
-}
-
-.change-down {
-  color: #5B9CF6;
-  background: rgba(91, 156, 246, 0.12);
-}
-
-.change-flat {
-  color: #B0B8C1;
-}
-
-.node-holding-badge {
-  padding: 4px 16px 12px;
-  font-size: 11px;
+/* 회사명 */
+.ftc-label {
   font-weight: 700;
-  color: #4ADE80;
+  color: #1E293B;
+  font-size: 11px;
 }
 
-/* ─── 핸들 (연결점) ─── */
-.node-handle {
-  width: 7px !important;
-  height: 7px !important;
-  background: #475569 !important;
-  border: 1.5px solid #64748B !important;
+.ftc-star {
+  color: #000;
+  margin-right: 1px;
+}
+
+/* 핸들 */
+.ftc-handle {
+  width: 4px !important;
+  height: 4px !important;
+  background: #94A3B8 !important;
+  border: none !important;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.12s;
 }
 
-.ownership-node:hover .node-handle {
-  opacity: 1;
+.ftc-node:hover .ftc-handle {
+  opacity: 0.5;
 }
 
 /* ==============================
-   커스텀 엣지 레이블
+   엣지 레이블 (Light)
    ============================== */
-.edge-label {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid;
+.ftc-edge-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: #333;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0 2px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 /* ==============================
-   필터 바 & 범례
+   필터 & 범례 (Light)
    ============================== */
-.graph-filter-bar {
+.ftc-filter-bar {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 10px;
+  left: 10px;
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  background: rgba(33, 40, 48, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(44, 53, 66, 0.6);
-  border-radius: 14px;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-.graph-filter-label {
+.ftc-filter-label {
   font-size: 11px;
   font-weight: 600;
-  color: #8B95A1;
+  color: #64748B;
 }
 
-.graph-filter-slider {
-  width: 100px;
-  accent-color: #3182F6;
+.ftc-filter-slider {
+  width: 80px;
+  accent-color: #333;
   cursor: pointer;
 }
 
-.graph-filter-value {
-  font-size: 12px;
-  font-weight: 800;
-  color: #3182F6;
-  min-width: 36px;
+.ftc-filter-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1E293B;
+  min-width: 32px;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-.graph-legend {
+.ftc-legend {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 10px;
+  right: 10px;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 12px 16px;
-  background: rgba(33, 40, 48, 0.92);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(44, 53, 66, 0.6);
-  border-radius: 14px;
-}
-
-.graph-legend-title {
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
   font-size: 10px;
-  font-weight: 700;
-  color: #6B7684;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 2px;
-}
-
-.graph-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: #8B95A1;
-}
-
-.graph-legend-divider {
-  height: 1px;
-  background: rgba(44, 53, 66, 0.8);
-  margin: 2px 0;
-}
-
-/* 범례 점 */
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.legend-controller {
-  background: linear-gradient(135deg, #F59E0B, #D97706);
-  border: 1px solid #FCD34D;
-}
-
-.legend-listed {
-  background: rgba(49, 130, 246, 0.15);
-  border: 2px solid rgba(49, 130, 246, 0.6);
-}
-
-.legend-holding {
-  background: rgba(34, 197, 94, 0.15);
-  border: 2px solid #22C55E;
-}
-
-.legend-unlisted {
-  background: rgba(100, 116, 139, 0.1);
-  border: 1px solid rgba(100, 116, 139, 0.4);
-}
-
-/* 범례 선 */
-.legend-line {
-  width: 18px;
-  height: 0;
-  flex-shrink: 0;
-}
-
-.legend-line-major {
-  border-top: 3px solid #F59E0B;
-}
-
-.legend-line-mid {
-  border-top: 2px solid #3B82F6;
-}
-
-.legend-line-minor {
-  border-top: 1px dashed #475569;
+  color: #64748B;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
